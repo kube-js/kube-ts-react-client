@@ -1,4 +1,4 @@
-FROM node:10.11.0-alpine
+FROM node:10.15.3-alpine
 STOPSIGNAL SIGTERM
 RUN apk --no-cache add g++ gcc libgcc libstdc++ linux-headers make python
 RUN npm install --quiet node-gyp -g
