@@ -1,0 +1,47 @@
+{
+  "name": "@kube-js/kube-ts-react-client",
+  "version": "0.0.0-development",
+  "dependencies": {
+    "@kube-js/semantic-release": "1.0.7",
+    "@kube-js/tscommons": "1.0.5",
+    "jscpd": "2.0.11",
+    "jscpd-badge-reporter": "1.1.3",
+    "react": "16.8.4",
+    "react-dom": "16.8.4",
+    "react-scripts": "2.1.8",
+    "typescript": "3.3.3333"
+  },
+  "devDependencies": {
+    "@types/jest": "24.0.11",
+    "@types/node": "11.11.3",
+    "@types/react": "16.8.8",
+    "@types/react-dom": "16.8.2",
+    "tslint": "^5.14.0",
+    "tslint-config-prettier": "^1.18.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test && codecov",
+    "lint": "tslint --project tsconfig.json --config tslint.json './src/**/*.ts'",
+    "duplication": "jscpd ./src",
+    "test:watch": "jest --watch --coverage",
+    "semantic-release": "semantic-release-public-circleci-app",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "author": "Mariusz Rajczakowski <mariuszrajczakowski@pm.me> (http://mariuszrajczakowski.me)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kube-js/kube-ts-react-client/issues"
+  },
+  "homepage": "https://github.com/kube-js/kube-ts-react-client#readme",
+  "publishConfig": {
+    "access": "public"
+  }
+}
