@@ -28,19 +28,19 @@ jobs:
           key: v1-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: Compiling code
-          command: npm run build
+          command: npm ci
       - run:
           name: Testing code
           command: npm run test
-      # - run:
-      #     name: Linting code
-      #     command: npm run lint
+      - run:
+          name: Linting code
+          command: npm run lint
       - run:
           name: Checking code duplication
           command: npm run duplication
       - run:
           name: Build docker image
-          command: docker build -t kubejs/kube-ts-react-client .
+          command: docker build -f ./docker/Dockerfile -t kubejs/kube-ts-react-client .
       - deploy:
           name: Semantic Release
           command: npm run semantic-release

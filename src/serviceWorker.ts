@@ -11,19 +11,21 @@
 // opt-in, read https://bit.ly/CRA-PWA
 
 const isLocalhost = Boolean(
-  window.location.hostname === 'localhost' ||
+  Boolean(window.location.hostname === 'localhost') ||
     // [::1] is the IPv6 localhost address.
-    window.location.hostname === '[::1]' ||
+    Boolean(window.location.hostname === '[::1]') ||
     // 127.0.0.1/8 is considered localhost for IPv4.
-    window.location.hostname.match(
-      /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+    Boolean(
+      window.location.hostname.match(
+        /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+      )
     )
 );
 
-type Config = {
-  onSuccess?: (registration: ServiceWorkerRegistration) => void;
-  onUpdate?: (registration: ServiceWorkerRegistration) => void;
-};
+interface Config {
+  readonly onSuccess?: (registration: ServiceWorkerRegistration) => void;
+  readonly onUpdate?: (registration: ServiceWorkerRegistration) => void;
+}
 
 export function register(config?: Config) {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
@@ -48,12 +50,18 @@ export function register(config?: Config) {
 
         // Add some additional logging to localhost, pointing developers to the
         // service worker/PWA documentation.
-        navigator.serviceWorker.ready.then(() => {
-          console.log(
-            'This web app is being served cache-first by a service ' +
-              'worker. To learn more, visit https://bit.ly/CRA-PWA'
-          );
-        });
+        navigator.serviceWorker.ready
+          .then(() => {
+            // tslint:disable-next-line:no-console
+            console.log(
+              'This web app is being served cache-first by a service ' +
+                'worker. To learn more, visit https://bit.ly/CRA-PWA'
+            );
+          })
+          .catch(e => {
+            // tslint:disable-next-line:no-console
+            console.log(e);
+          });
       } else {
         // Is not localhost. Just register service worker
         registerValidSW(swUrl, config);
@@ -68,32 +76,34 @@ function registerValidSW(swUrl: string, config?: Config) {
     .then(registration => {
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
-        if (installingWorker == null) {
+        if (installingWorker === null) {
           return;
         }
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
-            if (navigator.serviceWorker.controller) {
+            if (navigator.serviceWorker.controller !== null) {
               // At this point, the updated precached content has been fetched,
               // but the previous service worker will still serve the older
               // content until all client tabs are closed.
+              // tslint:disable-next-line:no-console
               console.log(
                 'New content is available and will be used when all ' +
                   'tabs for this page are closed. See https://bit.ly/CRA-PWA.'
               );
 
               // Execute callback
-              if (config && config.onUpdate) {
+              if (config !== undefined && config.onUpdate !== undefined) {
                 config.onUpdate(registration);
               }
             } else {
               // At this point, everything has been precached.
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
+              // tslint:disable-next-line:no-console
               console.log('Content is cached for offline use.');
 
               // Execute callback
-              if (config && config.onSuccess) {
+              if (config !== undefined && config.onSuccess !== undefined) {
                 config.onSuccess(registration);
               }
             }
@@ -102,6 +112,7 @@ function registerValidSW(swUrl: string, config?: Config) {
       };
     })
     .catch(error => {
+      // tslint:disable-next-line:no-console
       console.error('Error during service worker registration:', error);
     });
 }
@@ -113,21 +124,34 @@ function checkValidServiceWorker(swUrl: string, config?: Config) {
       // Ensure service worker exists, and that we really are getting a JS file.
       const contentType = response.headers.get('content-type');
       if (
+        // tslint:disable-next-line:no-magic-numbers
         response.status === 404 ||
-        (contentType != null && contentType.indexOf('javascript') === -1)
+        (contentType !== null && contentType.indexOf('javascript') === -1)
       ) {
         // No service worker found. Probably a different app. Reload the page.
-        navigator.serviceWorker.ready.then(registration => {
-          registration.unregister().then(() => {
-            window.location.reload();
+        navigator.serviceWorker.ready
+          .then(registration => {
+            registration
+              .unregister()
+              .then(() => {
+                window.location.reload();
+              })
+              .catch(error => {
+                // tslint:disable-next-line:no-console
+                console.error(error);
+              });
+          })
+          .catch(e => {
+            // tslint:disable-next-line:no-console
+            console.log(e);
           });
-        });
       } else {
         // Service worker found. Proceed as normal.
         registerValidSW(swUrl, config);
       }
     })
     .catch(() => {
+      // tslint:disable-next-line:no-console
       console.log(
         'No internet connection found. App is running in offline mode.'
       );
@@ -136,8 +160,23 @@ function checkValidServiceWorker(swUrl: string, config?: Config) {
 
 export function unregister() {
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready.then(registration => {
-      registration.unregister();
-    });
+    navigator.serviceWorker.ready
+      .then(registration => {
+        registration
+          .unregister()
+          .then(value => {
+            // tslint:disable-next-line:no-console
+            console.log(value);
+          })
+          .catch(error => {
+            // tslint:disable-next-line:no-console
+            console.error(error);
+          });
+      })
+      .catch(error => {
+        // tslint:disable-next-line:no-console
+        console.error(error);
+      });
   }
+  // tslint:disable-next-line:max-file-line-count
 }

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/kube-js/kube-ts-react-client/precache-manifest.f2154dc6b9c640bc8f490cc37bb0fcc5.js"
+  "/kube-js/kube-ts-react-client/precache-manifest.88ae7553da2914fa19a972626822db6e.js"
 );
 
 workbox.clientsClaim();
