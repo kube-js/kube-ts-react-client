@@ -5,5 +5,5 @@
 ![jscpd](assets/jscpd-badge.svg)
 [![Known Vulnerabilities](https://snyk.io/test/github/kube-js/kube-ts-react-client/badge.svg?targetFile=package.json)](https://snyk.io/test/github/kube-js/kube-ts-react-client?targetFile=package.json)
 
-Dockerized single page application powered by react/typescript ready to be deployed on kubernetes 
+Dockerized single page application powered by react/typescript ready to be deployed on kubernetes cluster
 
