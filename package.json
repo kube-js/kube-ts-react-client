@@ -24,7 +24,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test && codecov",
-    "lint": "tslint --project tsconfig.json --config tslint.json './src/**/*.ts'",
+    "lint": "tslint --project tsconfig.json --config tslint.json './src/**/*.(ts|tsx)'",
     "duplication": "jscpd ./src",
     "test:watch": "jest --watch --coverage",
     "semantic-release": "semantic-release-public-circleci-app",
