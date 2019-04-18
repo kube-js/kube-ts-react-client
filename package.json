@@ -18,7 +18,7 @@
     "@types/react-dom": "16.8.4",
     "tslint": "5.16.0",
     "tslint-config-prettier": "1.18.0",
-    "typescript": "3.4.3"
+    "typescript": "3.4.4"
   },
   "scripts": {
     "start": "react-scripts start",
