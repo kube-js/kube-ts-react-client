@@ -10,7 +10,7 @@ RUN npm ci
 COPY . .
 RUN PUBLIC_URL=/ npm run build
 
-FROM nginx:1.15.12-alpine as app
+FROM nginx:1.16.0-alpine as app
 
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
