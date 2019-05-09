@@ -4,7 +4,7 @@
   "dependencies": {
     "@kube-js/semantic-release": "1.0.7",
     "@kube-js/tscommons": "1.0.5",
-    "codecov": "3.3.0",
+    "codecov": "3.4.0",
     "jscpd": "2.0.15",
     "jscpd-badge-reporter": "1.1.3",
     "react": "16.8.6",
