@@ -25,7 +25,7 @@ spec:
       {{- range .hosts }}
         - {{ . | quote }}
       {{- end }}
-      secretName: letsencrypt-prod
+      secretName: letsencrypt-prod-kube-ts-react-client
   {{- end }}
 {{- end }}
   rules:
