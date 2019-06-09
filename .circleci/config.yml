@@ -42,7 +42,7 @@ jobs:
           name: Build docker image
           command: |
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-            docker build --rm=false -t kubejs/kube-ts-react-client:$CIRCLE_SHA1 -t kubejs/kube-ts-react-client:latest .
+            docker build -f ./docker/Dockerfile --rm=false -t kubejs/kube-ts-react-client:$CIRCLE_SHA1 -t kubejs/kube-ts-react-client:latest .
             docker push kubejs/kube-ts-react-client:latest
             docker push kubejs/kube-ts-react-client:$CIRCLE_SHA1
       - run:
