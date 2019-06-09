@@ -1,0 +1,41 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullname := include "kube-ts-react-client.fullname" . -}}
+{{- $ingressPaths := .Values.ingress.paths -}}
+{{- $servicePort := .Values.service.port }}
+{{- $ingressPath := .Values.ingress.path }}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $fullname }}
+  labels:
+    app.kubernetes.io/name: {{ include "kube-ts-react-client.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ include "kube-ts-react-client.chart" . }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+{{- if .Values.ingress.tls }}
+  tls:
+  {{- range .Values.ingress.tls }}
+    - hosts:
+      {{- range .hosts }}
+        - {{ . | quote }}
+      {{- end }}
+      secretName: letsencrypt-prod
+  {{- end }}
+{{- end }}
+  rules:
+  {{- range .Values.ingress.hosts }}
+    - host: {{ . | quote }}
+      http:
+        paths:
+          - path: {{ $ingressPath }}
+            backend:
+              serviceName: {{ $fullname }}
+              servicePort: {{ $servicePort }}
+  {{- end }}
+{{- end }}

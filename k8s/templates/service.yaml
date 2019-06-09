@@ -1,0 +1,26 @@
+{{- $fullName := include "kube-ts-react-client.fullname" . -}}
+{{- $name := include "kube-ts-react-client.name" . -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kube-ts-react-client.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ $name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ include "kube-ts-react-client.chart" . }}
+spec:
+  ports:
+    - name: client-port
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+  selector:
+    app.kubernetes.io/name: {{ $name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+
+
+
+
+
+
+

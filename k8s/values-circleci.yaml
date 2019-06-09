@@ -1,0 +1,6 @@
+secret: {}
+  # SECRET_VAR: $SECRET_VAR
+
+configMap: {}
+  # NORMAL_VAR: $NORMAL_VAR
+  
