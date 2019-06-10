@@ -4,8 +4,8 @@
   "dependencies": {
     "@kube-js/semantic-release": "1.0.7",
     "@kube-js/tscommons": "1.0.5",
-    "@material-ui/core": "^4.1.0",
-    "@material-ui/icons": "^4.1.0",
+    "@material-ui/core": "4.1.0",
+    "@material-ui/icons": "4.1.0",
     "codecov": "3.5.0",
     "jscpd": "2.0.15",
     "jscpd-badge-reporter": "1.1.3",
