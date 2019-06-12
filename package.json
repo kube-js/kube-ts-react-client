@@ -22,7 +22,7 @@
     "@types/node": "11.13.14",
     "@types/react": "16.8.19",
     "@types/react-dom": "16.8.4",
-    "@types/react-redux": "7.0.9",
+    "@types/react-redux": "7.1.0",
     "redux-devtools": "3.5.0",
     "tslint": "5.17.0",
     "tslint-config-prettier": "1.18.0",
