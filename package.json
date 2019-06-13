@@ -30,7 +30,7 @@
     "redux-devtools": "3.5.0",
     "tslint": "5.17.0",
     "tslint-config-prettier": "1.18.0",
-    "typescript": "3.5.1"
+    "typescript": "3.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
