@@ -25,7 +25,7 @@
     "@types/react": "16.8.20",
     "@types/react-dom": "16.8.4",
     "@types/react-redux": "7.1.0",
-    "@types/react-router": "5.0.1",
+    "@types/react-router": "5.0.2",
     "@types/react-router-dom": "4.3.3",
     "redux-devtools": "3.5.0",
     "tslint": "5.17.0",
