@@ -13,7 +13,7 @@ RUN PUBLIC_URL=/ npm run build
 FROM nginx:1.17.0-alpine as app
 
 RUN rm -rf /usr/share/nginx/html/*
-COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY /usr/src/app/docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
 
 EXPOSE 80
