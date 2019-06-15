@@ -78,7 +78,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const AppBar = () => {
+const NavNar = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -230,5 +230,5 @@ const AppBar = () => {
   );
 };
 
-export default AppBar;
+export default NavNar;
 // tslint:disable-next-line:max-file-line-count
