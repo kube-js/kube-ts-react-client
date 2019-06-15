@@ -38,7 +38,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "CI=true react-scripts test --coverage",
+    "test": "CI=true react-scripts test --coverage && codecov",
     "lint": "tslint --project tsconfig.json --config tslint.json './src/**/*.(ts|tsx)'",
     "duplication": "jscpd ./src",
     "test:watch": "jest --watch --coverage",
