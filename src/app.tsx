@@ -1,16 +1,19 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router';
-import NavBar from './components/NavBar';
+import AppWrapper from './components/AppWrapper';
+import Register from './pages/auth/Register';
 
 const App = () => (
   <Fragment>
     <CssBaseline />
-    <NavBar />
-    <Switch>
-      <Route exact path="/" render={() => <div>Home page</div>} />
-      <Route render={() => <div>Not found</div>} />
-    </Switch>
+    <AppWrapper>
+      <Switch>
+        <Route exact path="/" render={() => <div>Home page</div>} />
+        <Route exact path="/register" component={Register} />
+        <Route render={() => <div>Not found</div>} />
+      </Switch>
+    </AppWrapper>
   </Fragment>
 );
 

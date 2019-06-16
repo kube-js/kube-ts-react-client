@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 import { createSelector } from 'reselect';
 import {
   SHOW_ALL,
