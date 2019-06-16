@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 import { ConnectedRouter } from 'connected-react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';

@@ -1,4 +1,5 @@
 // tslint:disable:no-magic-numbers
+/* istanbul ignore next */
 import AppBar from '@material-ui/core/AppBar';
 import Badge from '@material-ui/core/Badge';
 import CssBaseline from '@material-ui/core/CssBaseline';

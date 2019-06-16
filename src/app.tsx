@@ -2,7 +2,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router';
 import AppWrapper from './components/AppWrapper';
-import Register from './containers/Register';
+import Register from './pages/auth/Register';
 
 const App = () => (
   <Fragment>
