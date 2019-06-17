@@ -2,6 +2,7 @@
 /* istanbul ignore next */
 import AppBar from '@material-ui/core/AppBar';
 import Badge from '@material-ui/core/Badge';
+import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
@@ -33,6 +34,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import SearchIcon from '@material-ui/icons/Search';
 import clsx from 'clsx';
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -52,6 +54,9 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
       width: `calc(100% - ${drawerWidth}px)`,
     },
+    button: {
+      margin: theme.spacing(1),
+    },
     content: {
       flexGrow: 1,
       marginLeft: -drawerWidth,
@@ -60,6 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
         duration: theme.transitions.duration.leavingScreen,
         easing: theme.transitions.easing.sharp,
       }),
+      width: '100%',
     },
     contentShift: {
       marginLeft: 0,
@@ -98,6 +104,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     inputRoot: {
       color: 'inherit',
+    },
+    link: {
+      margin: theme.spacing(1, 1.5),
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -263,7 +272,7 @@ const AppWrapper = ({ children }: Options) => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              kube-ts-react-client
+              PICO
             </Typography>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
@@ -280,7 +289,26 @@ const AppWrapper = ({ children }: Options) => {
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <IconButton aria-label="Show 4 new mails" color="inherit">
+              <NavLink to="/login">
+                <Button
+                  color="secondary"
+                  variant="outlined"
+                  className={classes.link}
+                >
+                  Login
+                </Button>
+              </NavLink>
+
+              <NavLink to="/register">
+                <Button
+                  color="secondary"
+                  variant="outlined"
+                  className={classes.link}
+                >
+                  Register
+                </Button>
+              </NavLink>
+              {/* <IconButton aria-label="Show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="secondary">
                   <MailIcon />
                 </Badge>
@@ -302,7 +330,7 @@ const AppWrapper = ({ children }: Options) => {
                 color="inherit"
               >
                 <AccountCircle />
-              </IconButton>
+              </IconButton> */}
             </div>
             <div className={classes.sectionMobile}>
               <IconButton
