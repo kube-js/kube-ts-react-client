@@ -308,29 +308,6 @@ const AppWrapper = ({ children }: Options) => {
                   Register
                 </Button>
               </NavLink>
-              {/* <IconButton aria-label="Show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
-              <IconButton
-                aria-label="Show 17 new notifications"
-                color="inherit"
-              >
-                <Badge badgeContent={17} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-              <IconButton
-                edge="end"
-                aria-label="Account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton> */}
             </div>
             <div className={classes.sectionMobile}>
               <IconButton
