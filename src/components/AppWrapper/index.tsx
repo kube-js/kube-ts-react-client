@@ -34,7 +34,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import SearchIcon from '@material-ui/icons/Search';
 import clsx from 'clsx';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -107,6 +107,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     link: {
       margin: theme.spacing(1, 1.5),
+    },
+    logoLink: {
+      color: 'white',
+      fontWeight: 'bold',
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -271,15 +275,21 @@ const AppWrapper = ({ children }: Options) => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap>
-              PICO
-            </Typography>
+            <Button
+              component={Link}
+              to="/"
+              color="default"
+              variant="text"
+              className={`${classes.link} ${classes.logoLink}`}
+            >
+              kudemy
+            </Button>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Search…"
+                placeholder="Search online courses..."
                 classes={{
                   input: classes.inputInput,
                   root: classes.inputRoot,
@@ -289,25 +299,25 @@ const AppWrapper = ({ children }: Options) => {
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <NavLink to="/login">
-                <Button
-                  color="secondary"
-                  variant="outlined"
-                  className={classes.link}
-                >
-                  Login
-                </Button>
-              </NavLink>
+              <Button
+                component={Link}
+                to="/login"
+                color="secondary"
+                variant="contained"
+                className={classes.link}
+              >
+                Login
+              </Button>
 
-              <NavLink to="/register">
-                <Button
-                  color="secondary"
-                  variant="outlined"
-                  className={classes.link}
-                >
-                  Register
-                </Button>
-              </NavLink>
+              <Button
+                component={Link}
+                to="/register"
+                color="secondary"
+                variant="contained"
+                className={classes.link}
+              >
+                Register
+              </Button>
             </div>
             <div className={classes.sectionMobile}>
               <IconButton
