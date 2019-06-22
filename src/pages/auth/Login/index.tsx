@@ -14,31 +14,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React from 'react';
-
-const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.white,
-    },
-  },
-  avatar: {
-    backgroundColor: theme.palette.secondary.main,
-    margin: theme.spacing(1),
-  },
-  form: {
-    marginTop: theme.spacing(1),
-    width: '100%', // Fix IE 11 issue.
-  },
-  paper: {
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: theme.spacing(8),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+import useStyles from './styles';
 
 const Login = () => {
   const classes = useStyles();

@@ -12,150 +12,21 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import {
-  createStyles,
-  fade,
-  makeStyles,
-  Theme,
-  useTheme,
-} from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import SearchIcon from '@material-ui/icons/Search';
 import clsx from 'clsx';
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    appBar: {
-      transition: theme.transitions.create(['margin', 'width'], {
-        duration: theme.transitions.duration.leavingScreen,
-        easing: theme.transitions.easing.sharp,
-      }),
-    },
-    appBarShift: {
-      marginLeft: drawerWidth,
-      transition: theme.transitions.create(['margin', 'width'], {
-        duration: theme.transitions.duration.enteringScreen,
-        easing: theme.transitions.easing.easeOut,
-      }),
-      width: `calc(100% - ${drawerWidth}px)`,
-    },
-    button: {
-      margin: theme.spacing(1),
-    },
-    content: {
-      flexGrow: 1,
-      marginLeft: -drawerWidth,
-      padding: theme.spacing(3),
-      transition: theme.transitions.create('margin', {
-        duration: theme.transitions.duration.leavingScreen,
-        easing: theme.transitions.easing.sharp,
-      }),
-      width: '100%',
-    },
-    contentShift: {
-      marginLeft: 0,
-      transition: theme.transitions.create('margin', {
-        duration: theme.transitions.duration.enteringScreen,
-        easing: theme.transitions.easing.easeOut,
-      }),
-    },
-    drawer: {
-      flexShrink: 0,
-      width: drawerWidth,
-    },
-    drawerHeader: {
-      alignItems: 'center',
-      display: 'flex',
-      padding: '0 8px',
-      ...theme.mixins.toolbar,
-      justifyContent: 'flex-end',
-    },
-    drawerPaper: {
-      width: drawerWidth,
-    },
-    grow: {
-      flexGrow: 1,
-    },
-    hide: {
-      display: 'none',
-    },
-    inputInput: {
-      padding: theme.spacing(1, 1, 1, 7),
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('md')]: {
-        width: 200,
-      },
-    },
-    inputRoot: {
-      color: 'inherit',
-    },
-    link: {
-      margin: theme.spacing(1, 1.5),
-    },
-    logoLink: {
-      color: 'white',
-      fontWeight: 'bold',
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    root: {
-      display: 'flex',
-    },
-    search: {
-      '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
-      },
-      backgroundColor: fade(theme.palette.common.white, 0.15),
-      borderRadius: theme.shape.borderRadius,
-      marginLeft: 0,
-      marginRight: theme.spacing(2),
-      position: 'relative',
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
-        width: 'auto',
-      },
-    },
-    searchIcon: {
-      alignItems: 'center',
-      display: 'flex',
-      height: '100%',
-      justifyContent: 'center',
-      pointerEvents: 'none',
-      position: 'absolute',
-      width: theme.spacing(7),
-    },
-    sectionDesktop: {
-      display: 'none',
-      [theme.breakpoints.up('md')]: {
-        display: 'flex',
-      },
-    },
-    sectionMobile: {
-      display: 'flex',
-      [theme.breakpoints.up('md')]: {
-        display: 'none',
-      },
-    },
-  })
-);
+import NavBarMenu from '../NavBarMenu';
+import NavBarMobileMenu from '../NavBarMobileMenu';
+import useStyles from './styles';
 
 export interface Options {
   readonly children: any;
@@ -199,61 +70,6 @@ const AppWrapper = ({ children }: Options) => {
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const menuId = 'primary-search-account-menu';
-
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton aria-label="Show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="Show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="Account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
-
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
 
   return (
     <div className={classes.root}>
@@ -332,8 +148,19 @@ const AppWrapper = ({ children }: Options) => {
             </div>
           </Toolbar>
         </AppBar>
-        {renderMobileMenu}
-        {renderMenu}
+        <NavBarMobileMenu
+          anchorEl={mobileMoreAnchorEl}
+          id={mobileMenuId}
+          open={isMobileMenuOpen}
+          onClose={handleMobileMenuClose}
+          onOpen={handleProfileMenuOpen}
+        />
+        <NavBarMenu
+          anchorEl={anchorEl}
+          id={menuId}
+          open={isMenuOpen}
+          onClose={handleMenuClose}
+        />
       </div>
       <Drawer
         className={classes.drawer}
