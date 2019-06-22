@@ -6,42 +6,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
-
-const useStyles = makeStyles(theme => ({
-  card: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  cardGrid: {
-    paddingBottom: theme.spacing(8),
-    paddingTop: theme.spacing(8),
-  },
-  cardMedia: {
-    paddingTop: '56.25%', // 16:9
-  },
-  heroButtons: {
-    marginTop: theme.spacing(4),
-  },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
-  },
-  icon: {
-    marginRight: theme.spacing(2),
-  },
-
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
-  },
-}));
+import useStyles from './styles';
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -80,7 +47,7 @@ const Home = () => {
               </Grid>
               <Grid item>
                 <Button variant="outlined" color="primary">
-                  Join for free 
+                  Join for free
                 </Button>
               </Grid>
             </Grid>
