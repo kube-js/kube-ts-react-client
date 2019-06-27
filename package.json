@@ -30,7 +30,7 @@
     "@types/node": "11.13.15",
     "@types/react": "16.8.22",
     "@types/react-dom": "16.8.4",
-    "@types/react-redux": "7.1.0",
+    "@types/react-redux": "7.1.1",
     "@types/react-router": "5.0.2",
     "@types/react-router-dom": "4.3.4",
     "redux-devtools": "3.5.0",
