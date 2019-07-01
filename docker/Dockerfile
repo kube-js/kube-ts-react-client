@@ -10,7 +10,7 @@ RUN npm ci
 COPY . .
 RUN PUBLIC_URL=/ npm run build
 
-FROM nginx:1.17.0-alpine as app
+FROM nginx:1.17.1-alpine as app
 
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /usr/src/app/docker/nginx.conf /etc/nginx/conf.d/default.conf
