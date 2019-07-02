@@ -9,7 +9,7 @@
     "@material-ui/styles": "4.1.2",
     "clsx": "1.0.4",
     "codecov": "3.5.0",
-    "connected-react-router": "6.4.0",
+    "connected-react-router": "6.5.0",
     "history": "4.9.0",
     "jscpd": "2.0.15",
     "jscpd-badge-reporter": "1.1.3",
