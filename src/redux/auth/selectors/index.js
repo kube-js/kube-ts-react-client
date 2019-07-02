@@ -1,10 +1,9 @@
 /* istanbul ignore next */
+export const SHOW_ALL = 'show_all';
+export const SHOW_COMPLETED = 'show_completed';
+export const SHOW_ACTIVE = 'show_active';
+
 import { createSelector } from 'reselect';
-import {
-  SHOW_ALL,
-  SHOW_COMPLETED,
-  SHOW_ACTIVE,
-} from '../constants/TodoFilters';
 
 const getVisibilityFilter = state => state.visibilityFilter;
 const getTodos = state => state.todos;
