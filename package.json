@@ -23,7 +23,7 @@
     "react-router-dom": "5.0.1",
     "react-scripts": "2.1.8",
     "redux": "4.0.1",
-    "redux-saga": "1.0.4",
+    "redux-saga": "1.0.5",
     "reselect": "4.0.0",
     "set-value": "3.0.1"
   },
