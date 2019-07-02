@@ -5,10 +5,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './app';
-import configureStore, { history } from './configureStore';
+import configureStore, { history } from './redux/configureStore';
 import defaultTheme from './themes/default';
 
-const store = configureStore({});
+const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
