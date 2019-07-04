@@ -1,45 +1,24 @@
-import * as actions from '.'
-import * as types from '../actions'
+import * as actions from '.';
+import { TEST_TOKEN, TEST_USER } from '../../../utils/tests/testData';
+import { LOGIN_FAILED, LOGIN_SUCCEDED } from '../actions';
 
-describe('todo actions', () => {
-  it('addTodo should create ADD_TODO action', () => {
-    expect(actions.addTodo('Use Redux')).toEqual({
-      text: 'Use Redux',
-      type: types.ADD_TODO,
-    })
-  })
+describe('auth actions', () => {
+  it('loginSucceded creates LOGIN_SUCCEDED', () => {
+    const payload = { user: TEST_USER, token: TEST_TOKEN };
 
-  it('deleteTodo should create DELETE_TODO action', () => {
-    expect(actions.deleteTodo(1)).toEqual({
-      id: 1,
-      type: types.DELETE_TODO,
-    })
-  })
+    expect(actions.loginSucceded(payload)).toEqual({
+      payload,
+      type: LOGIN_SUCCEDED,
+    });
+  });
 
-  it('editTodo should create EDIT_TODO action', () => {
-    expect(actions.editTodo(1, 'Use Redux everywhere')).toEqual({
-      id: 1,
-      text: 'Use Redux everywhere',
-      type: types.EDIT_TODO,
-    })
-  })
+  it('loginFailed creates LOGIN_FAILED', () => {
+    const error = new Error('test');
+    const payload = { error };
 
-  it('completeTodo should create COMPLETE_TODO action', () => {
-    expect(actions.completeTodo(1)).toEqual({
-      id: 1,
-      type: types.COMPLETE_TODO,
-    })
-  })
-
-  it('completeAll should create COMPLETE_ALL action', () => {
-    expect(actions.completeAllTodos()).toEqual({
-      type: types.COMPLETE_ALL_TODOS
-    })
-  })
-
-  it('clearCompleted should create CLEAR_COMPLETED action', () => {
-    expect(actions.clearCompleted()).toEqual({
-      type: types.CLEAR_COMPLETED
-    })
-  })
-})
+    expect(actions.loginFailed(error)).toEqual({
+      payload,
+      type: LOGIN_FAILED,
+    });
+  });
+});
