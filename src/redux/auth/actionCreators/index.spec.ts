@@ -1,8 +1,23 @@
 import * as actions from '.';
-import { TEST_TOKEN, TEST_USER } from '../../../utils/tests/testData';
-import { LOGIN_FAILED, LOGIN_SUCCEDED } from '../actions';
+import {
+  TEST_EMAIL,
+  TEST_PASSWORD,
+  TEST_TOKEN,
+  TEST_USER,
+} from '../../../utils/tests/testData';
+import { LOGIN_FAILED, LOGIN_REQUESTED, LOGIN_SUCCEDED } from '../actions';
 
 describe('auth actions', () => {
+  it('loginRequested creates LOGIN_REQUESTED', () => {
+    expect(actions.loginRequested(TEST_EMAIL, TEST_PASSWORD)).toEqual({
+      payload: {
+        email: TEST_EMAIL,
+        password: TEST_PASSWORD
+      },
+      type: LOGIN_REQUESTED,
+    });
+  });
+
   it('loginSucceded creates LOGIN_SUCCEDED', () => {
     const payload = { user: TEST_USER, token: TEST_TOKEN };
 

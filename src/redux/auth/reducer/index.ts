@@ -5,20 +5,20 @@ export interface ReduxAction {
   readonly payload?: any;
 }
 
-export interface InitialState {
+export interface AuthState {
   readonly user?: any;
   readonly token?: string | null;
   readonly error?: any;
 }
 
-const initialState = {
+const initialState: AuthState = {
   error: null,
   token: null,
   user: null,
 };
 
 const authReducer = (
-  state: InitialState = initialState,
+  state: AuthState = initialState,
   action: ReduxAction = {}
 ) => {
   switch (action.type) {

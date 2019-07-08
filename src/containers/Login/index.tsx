@@ -1,17 +1,20 @@
-import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
+import LoginForm from '../../components/LoginForm';
+import { loginRequested } from '../../redux/auth/actionCreators/index';
+import { State } from '../../redux/rootReducer';
 
-export const LoginContainer = ({ children }: { children: any }) => (
-  <Fragment>{children}</Fragment>
-);
-
-const mapStateToProps = (state: any /*, ownProps*/) => ({
-  auth: state.auth,
+const mapStateToProps = ({ auth }: State) => ({
+  error: auth.error,
+  token: auth.token,
+  user: auth.user,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  login: bindActionCreators(loginRequested, dispatch),
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginContainer);
+)(LoginForm);

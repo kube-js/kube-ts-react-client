@@ -3,27 +3,33 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import { routerMiddleware } from 'connected-react-router';
 import createRootReducer from './rootReducer';
 import createSagaMiddleware from 'redux-saga';
-// import loginSaga from './sagas/login';
+import { createLogger } from 'redux-logger';
+import authSaga from './auth/saga/index';
 
 export const history = createBrowserHistory();
 
-const sagaMiddleware = createSagaMiddleware();
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+const sagaMiddleware = createSagaMiddleware();
+
 export default function configureStore(preloadedState) {
+  const middlewares = [
+    routerMiddleware(history), // for dispatching history actions
+    sagaMiddleware,
+  ];
+
+  if (process.env.NODE_ENV !== 'production') {
+    middlewares.push(createLogger());
+  }
+
   const store = createStore(
     createRootReducer(history), // root reducer with router state
     preloadedState,
-    composeEnhancers(
-      applyMiddleware(
-        routerMiddleware(history), // for dispatching history actions
-        sagaMiddleware
-      )
-    )
+    composeEnhancers(applyMiddleware(...middlewares))
   );
 
-  // sagaMiddleware.use(loginSaga);
+  sagaMiddleware.run(authSaga);
 
   return store;
 }
