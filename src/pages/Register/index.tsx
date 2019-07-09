@@ -6,11 +6,11 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Container from '@material-ui/core/Container';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import useStyles from './styles';
 
 const Register = () => {
@@ -23,7 +23,7 @@ const Register = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Register
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
@@ -87,13 +87,11 @@ const Register = () => {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            Register
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
+              <Link to="/login">Already have an account? Log in</Link>
             </Grid>
           </Grid>
         </form>

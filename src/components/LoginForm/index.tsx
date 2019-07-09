@@ -2,16 +2,14 @@
 /* istanbul ignore next */
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React, { SyntheticEvent, useState } from 'react';
+import { Link } from 'react-router-dom';
 import useStyles from './styles';
 
 const LoginForm = (props: any) => {
@@ -32,9 +30,11 @@ const LoginForm = (props: any) => {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
+
         <Typography component="h1" variant="h5">
-          Sign in
+          Login
         </Typography>
+
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
@@ -49,6 +49,7 @@ const LoginForm = (props: any) => {
             value={email}
             onChange={({ target: { value } }) => setEmail(value)}
           />
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -62,10 +63,7 @@ const LoginForm = (props: any) => {
             value={password}
             onChange={({ target: { value } }) => setPassword(value)}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
+
           <Button
             type="submit"
             fullWidth
@@ -73,18 +71,15 @@ const LoginForm = (props: any) => {
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Log in
           </Button>
+
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+              <Link to="/forgot-password">Forgot password?</Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              <Link to="/register">Don't have an account? Register</Link>
             </Grid>
           </Grid>
         </form>
