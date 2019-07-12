@@ -1,4 +1,3 @@
-/* istanbul ignore next */
 // tslint:disable:no-magic-numbers
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -89,5 +88,4 @@ const Home = () => {
   );
 };
 
-// tslint:disable-next-line:max-file-line-count
 export default Home;
