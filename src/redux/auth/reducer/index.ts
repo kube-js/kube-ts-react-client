@@ -1,4 +1,4 @@
-import { LOGIN_FAILED, LOGIN_SUCCEDED } from '../actions';
+import { LOGIN_FAILED, LOGIN_REQUESTED, LOGIN_SUCCEDED } from '../actions';
 
 export interface ReduxAction {
   readonly type?: string;
@@ -9,10 +9,12 @@ export interface AuthState {
   readonly user?: any;
   readonly token?: string | null;
   readonly error?: any;
+  readonly loading?: boolean;
 }
 
 const initialState: AuthState = {
   error: null,
+  loading: false,
   token: null,
   user: null,
 };
@@ -22,14 +24,24 @@ const authReducer = (
   action: ReduxAction = {}
 ) => {
   switch (action.type) {
+    case LOGIN_REQUESTED: {
+      return { ...state, error: null, loading: true };
+    }
+
     case LOGIN_SUCCEDED: {
       const { user, token } = action.payload;
 
-      return { ...state, user, token, error: null };
+      return { ...state, user, token, error: null, loading: false };
     }
 
     case LOGIN_FAILED: {
-      return { ...state, user: null, token: null, error: action.payload.error };
+      return {
+        ...state,
+        error: action.payload.error,
+        loading: false,
+        token: null,
+        user: null,
+      };
     }
 
     default:

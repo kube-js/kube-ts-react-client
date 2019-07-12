@@ -1,7 +1,7 @@
 import React from 'react';
+import { RouterProps } from 'react-router';
 import LoginContainer from '../../containers/Login';
 
-const Login = () => <LoginContainer />;
+const Login = (props: RouterProps) => <LoginContainer {...props} />;
 
-// tslint:disable-next-line:max-file-line-count
 export default Login;
