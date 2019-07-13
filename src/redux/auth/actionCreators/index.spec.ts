@@ -5,14 +5,19 @@ import {
   TEST_TOKEN,
   TEST_USER,
 } from '../../../utils/tests/testData';
-import { LOGIN_FAILED, LOGIN_REQUESTED, LOGIN_SUCCEDED } from '../actions';
+import {
+  LOGIN_FAILED,
+  LOGIN_REQUESTED,
+  LOGIN_SUCCEDED,
+  LOGOUT_REQUESTED,
+} from '../actions';
 
 describe('auth actions', () => {
   it('loginRequested creates LOGIN_REQUESTED', () => {
     expect(actions.loginRequested(TEST_EMAIL, TEST_PASSWORD)).toEqual({
       payload: {
         email: TEST_EMAIL,
-        password: TEST_PASSWORD
+        password: TEST_PASSWORD,
       },
       type: LOGIN_REQUESTED,
     });
@@ -34,6 +39,12 @@ describe('auth actions', () => {
     expect(actions.loginFailed(error)).toEqual({
       payload,
       type: LOGIN_FAILED,
+    });
+  });
+
+  it('logoutRequested creates LOGOUT_REQUESTED', () => {
+    expect(actions.logoutRequested()).toEqual({
+      type: LOGOUT_REQUESTED,
     });
   });
 });

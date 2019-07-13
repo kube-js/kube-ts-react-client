@@ -1,5 +1,5 @@
 import { TEST_TOKEN, TEST_USER } from '../../../utils/tests/testData';
-import { LOGIN_FAILED, LOGIN_REQUESTED, LOGIN_SUCCEDED } from '../actions';
+import { LOGIN_FAILED, LOGIN_REQUESTED, LOGIN_SUCCEDED, LOGOUT_REQUESTED } from '../actions';
 import authReducer from './index';
 
 describe('@authReducer', () => {
@@ -50,5 +50,17 @@ describe('@authReducer', () => {
     );
 
     expect(result).toEqual({ user: null, token: null, loading: false, error });
+  });
+
+  it('returns state for LOGOUT_REQUESTED', () => {
+
+    const action = { type: LOGOUT_REQUESTED };
+
+    const result = authReducer(
+      { error: null, token: TEST_TOKEN, user: TEST_USER, loading: false},
+      action
+    );
+
+    expect(result).toEqual({ user: null, token: null, loading: false, error: null });
   });
 });

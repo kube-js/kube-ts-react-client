@@ -1,4 +1,4 @@
-import { LOGIN_FAILED, LOGIN_REQUESTED, LOGIN_SUCCEDED } from '../actions';
+import { LOGIN_FAILED, LOGIN_REQUESTED, LOGIN_SUCCEDED, LOGOUT_REQUESTED } from '../actions';
 
 export interface ReduxAction {
   readonly type?: string;
@@ -38,6 +38,16 @@ const authReducer = (
       return {
         ...state,
         error: action.payload.error,
+        loading: false,
+        token: null,
+        user: null,
+      };
+    }
+
+    case LOGOUT_REQUESTED: {
+      return {
+        ...state,
+        error: null,
         loading: false,
         token: null,
         user: null,
