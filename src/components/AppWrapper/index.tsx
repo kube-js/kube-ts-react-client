@@ -22,16 +22,22 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import SearchIcon from '@material-ui/icons/Search';
 import clsx from 'clsx';
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { bindActionCreators, Dispatch } from 'redux';
+import { logoutRequested } from '../../redux/auth/actionCreators';
+import OnlyAuthenticated from '../Auth/OnlyAuthenticated';
+import OnlyUnauthenticated from '../Auth/OnlyUnauthenticated';
 import NavBarMenu from '../NavBarMenu';
 import NavBarMobileMenu from '../NavBarMobileMenu';
 import useStyles from './styles';
 
 export interface Options {
   readonly children: any;
+  readonly logout: () => ReturnType<typeof logoutRequested>;
 }
 
-const AppWrapper = ({ children }: Options) => {
+const AppWrapper = ({ children, logout }: Options) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -81,15 +87,17 @@ const AppWrapper = ({ children }: Options) => {
           })}
         >
           <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="Open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              className={clsx(classes.menuButton, open && classes.hide)}
-            >
-              <MenuIcon />
-            </IconButton>
+            <OnlyAuthenticated>
+              <IconButton
+                color="inherit"
+                aria-label="Open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+                className={clsx(classes.menuButton, open && classes.hide)}
+              >
+                <MenuIcon />
+              </IconButton>
+            </OnlyAuthenticated>
             <Button
               component={Link}
               to="/"
@@ -114,25 +122,37 @@ const AppWrapper = ({ children }: Options) => {
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <Button
-                component={Link}
-                to="/login"
-                color="secondary"
-                variant="contained"
-                className={classes.link}
-              >
-                Login
-              </Button>
+              <OnlyUnauthenticated>
+                <Button
+                  component={Link}
+                  to="/login"
+                  color="secondary"
+                  variant="contained"
+                  className={classes.link}
+                >
+                  Login
+                </Button>
 
-              <Button
-                component={Link}
-                to="/register"
-                color="secondary"
-                variant="contained"
-                className={classes.link}
-              >
-                Register
-              </Button>
+                <Button
+                  component={Link}
+                  to="/register"
+                  color="secondary"
+                  variant="contained"
+                  className={classes.link}
+                >
+                  Register
+                </Button>
+              </OnlyUnauthenticated>
+              <OnlyAuthenticated>
+                <Button
+                  onClick={logout}
+                  color="secondary"
+                  variant="contained"
+                  className={classes.link}
+                >
+                  Logout
+                </Button>
+              </OnlyAuthenticated>
             </div>
             <div className={classes.sectionMobile}>
               <IconButton
@@ -214,5 +234,12 @@ const AppWrapper = ({ children }: Options) => {
   );
 };
 
-// tslint:disable-next-line:max-file-line-count
-export default AppWrapper;
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  logout: bindActionCreators(logoutRequested, dispatch),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+  // tslint:disable-next-line:max-file-line-count
+)(AppWrapper);
