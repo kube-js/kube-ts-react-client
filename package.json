@@ -30,6 +30,8 @@
     "set-value": "3.0.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "4.0.0",
+    "@testing-library/react": "8.0.5",
     "@types/jest": "24.0.15",
     "@types/node": "11.13.17",
     "@types/ramda": "0.26.15",
@@ -48,10 +50,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "CI=true react-scripts test --coverage",
+    "test": "CI=true react-scripts test --coverage --env=jsdom",
     "lint": "tslint --project tsconfig.json --config tslint.json './src/**/*.(ts|tsx)'",
     "duplication": "jscpd ./src",
-    "test:watch": "jest --watch --coverage",
+    "test:watch": "react-scripts test --watch --coverage --env=jsdom",
     "semantic-release": "semantic-release-public-circleci-app",
     "eject": "react-scripts eject"
   },
