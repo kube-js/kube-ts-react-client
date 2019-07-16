@@ -13,23 +13,21 @@ export interface AuthSwitchProps {
   readonly onlyAuthenticated: boolean;
 }
 
-export const Switch = ({ onlyAuthenticated }: AuthSwitchProps) => ({
+export const Switch = ({ onlyAuthenticated }: AuthSwitchProps): any => ({
   isAuthenticated,
   children,
   ...props
 }: OnlyAuthenticatedProps) => {
+  const element = React.isValidElement(children)
+    ? React.Children.map(children, (child: any) =>
+        React.cloneElement(child, props)
+      )
+    : children;
+
   if (onlyAuthenticated) {
-    return isAuthenticated
-      ? React.Children.map(children, (child: any) =>
-          React.cloneElement(child, props)
-        )
-      : null;
+    return isAuthenticated ? element : null;
   } else {
-    return isAuthenticated
-      ? null
-      : React.Children.map(children, (child: any) =>
-          React.cloneElement(child, props)
-        );
+    return isAuthenticated ? null : element;
   }
 };
 
@@ -38,4 +36,7 @@ const mapStateToProps = ({ auth }: State) => ({
 });
 
 export default ({ onlyAuthenticated }: AuthSwitchProps) =>
-  connect(mapStateToProps, {})(Switch({ onlyAuthenticated }) as any);
+  connect(
+    mapStateToProps,
+    {}
+  )(Switch({ onlyAuthenticated }) as any);
