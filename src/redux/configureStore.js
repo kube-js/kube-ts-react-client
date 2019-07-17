@@ -8,14 +8,13 @@ import authSaga from './auth/saga/index';
 
 export const history = createBrowserHistory();
 
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const sagaMiddleware = createSagaMiddleware();
 
 export default function configureStore(preloadedState) {
   const middlewares = [
-    routerMiddleware(history), // for dispatching history actions
+    routerMiddleware(history), 
     sagaMiddleware,
   ];
 
@@ -24,7 +23,7 @@ export default function configureStore(preloadedState) {
   }
 
   const store = createStore(
-    createRootReducer(history), // root reducer with router state
+    createRootReducer(history),
     preloadedState,
     composeEnhancers(applyMiddleware(...middlewares))
   );

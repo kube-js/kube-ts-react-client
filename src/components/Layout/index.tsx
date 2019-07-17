@@ -22,22 +22,19 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import SearchIcon from '@material-ui/icons/Search';
 import clsx from 'clsx';
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { bindActionCreators, Dispatch } from 'redux';
-import { logoutRequested } from '../../redux/auth/actionCreators';
 import OnlyAuthenticated from '../Auth/OnlyAuthenticated';
 import OnlyUnauthenticated from '../Auth/OnlyUnauthenticated';
+import LogoutButton from '../LogoutButton';
 import NavBarMenu from '../NavBarMenu';
 import NavBarMobileMenu from '../NavBarMobileMenu';
 import useStyles from './styles';
 
 export interface Options {
   readonly children: any;
-  readonly logout: () => ReturnType<typeof logoutRequested>;
 }
 
-const AppWrapper = ({ children, logout }: Options) => {
+const Layout = ({ children }: Options) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -144,14 +141,7 @@ const AppWrapper = ({ children, logout }: Options) => {
                 </Button>
               </OnlyUnauthenticated>
               <OnlyAuthenticated>
-                <Button
-                  onClick={logout}
-                  color="secondary"
-                  variant="contained"
-                  className={classes.link}
-                >
-                  Logout
-                </Button>
+                <LogoutButton />
               </OnlyAuthenticated>
             </div>
             <div className={classes.sectionMobile}>
@@ -234,12 +224,5 @@ const AppWrapper = ({ children, logout }: Options) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  logout: bindActionCreators(logoutRequested, dispatch),
-});
-
-export default connect(
-  null,
-  mapDispatchToProps
-  // tslint:disable-next-line:max-file-line-count
-)(AppWrapper);
+// tslint:disable-next-line:max-file-line-count
+export default Layout;

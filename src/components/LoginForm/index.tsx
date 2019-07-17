@@ -9,9 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React, { SyntheticEvent, useState } from 'react';
-import { Redirect, RouterProps } from 'react-router';
+import { RouterProps } from 'react-router';
 import { Link } from 'react-router-dom';
-import { DASHBOARD } from '../../constants/routes';
 import { loginRequested } from '../../redux/auth/actionCreators';
 import { AuthState } from '../../redux/auth/reducer';
 import useStyles from './styles';
@@ -29,16 +28,12 @@ const LoginForm = (props: LoginFormProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { loading, login, user } = props;
+  const { loginLoading, login, user } = props;
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     login(email, password);
   };
-
-  if (user) {
-    return <Redirect push to={DASHBOARD} />;
-  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -82,7 +77,7 @@ const LoginForm = (props: LoginFormProps) => {
           />
 
           <Button
-            disabled={loading}
+            disabled={loginLoading}
             type="submit"
             fullWidth
             variant="contained"
