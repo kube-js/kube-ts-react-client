@@ -6,25 +6,22 @@ import { render } from '@testing-library/react';
 // tslint:disable-next-line:no-import-side-effect
 import '@testing-library/react/cleanup-after-each';
 import React from 'react';
-import { Switch } from './index';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { AuthenticatedRoute, AuthenticatedRouteProps } from './index';
 
-const Children = () => <div>test</div>;
+const TestComponent = () => <div>test</div>;
 
 const renderComponent = ({
-  onlyAuthenticated = true,
-  children = Children,
+  component = TestComponent,
   ...props
-}: any) => {
-  const Component = Switch({ onlyAuthenticated });
-
-  return render(
-    <Component {...props}>
-      <Children />
-    </Component>
+}: AuthenticatedRouteProps) =>
+  render(
+    <Router>
+      <AuthenticatedRoute {...props} component={component} />
+    </Router>
   );
-};
 
-describe('OnlyAuthenticated', () => {
+describe('AuthenticatedRoute', () => {
   it('renders when authenticated', () => {
     const { queryByText } = renderComponent({
       isAuthenticated: true,
@@ -36,26 +33,6 @@ describe('OnlyAuthenticated', () => {
   it('does not render when unauthenticated', () => {
     const { queryByText } = renderComponent({
       isAuthenticated: false,
-    });
-
-    expect(queryByText('test')).not.toBeInTheDocument();
-  });
-});
-
-describe('OnlyUnauthenticated', () => {
-  it('renders when unauthenticated', () => {
-    const { queryByText } = renderComponent({
-      isAuthenticated: false,
-      onlyAuthenticated: false,
-    });
-
-    expect(queryByText('test')).toBeInTheDocument();
-  });
-
-  it('does not render when authenticated', () => {
-    const { queryByText } = renderComponent({
-      isAuthenticated: true,
-      onlyAuthenticated: false,
     });
 
     expect(queryByText('test')).not.toBeInTheDocument();

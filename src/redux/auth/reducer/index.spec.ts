@@ -10,7 +10,7 @@ describe('@authReducer', () => {
 
     expect(result).toEqual({
       error: null,
-      loading: false,
+      loginLoading: false,
       token: null,
       user: null,
     });
@@ -23,7 +23,7 @@ describe('@authReducer', () => {
 
     expect(result).toEqual({
       error: null,
-      loading: true,
+      loginLoading: true,
       token: null,
       user: null,
     });
@@ -34,9 +34,9 @@ describe('@authReducer', () => {
 
     const action = { type: LOGIN_SUCCEDED, payload };
 
-    const result = authReducer({ error, token: null, user: null, loading: true }, action);
+    const result = authReducer({ error, token: null, user: null, loginLoading: true }, action);
 
-    expect(result).toEqual({ user: TEST_USER, token: TEST_TOKEN, error: null, loading: false });
+    expect(result).toEqual({ user: TEST_USER, token: TEST_TOKEN, error: null, loginLoading: false });
   });
 
   it('returns state for LOGIN_FAILED', () => {
@@ -45,11 +45,11 @@ describe('@authReducer', () => {
     const action = { type: LOGIN_FAILED, payload };
 
     const result = authReducer(
-      { error: null, token: TEST_TOKEN, user: TEST_USER, loading: true},
+      { error: null, token: TEST_TOKEN, user: TEST_USER, loginLoading: true},
       action
     );
 
-    expect(result).toEqual({ user: null, token: null, loading: false, error });
+    expect(result).toEqual({ user: null, token: null, loginLoading: false, error });
   });
 
   it('returns state for LOGOUT_REQUESTED', () => {
@@ -57,10 +57,10 @@ describe('@authReducer', () => {
     const action = { type: LOGOUT_REQUESTED };
 
     const result = authReducer(
-      { error: null, token: TEST_TOKEN, user: TEST_USER, loading: false},
+      { error: null, token: TEST_TOKEN, user: TEST_USER, loginLoading: false},
       action
     );
 
-    expect(result).toEqual({ user: null, token: null, loading: false, error: null });
+    expect(result).toEqual({ user: null, token: null, loginLoading: false, error: null });
   });
 });

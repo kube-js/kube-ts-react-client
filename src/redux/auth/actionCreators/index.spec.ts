@@ -1,4 +1,3 @@
-import * as actions from '.';
 import {
   TEST_EMAIL,
   TEST_PASSWORD,
@@ -11,6 +10,7 @@ import {
   LOGIN_SUCCEDED,
   LOGOUT_REQUESTED,
 } from '../actions';
+import * as actions from './index';
 
 describe('auth actions', () => {
   it('loginRequested creates LOGIN_REQUESTED', () => {

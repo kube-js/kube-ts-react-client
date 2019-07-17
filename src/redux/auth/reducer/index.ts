@@ -9,12 +9,12 @@ export interface AuthState {
   readonly user?: any;
   readonly token?: string | null;
   readonly error?: any;
-  readonly loading?: boolean;
+  readonly loginLoading?: boolean;
 }
 
 const initialState: AuthState = {
   error: null,
-  loading: false,
+  loginLoading: false,
   token: null,
   user: null,
 };
@@ -25,20 +25,20 @@ const authReducer = (
 ) => {
   switch (action.type) {
     case LOGIN_REQUESTED: {
-      return { ...state, error: null, loading: true };
+      return { ...state, error: null, loginLoading: true };
     }
 
     case LOGIN_SUCCEDED: {
       const { user, token } = action.payload;
 
-      return { ...state, user, token, error: null, loading: false };
+      return { ...state, user, token, error: null, loginLoading: false };
     }
 
     case LOGIN_FAILED: {
       return {
         ...state,
         error: action.payload.error,
-        loading: false,
+        loginLoading: false,
         token: null,
         user: null,
       };
@@ -48,7 +48,7 @@ const authReducer = (
       return {
         ...state,
         error: null,
-        loading: false,
+        loginLoading: false,
         token: null,
         user: null,
       };

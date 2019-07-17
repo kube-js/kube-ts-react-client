@@ -1,9 +1,9 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import React, { Fragment, lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router';
-import AppWrapper from './components/AppWrapper';
 import AuthenticatedRoute from './components/Auth/AuthenticatedRoute';
 import UnauthenticatedRoute from './components/Auth/UnauthenticatedRoute';
+import Layout from './components/Layout';
 import { DASHBOARD, LOGIN, REGISTER, ROOT } from './constants/routes';
 import Loading from './pages/Loading';
 
@@ -16,7 +16,7 @@ const Dashboard = lazy(() => import('./pages/Dashboard'));
 const App = () => (
   <Fragment>
     <CssBaseline />
-    <AppWrapper>
+    <Layout>
       <Suspense fallback={<Loading />}>
         <Switch>
           <Route exact path={ROOT} component={Home} />
@@ -26,7 +26,7 @@ const App = () => (
           <Route component={NotFound} />
         </Switch>
       </Suspense>
-    </AppWrapper>
+    </Layout>
   </Fragment>
 );
 
