@@ -64,17 +64,6 @@ const useStyles = makeStyles((theme: Theme) =>
     hide: {
       display: 'none',
     },
-    inputInput: {
-      padding: theme.spacing(1, 1, 1, 7),
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('md')]: {
-        width: 200,
-      },
-    },
-    inputRoot: {
-      color: 'inherit',
-    },
     link: {
       margin: theme.spacing(1, 1.5),
     },
@@ -87,30 +76,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     root: {
       display: 'flex',
-    },
-    search: {
-      '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
-      },
-      backgroundColor: fade(theme.palette.common.white, 0.15),
-      borderRadius: theme.shape.borderRadius,
-      marginLeft: 0,
-      marginRight: theme.spacing(2),
-      position: 'relative',
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
-        width: 'auto',
-      },
-    },
-    searchIcon: {
-      alignItems: 'center',
-      display: 'flex',
-      height: '100%',
-      justifyContent: 'center',
-      pointerEvents: 'none',
-      position: 'absolute',
-      width: theme.spacing(7),
     },
     sectionDesktop: {
       display: 'none',

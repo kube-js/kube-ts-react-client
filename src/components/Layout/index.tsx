@@ -6,7 +6,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -19,7 +18,6 @@ import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import SearchIcon from '@material-ui/icons/Search';
 import clsx from 'clsx';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -28,11 +26,13 @@ import OnlyUnauthenticated from '../Auth/OnlyUnauthenticated';
 import LogoutButton from '../LogoutButton';
 import NavBarMenu from '../NavBarMenu';
 import NavBarMobileMenu from '../NavBarMobileMenu';
+import SearchBox from '../SearchBox';
 import useStyles from './styles';
 
 export interface Options {
   readonly children: any;
 }
+
 
 const Layout = ({ children }: Options) => {
   const classes = useStyles();
@@ -104,19 +104,9 @@ const Layout = ({ children }: Options) => {
             >
               kudemy
             </Button>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search online courses..."
-                classes={{
-                  input: classes.inputInput,
-                  root: classes.inputRoot,
-                }}
-                inputProps={{ 'aria-label': 'Search' }}
-              />
-            </div>
+            
+            <SearchBox />
+
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <OnlyUnauthenticated>
