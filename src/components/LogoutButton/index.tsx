@@ -15,8 +15,7 @@ const LogoutButton = ({ logout }: LogoutButtonProps) => {
   return (
     <Button
       onClick={logout}
-      color="secondary"
-      variant="contained"
+      color="inherit"
       className={classes.link}
     >
       Logout

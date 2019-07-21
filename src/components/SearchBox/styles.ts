@@ -46,5 +46,4 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-// tslint:disable-next-line:max-file-line-count
 export default useStyles;
