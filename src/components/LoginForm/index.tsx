@@ -28,7 +28,7 @@ const LoginForm = (props: LoginFormProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { loginLoading, login, user } = props;
+  const { loginLoading, login } = props;
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();

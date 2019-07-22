@@ -1,34 +1,31 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { TEST_TOKEN, TEST_USER } from '../../../utils/tests/testData';
+import api, { Api } from '../../../api';
 import { loginFailed, loginSucceded } from '../actionCreators';
 import { LOGIN_REQUESTED } from '../actions';
 
-const LOGIN_FAKE_TIME = 1000;
-
-const Api = {
-  login: ({ email }: { email: string; password: string }) =>
-    new Promise(resolve => {
-      setTimeout(
-        () => resolve({ user: { ...TEST_USER, email }, token: TEST_TOKEN }),
-        LOGIN_FAKE_TIME
-      );
-    }),
-};
-
-function* login(action: { payload: { email: string; password: string } }) {
-  try {
-    const { email, password } = action.payload;
-
-    const { user, token } = yield call(Api.login, { email, password });
-
-    yield put(loginSucceded({ user, token }));
-  } catch (error) {
-    yield put(loginFailed(error));
-  }
+export interface Options {
+  readonly api: Api;
 }
 
-function* loginSaga() {
-  yield takeLatest<any>(LOGIN_REQUESTED, login);
-}
+export const loginCreator = (options: Options) =>
+  function* login(action: { payload: { email: string; password: string } }) {
+    try {
+      const { email, password } = action.payload;
 
-export default loginSaga;
+      const { user, token } = yield call(options.api.auth.login, {
+        email,
+        password,
+      });
+
+      yield put(loginSucceded({ user, token }));
+    } catch (error) {
+      yield put(loginFailed(JSON.stringify(error)));
+    }
+  };
+
+export const createLoginSaga = (options: Options) =>
+  function* loginSaga() {
+    yield takeLatest<any>(LOGIN_REQUESTED, loginCreator(options));
+  };
+
+export default createLoginSaga({ api });
