@@ -62,28 +62,10 @@ affinity: {}
 
 # Secret [remove "{}", uncomment and change the values below]
 secret: {}
-  # KNEX_PASSWORD: password
-  # KNEX_USER: root
-  # SMTP_USER: user
-  # SMTP_PASS: password
-  # JWT_SECRET: secret
-  # LOGGLY_TOKEN=logglyToken
-  # LOGGLY_SUBDOMAIN=logglyUser
+  # TEST_VAL: val1
+
 
 # Configmap [remove "{}", uncomment and change the values below]
 configMap: {}
-  # KNEX_DATABASE: database
-  # KNEX_CLIENT: mysql
-  # KNEX_HOST: localhost
-  # SMTP_HOST: localhost
-  # SMTP_FROM: noreply@example.com
-  # SMTP_PORT: 465
-  # SMTP_IGNORE_TLS: true
-  # SMTP_SECURE: true
-  # SMTP_REQUIRE_TLS: true
-  # LOGGER_TYPE=winston
-  # WINSTON_LOGGER_TYPE=loggly
-  # LOGGLY_JSON=true
-  # LOGGLY_TAGS=tag1,tag2
-
+  # REACT_APP_API_URL: https://localhost:9000/api/v1
 

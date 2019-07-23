@@ -1,6 +1,6 @@
 secret: {}
   # SECRET_VAR: $SECRET_VAR
 
-configMap: {}
-  # NORMAL_VAR: $NORMAL_VAR
+configMap: 
+  REACT_APP_API_URL: $REACT_APP_API_URL
   
