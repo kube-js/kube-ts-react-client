@@ -48,7 +48,8 @@
     "typescript": "3.5.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "env": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/",
+    "dev": "npm run env && react-scripts start",
     "build": "react-scripts build",
     "test": "CI=true react-scripts test --coverage --env=jsdom",
     "lint": "tslint --project tsconfig.json --config tslint.json './src/**/*.(ts|tsx)'",
