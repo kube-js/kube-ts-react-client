@@ -3,15 +3,13 @@
 # Recreate config file
 # get env vars from CI/CD tool - only those starting with REACT_APP_*
 
-touch ./.env
-ls -la .
-printenv | grep 'REACT_APP_*' >> .env
+touch /usr/share/nginx/html/.env
+printenv | grep 'REACT_APP_*' >> /usr/share/nginx/html/.env
 
-rm -rf ./env-config.js
-touch ./env-config.js
+touch /usr/share/nginx/html/env-config.js
 
 # Add assignment
-echo "window._env_ = {" >>./env-config.js
+echo "window._env_ = {" >>/usr/share/nginx/html/env-config.js
 
 # Read each line in .env file
 # Each line represents key=value pairs
@@ -33,7 +31,7 @@ while read -r line || [[ -n "$line" ]]; do
   [[ -z $value ]] && value=${varvalue}
 
   # Append configuration property to JS file
-  echo "  $varname: \"$value\"," >>./env-config.js
-done <.env
+  echo "  $varname: \"$value\"," >>/usr/share/nginx/html/env-config.js
+done </usr/share/nginx/html/.env
 
-echo "}" >>./env-config.js
+echo "}" >>/usr/share/nginx/html/env-config.js
