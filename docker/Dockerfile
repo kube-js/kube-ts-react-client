@@ -21,8 +21,9 @@ COPY --from=builder /usr/src/app/build /usr/share/nginx/html
 COPY --from=builder /usr/src/app/env.sh /usr/share/nginx/html
 COPY --from=builder /usr/src/app/.env /usr/share/nginx/html
 
+RUN ls /usr/share/nginx/html
 # Make our shell script executable
-RUN chmod +x env.sh
+RUN chmod +x /usr/share/nginx/html/env.sh
 
 EXPOSE 80
 CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
