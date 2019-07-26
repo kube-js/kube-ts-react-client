@@ -18,12 +18,15 @@ RUN apk add --no-cache bash
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /usr/src/app/docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
+COPY --from=builder /usr/src/app/.env /usr/share/nginx/html/.env
 COPY --from=builder /usr/src/app/env.sh /usr/share/nginx/html/env.sh
-COPY --from=builder /usr/src/app/.env /usr/share/nginx/html/env.sh
 
 RUN ls /usr/share/nginx/html
 # Make our shell script executable
 RUN chmod +x /usr/share/nginx/html/env.sh
+
+RUN ls /usr/share/nginx/html
+
 
 EXPOSE 80
 CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
