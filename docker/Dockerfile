@@ -12,9 +12,17 @@ RUN PUBLIC_URL=/ npm run build
 
 FROM nginx:1.17.2-alpine as app
 
+# Add bash
+RUN apk add --no-cache bash
+
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /usr/src/app/docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
+COPY --from=builder /usr/src/app/env.sh .
+COPY --from=builder /usr/src/app/.env .
+
+# Make our shell script executable
+RUN chmod +x env.sh
 
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
