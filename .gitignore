@@ -57,8 +57,9 @@ typings/
 # next.js build output
 .next
 build
-/k8s/override.yaml
 
 # env related
 /public/env-config.js
 env-config.js
+
+/k8s/override.yaml
