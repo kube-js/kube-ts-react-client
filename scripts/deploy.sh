@@ -12,6 +12,11 @@ mv ~/repo/k8s/values-circleci.yaml.out ~/repo/k8s/values-circleci.yaml
 envsubst <~/repo/k8s/cicd-config.yaml >~/repo/k8s/cicd-config.yaml.out
 mv ~/repo/k8s/cicd-config.yaml.out ~/repo/k8s/cicd-config.yaml
 
+# get env vars from CI/CD tool - only those starting with REACT_APP_*
+rm ~/repo/.env
+touch ~/repo/.env
+printenv | grep 'REACT_APP_*' >> .env
+
 echo "initialising helm..."
 helm init --client-only
 
