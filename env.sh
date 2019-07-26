@@ -2,7 +2,7 @@
 # @credits: https://codequs.com/p/ByBym0ZS4/how-to-implement-runtime-environment-variables-with-create-react-app-docker-and-nginx
 # Recreate config file
 # get env vars from CI/CD tool - only those starting with REACT_APP_*
-rm ./env
+
 touch ./.env
 ls -la .
 printenv | grep 'REACT_APP_*' >> .env
