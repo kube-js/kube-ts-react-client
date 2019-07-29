@@ -28,7 +28,7 @@
     "redux-saga": "1.0.5",
     "reselect": "4.0.0",
     "set-value": "3.0.1",
-    "store": "^2.0.12"
+    "store": "2.0.12"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "4.0.0",
@@ -41,8 +41,8 @@
     "@types/react-redux": "7.1.1",
     "@types/react-router": "5.0.3",
     "@types/react-router-dom": "4.3.4",
-    "@types/redux-logger": "^3.0.7",
-    "@types/store": "^2.0.2",
+    "@types/redux-logger": "3.0.7",
+    "@types/store": "2.0.2",
     "redux-devtools": "3.5.0",
     "redux-logger": "3.0.6",
     "ts-jest": "24.0.2",
