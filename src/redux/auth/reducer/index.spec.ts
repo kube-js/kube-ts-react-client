@@ -1,19 +1,31 @@
-import { TEST_TOKEN, TEST_USER } from '../../../utils/tests/testData';
-import { LOGIN_FAILED, LOGIN_REQUESTED, LOGIN_SUCCEDED, LOGOUT_REQUESTED } from '../actions';
+import {
+  TEST_ROLES,
+  TEST_TOKEN,
+  TEST_USER,
+} from '../../../utils/tests/testData';
+import {
+  LOGIN_FAILED,
+  LOGIN_REQUESTED,
+  LOGIN_SUCCEEDED,
+  LOGOUT_REQUESTED,
+} from '../actions';
 import authReducer from './index';
 
 describe('@authReducer', () => {
   const error = new Error('test');
 
+  const initialState = {
+    error: null,
+    loginLoading: false,
+    roles: null,
+    token: null,
+    user: null,
+  };
+
   it('returns initial state', () => {
     const result = authReducer();
 
-    expect(result).toEqual({
-      error: null,
-      loginLoading: false,
-      token: null,
-      user: null,
-    });
+    expect(result).toEqual(initialState);
   });
 
   it('returns state for LOGIN_REQUESTED', () => {
@@ -22,21 +34,29 @@ describe('@authReducer', () => {
     const result = authReducer(undefined, action);
 
     expect(result).toEqual({
+      ...initialState,
       error: null,
       loginLoading: true,
-      token: null,
-      user: null,
     });
   });
 
   it('returns state for LOGIN_SUCCEDED', () => {
-    const payload = { user: TEST_USER, token: TEST_TOKEN };
+    const payload = { user: TEST_USER, token: TEST_TOKEN, roles: TEST_ROLES };
 
-    const action = { type: LOGIN_SUCCEDED, payload };
+    const action = { type: LOGIN_SUCCEEDED, payload };
 
-    const result = authReducer({ error, token: null, user: null, loginLoading: true }, action);
+    const result = authReducer(
+      { ...initialState, error, loginLoading: true },
+      action
+    );
 
-    expect(result).toEqual({ user: TEST_USER, token: TEST_TOKEN, error: null, loginLoading: false });
+    expect(result).toEqual({
+      error: null,
+      loginLoading: false,
+      roles: TEST_ROLES,
+      token: TEST_TOKEN,
+      user: TEST_USER,
+    });
   });
 
   it('returns state for LOGIN_FAILED', () => {
@@ -45,22 +65,29 @@ describe('@authReducer', () => {
     const action = { type: LOGIN_FAILED, payload };
 
     const result = authReducer(
-      { error: null, token: TEST_TOKEN, user: TEST_USER, loginLoading: true},
+      {
+        ...initialState,
+        loginLoading: true,
+        token: TEST_TOKEN,
+        user: TEST_USER,
+      },
       action
     );
 
-    expect(result).toEqual({ user: null, token: null, loginLoading: false, error });
+    expect(result).toEqual({
+      ...initialState,
+      error,
+    });
   });
 
   it('returns state for LOGOUT_REQUESTED', () => {
-
     const action = { type: LOGOUT_REQUESTED };
 
     const result = authReducer(
-      { error: null, token: TEST_TOKEN, user: TEST_USER, loginLoading: false},
+      { error: null, token: TEST_TOKEN, user: TEST_USER, loginLoading: false },
       action
     );
 
-    expect(result).toEqual({ user: null, token: null, loginLoading: false, error: null });
+    expect(result).toEqual(initialState);
   });
 });

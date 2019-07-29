@@ -5,10 +5,13 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './app';
+import { authDataRetrievalRequested } from './redux/auth/actionCreators';
 import configureStore, { history } from './redux/configureStore';
 import defaultTheme from './themes/default';
 
 const store = configureStore();
+
+store.dispatch(authDataRetrievalRequested());
 
 render(
   <Provider store={store}>

@@ -1,4 +1,10 @@
-import { LOGIN_FAILED, LOGIN_REQUESTED, LOGIN_SUCCEDED, LOGOUT_REQUESTED } from '../actions';
+import {
+  AUTH_DATA_RETRIEVAL_SUCCEEDED,
+  LOGIN_FAILED,
+  LOGIN_REQUESTED,
+  LOGIN_SUCCEEDED,
+  LOGOUT_REQUESTED,
+} from '../actions';
 
 export interface ReduxAction {
   readonly type?: string;
@@ -7,6 +13,7 @@ export interface ReduxAction {
 
 export interface AuthState {
   readonly user?: any;
+  readonly roles?: string[] | null;
   readonly token?: string | null;
   readonly error?: any;
   readonly loginLoading?: boolean;
@@ -15,6 +22,7 @@ export interface AuthState {
 const initialState: AuthState = {
   error: null,
   loginLoading: false,
+  roles: null,
   token: null,
   user: null,
 };
@@ -28,29 +36,32 @@ const authReducer = (
       return { ...state, error: null, loginLoading: true };
     }
 
-    case LOGIN_SUCCEDED: {
-      const { user, token } = action.payload;
+    case LOGIN_SUCCEEDED: {
+      const { user, token, roles } = action.payload;
 
-      return { ...state, user, token, error: null, loginLoading: false };
+      return { ...state, user, token, roles, error: null, loginLoading: false };
     }
 
     case LOGIN_FAILED: {
       return {
-        ...state,
+        ...initialState,
         error: action.payload.error,
         loginLoading: false,
-        token: null,
-        user: null,
       };
     }
 
     case LOGOUT_REQUESTED: {
+      return initialState;
+    }
+
+    case AUTH_DATA_RETRIEVAL_SUCCEEDED: {
+      const { token, roles, user } = action.payload;
+      
       return {
-        ...state,
-        error: null,
-        loginLoading: false,
-        token: null,
-        user: null,
+        ...initialState,
+        roles,
+        token,
+        user,
       };
     }
 

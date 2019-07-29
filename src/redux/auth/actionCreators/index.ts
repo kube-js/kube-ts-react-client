@@ -1,21 +1,29 @@
 import {
+  AUTH_DATA_RETRIEVAL_REQUESTED,
+  AUTH_DATA_RETRIEVAL_SUCCEEDED,
   LOGIN_FAILED,
   LOGIN_REQUESTED,
-  LOGIN_SUCCEDED,
+  LOGIN_SUCCEEDED,
   LOGOUT_REQUESTED,
 } from '../actions/index';
 
 export interface LoginSuccededAction {
   readonly user?: any;
   readonly token?: string;
+  readonly roles?: string[];
 }
 
-export const loginSucceded = ({ token, user }: LoginSuccededAction) => ({
+export const loginSucceeded = ({
+  token,
+  user,
+  roles,
+}: LoginSuccededAction) => ({
   payload: {
+    roles,
     token,
     user,
   },
-  type: LOGIN_SUCCEDED,
+  type: LOGIN_SUCCEEDED,
 });
 
 export const loginFailed = (error: any) => ({
@@ -30,7 +38,25 @@ export const loginRequested = (email: string, password: string) => ({
   type: LOGIN_REQUESTED,
 });
 
-
 export const logoutRequested = () => ({
   type: LOGOUT_REQUESTED,
+});
+
+export const authDataRetrievalRequested = () => ({
+  type: AUTH_DATA_RETRIEVAL_REQUESTED,
+});
+
+export interface AuthDataRetrievalOptions {
+  readonly user?: any;
+  readonly token?: string | null;
+  readonly roles?: string[] | null;
+}
+
+export const authDataRetrievalSucceeded = ({
+  token,
+  user,
+  roles,
+}: AuthDataRetrievalOptions) => ({
+  payload: { token, user, roles },
+  type: AUTH_DATA_RETRIEVAL_SUCCEEDED,
 });

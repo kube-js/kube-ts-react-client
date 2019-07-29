@@ -12,6 +12,8 @@ export const TEST_USER = {
 
 export const TEST_TOKEN = "JWT Bearer";
 
+export const TEST_ROLES = ['admin'];
+
 export const TEST_EMAIL = 'test@test.com';
 
 export const TEST_PASSWORD = 'password';
