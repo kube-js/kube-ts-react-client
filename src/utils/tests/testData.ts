@@ -17,3 +17,7 @@ export const TEST_ROLES = ['admin'];
 export const TEST_EMAIL = 'test@test.com';
 
 export const TEST_PASSWORD = 'password';
+
+export const TEST_FIRSTNAME = 'John';
+
+export const TEST_LASTNAME = 'Doe';
