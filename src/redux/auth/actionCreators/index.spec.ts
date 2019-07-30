@@ -1,5 +1,7 @@
 import {
   TEST_EMAIL,
+  TEST_FIRSTNAME,
+  TEST_LASTNAME,
   TEST_PASSWORD,
   TEST_ROLES,
   TEST_TOKEN,
@@ -12,6 +14,9 @@ import {
   LOGIN_REQUESTED,
   LOGIN_SUCCEEDED,
   LOGOUT_REQUESTED,
+  REGISTER_FAILED,
+  REGISTER_REQUESTED,
+  REGISTER_SUCCEEDED,
 } from '../actions';
 import * as actions from './index';
 
@@ -45,6 +50,39 @@ describe('auth actions', () => {
     });
   });
 
+  it('registerRequested creates REGISTER_REQUESTED', () => {
+    const payload = {
+      email: TEST_EMAIL,
+      firstName: TEST_FIRSTNAME,
+      lastName: TEST_LASTNAME,
+      password: TEST_EMAIL,
+    };
+
+    expect(actions.registerRequested(payload)).toEqual({
+      payload,
+      type: REGISTER_REQUESTED,
+    });
+  });
+
+  it('registerSucceeded creates REGISTER_SUCCEDED', () => {
+    const payload = { user: TEST_USER, token: TEST_TOKEN, roles: TEST_ROLES };
+
+    expect(actions.registerSucceeded(payload)).toEqual({
+      payload,
+      type: REGISTER_SUCCEEDED,
+    });
+  });
+
+  it('registerFailed creates REGISTER_FAILED', () => {
+    const error = new Error('test');
+    const payload = { error };
+
+    expect(actions.registerFailed(error)).toEqual({
+      payload,
+      type: REGISTER_FAILED,
+    });
+  });
+
   it('logoutRequested creates LOGOUT_REQUESTED', () => {
     expect(actions.logoutRequested()).toEqual({
       type: LOGOUT_REQUESTED,
@@ -75,4 +113,5 @@ describe('auth actions', () => {
       type: AUTH_DATA_RETRIEVAL_SUCCEEDED,
     });
   });
+  // tslint:disable-next-line:max-file-line-count
 });

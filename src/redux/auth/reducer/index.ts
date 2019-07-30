@@ -17,6 +17,7 @@ export interface AuthState {
   readonly token?: string | null;
   readonly error?: any;
   readonly loginLoading?: boolean;
+  readonly registerLoading?: boolean;
 }
 
 const initialState: AuthState = {

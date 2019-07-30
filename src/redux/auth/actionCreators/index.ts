@@ -5,7 +5,15 @@ import {
   LOGIN_REQUESTED,
   LOGIN_SUCCEEDED,
   LOGOUT_REQUESTED,
+  REGISTER_FAILED,
+  REGISTER_REQUESTED,
+  REGISTER_SUCCEEDED,
 } from '../actions/index';
+
+export const loginRequested = (email: string, password: string) => ({
+  payload: { email, password },
+  type: LOGIN_REQUESTED,
+});
 
 export interface LoginSuccededAction {
   readonly user?: any;
@@ -33,11 +41,6 @@ export const loginFailed = (error: any) => ({
   type: LOGIN_FAILED,
 });
 
-export const loginRequested = (email: string, password: string) => ({
-  payload: { email, password },
-  type: LOGIN_REQUESTED,
-});
-
 export const logoutRequested = () => ({
   type: LOGOUT_REQUESTED,
 });
@@ -59,4 +62,43 @@ export const authDataRetrievalSucceeded = ({
 }: AuthDataRetrievalOptions) => ({
   payload: { token, user, roles },
   type: AUTH_DATA_RETRIEVAL_SUCCEEDED,
+});
+
+export interface RegisterOptions {
+  readonly email: string;
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly password: string;
+}
+
+export const registerRequested = (options: RegisterOptions) => ({
+  payload: options,
+  type: REGISTER_REQUESTED,
+});
+
+export interface RegisterSuccededAction {
+  readonly user?: any;
+  readonly token?: string;
+  readonly roles?: string[];
+}
+
+export const registerSucceeded = ({
+  token,
+  user,
+  roles,
+}: RegisterSuccededAction) => ({
+  payload: {
+    roles,
+    token,
+    user,
+  },
+  type: REGISTER_SUCCEEDED,
+});
+
+export const registerFailed = (error: any) => ({
+  payload: {
+    error,
+  },
+  type: REGISTER_FAILED,
+// tslint:disable-next-line:max-file-line-count
 });
