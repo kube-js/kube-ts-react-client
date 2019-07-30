@@ -50,7 +50,6 @@ describe('auth actions', () => {
     });
   });
 
-  /* START */
   it('registerRequested creates REGISTER_REQUESTED', () => {
     const payload = {
       email: TEST_EMAIL,
@@ -114,5 +113,5 @@ describe('auth actions', () => {
       type: AUTH_DATA_RETRIEVAL_SUCCEEDED,
     });
   });
-// tslint:disable-next-line:max-file-line-count
+  // tslint:disable-next-line:max-file-line-count
 });
