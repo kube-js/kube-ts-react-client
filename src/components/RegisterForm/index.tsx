@@ -29,6 +29,7 @@ const RegisterForm = (props: RegisterFormProps) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
@@ -36,7 +37,7 @@ const RegisterForm = (props: RegisterFormProps) => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    register({ email, password, firstName, lastName });
+    register({ email, password, firstName, lastName, passwordConfirmation });
   };
 
   return (
@@ -102,9 +103,24 @@ const RegisterForm = (props: RegisterFormProps) => {
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="current-password"
+                autoComplete="off"
                 value={password}
                 onChange={({ target: { value } }) => setPassword(value)}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="passwordConfirmation"
+                label="Password Confirmation"
+                type="password"
+                id="passwordConfirmation"
+                autoComplete="off"
+                value={passwordConfirmation}
+                onChange={({ target: { value } }) => setPasswordConfirmation(value)}
               />
             </Grid>
           </Grid>

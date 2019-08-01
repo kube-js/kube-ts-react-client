@@ -69,6 +69,7 @@ export interface RegisterOptions {
   readonly firstName: string;
   readonly lastName: string;
   readonly password: string;
+  readonly passwordConfirmation: string;
 }
 
 export const registerRequested = (options: RegisterOptions) => ({

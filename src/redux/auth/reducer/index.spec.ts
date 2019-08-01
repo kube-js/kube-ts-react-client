@@ -8,6 +8,9 @@ import {
   LOGIN_REQUESTED,
   LOGIN_SUCCEEDED,
   LOGOUT_REQUESTED,
+  REGISTER_REQUESTED,
+  REGISTER_SUCCEEDED,
+  REGISTER_FAILED,
 } from '../actions';
 import authReducer from './index';
 
@@ -15,8 +18,10 @@ describe('@authReducer', () => {
   const error = new Error('test');
 
   const initialState = {
-    error: null,
+    loginError: null,
     loginLoading: false,
+    registerError: null,
+    registerLoading: false,
     roles: null,
     token: null,
     user: null,
@@ -35,7 +40,7 @@ describe('@authReducer', () => {
 
     expect(result).toEqual({
       ...initialState,
-      error: null,
+      loginError: null,
       loginLoading: true,
     });
   });
@@ -46,12 +51,13 @@ describe('@authReducer', () => {
     const action = { type: LOGIN_SUCCEEDED, payload };
 
     const result = authReducer(
-      { ...initialState, error, loginLoading: true },
+      { ...initialState, loginError: error, loginLoading: true },
       action
     );
 
     expect(result).toEqual({
-      error: null,
+      ...initialState,
+      loginError: null,
       loginLoading: false,
       roles: TEST_ROLES,
       token: TEST_TOKEN,
@@ -76,7 +82,8 @@ describe('@authReducer', () => {
 
     expect(result).toEqual({
       ...initialState,
-      error,
+      loginError: error,
+      loginLoading: false,
     });
   });
 
@@ -84,10 +91,70 @@ describe('@authReducer', () => {
     const action = { type: LOGOUT_REQUESTED };
 
     const result = authReducer(
-      { error: null, token: TEST_TOKEN, user: TEST_USER, loginLoading: false },
+      {
+        loginError: error,
+        registerError: error,
+        token: TEST_TOKEN,
+        user: TEST_USER,
+        loginLoading: false,
+      },
       action
     );
 
     expect(result).toEqual(initialState);
+  });
+
+  it('returns state for REGISTER_REQUESTED', () => {
+    const action = { type: REGISTER_REQUESTED };
+
+    const result = authReducer(undefined, action);
+
+    expect(result).toEqual({
+      ...initialState,
+      registerError: null,
+      registerLoading: true,
+    });
+  });
+
+  it('returns state for REGISTER_SUCCEEDED', () => {
+    const payload = { user: TEST_USER, token: TEST_TOKEN, roles: TEST_ROLES };
+
+    const action = { type: REGISTER_SUCCEEDED, payload };
+
+    const result = authReducer(
+      { ...initialState, registerError: error, registerLoading: true },
+      action
+    );
+
+    expect(result).toEqual({
+      ...initialState,
+      registerError: null,
+      registerLoading: false,
+      roles: TEST_ROLES,
+      token: TEST_TOKEN,
+      user: TEST_USER,
+    });
+  });
+
+  it('returns state for REGISTER_FAILED', () => {
+    const payload = { error };
+
+    const action = { type: REGISTER_FAILED, payload };
+
+    const result = authReducer(
+      {
+        ...initialState,
+        registerLoading: true,
+        token: TEST_TOKEN,
+        user: TEST_USER,
+      },
+      action
+    );
+
+    expect(result).toEqual({
+      ...initialState,
+      registerLoading: false,
+      registerError: error,
+    });
   });
 });

@@ -12,8 +12,8 @@ const mapStateToProps = ({ auth: { registerLoading } }: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  register: ({ firstName, lastName, email, password }: RegisterOptions) =>
-    dispatch(registerRequested({ firstName, lastName, email, password })),
+  register: (options: RegisterOptions) =>
+    dispatch(registerRequested(options)),
 });
 
 export default connect(
