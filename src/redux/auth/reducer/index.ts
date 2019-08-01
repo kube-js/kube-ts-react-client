@@ -4,6 +4,9 @@ import {
   LOGIN_REQUESTED,
   LOGIN_SUCCEEDED,
   LOGOUT_REQUESTED,
+  REGISTER_REQUESTED,
+  REGISTER_SUCCEEDED,
+  REGISTER_FAILED,
 } from '../actions';
 
 export interface ReduxAction {
@@ -15,14 +18,17 @@ export interface AuthState {
   readonly user?: any;
   readonly roles?: string[] | null;
   readonly token?: string | null;
-  readonly error?: any;
+  readonly loginError?: any;
   readonly loginLoading?: boolean;
+  readonly registerError?: any;
   readonly registerLoading?: boolean;
 }
 
 const initialState: AuthState = {
-  error: null,
+  loginError: null,
+  registerError: null,
   loginLoading: false,
+  registerLoading: false,
   roles: null,
   token: null,
   user: null,
@@ -34,20 +40,38 @@ const authReducer = (
 ) => {
   switch (action.type) {
     case LOGIN_REQUESTED: {
-      return { ...state, error: null, loginLoading: true };
+      return { ...state, loginError: null, loginLoading: true };
     }
 
     case LOGIN_SUCCEEDED: {
       const { user, token, roles } = action.payload;
 
-      return { ...state, user, token, roles, error: null, loginLoading: false };
+      return { ...state, loginError: null, loginLoading: false, user, token, roles  };
     }
 
     case LOGIN_FAILED: {
       return {
         ...initialState,
-        error: action.payload.error,
+        loginError: action.payload.error,
         loginLoading: false,
+      };
+    }
+
+    case REGISTER_REQUESTED: {
+      return { ...state, registerError: null, registerLoading: true };
+    }
+
+    case REGISTER_SUCCEEDED: {
+      const { user, token, roles } = action.payload;
+
+      return { ...state, user, token, roles, registerError: null, registerLoading: false };
+    }
+
+    case REGISTER_FAILED: {
+      return {
+        ...initialState,
+        registerError: action.payload.error,
+        registerLoading: false,
       };
     }
 

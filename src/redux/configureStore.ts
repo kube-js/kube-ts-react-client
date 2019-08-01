@@ -5,6 +5,7 @@ import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import authDataSaga from './auth/saga/authData/index';
 import loginSaga from './auth/saga/login/index';
+import registerSaga from './auth/saga/register/index';
 import createRootReducer, { State } from './rootReducer';
 
 export const history = createBrowserHistory();
@@ -28,6 +29,7 @@ export default function configureStore(preloadedState?: State): Store {
   );
 
   sagaMiddleware.run(loginSaga);
+  sagaMiddleware.run(registerSaga);
   sagaMiddleware.run(authDataSaga);
 
   return store;
