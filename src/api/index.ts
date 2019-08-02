@@ -1,7 +1,7 @@
-import http from '../services/http';
-import { RegisterOptions } from '../redux/auth/actionCreators';
-import { toSnake, toCamel } from 'convert-keys';
+import { toCamel, toSnake } from 'convert-keys';
 import { ResponsePromise } from 'ky';
+import { RegisterOptions } from '../redux/auth/actionCreators';
+import http from '../services/http';
 
 export interface Options {
   readonly httpClient: typeof http;
@@ -28,7 +28,7 @@ export interface Api {
 }
 
 export const normalisePromise = <T>(promise: ResponsePromise): Promise<T> =>
-  promise.json().then((response: any) => toCamel(response));
+  promise.json().then(toCamel as any);
 
 const createApi = ({ httpClient }: Options): Api => ({
   auth: {
