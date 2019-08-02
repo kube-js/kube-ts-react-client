@@ -7,9 +7,9 @@ import {
 } from '../../../../constants/auth';
 import store from '../../../../services/store';
 import {
+  registerFailed,
   RegisterOptions,
   registerSucceeded,
-  registerFailed,
 } from '../../actionCreators';
 import { REGISTER_REQUESTED } from '../../actions';
 
