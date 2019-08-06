@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`@useFormik handles blur 1`] = `
+Object {
+  "errors": Object {},
+  "handleBlur": [Function],
+  "handleChange": [Function],
+  "handleSubmit": [Function],
+  "touched": Object {
+    "email": true,
+  },
+  "values": Object {
+    "email": "",
+    "password": "",
+  },
+}
+`;
+
+exports[`@useFormik handles change 1`] = `
+Object {
+  "errors": Object {},
+  "handleBlur": [Function],
+  "handleChange": [Function],
+  "handleSubmit": [Function],
+  "touched": Object {},
+  "values": Object {
+    "email": "test@test.com",
+    "password": "",
+  },
+}
+`;
+
+exports[`@useFormik handles submit 1`] = `
+Object {
+  "errors": Object {},
+  "handleBlur": [Function],
+  "handleChange": [Function],
+  "handleSubmit": [Function],
+  "touched": Object {
+    "email": true,
+    "password": true,
+  },
+  "values": Object {
+    "email": "test@test.com",
+    "password": "password",
+  },
+}
+`;
+
+exports[`@useFormik returns initial state 1`] = `
+Object {
+  "errors": Object {},
+  "handleBlur": [Function],
+  "handleChange": [Function],
+  "handleSubmit": [Function],
+  "touched": Object {},
+  "values": Object {
+    "email": "",
+    "password": "",
+  },
+}
+`;
