@@ -8,12 +8,13 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import React, { SyntheticEvent, useState } from 'react';
+import React from 'react';
 import { RouterProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { loginRequested } from '../../redux/auth/actionCreators';
 import { AuthState } from '../../redux/auth/reducer';
 import useStyles from './styles';
+import useForm from '../../utils/hooks/useForm';
 
 interface LoginFormProps extends AuthState, RouterProps {
   readonly login: (
@@ -22,18 +23,32 @@ interface LoginFormProps extends AuthState, RouterProps {
   ) => ReturnType<typeof loginRequested>;
 }
 
+export interface LoginValues {
+  readonly email: string;
+  readonly password: string;
+}
+
 const LoginForm = (props: LoginFormProps) => {
   const classes = useStyles();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { loginLoading, loginError, login } = props;
 
-  const { loginLoading, login } = props;
-
-  const handleSubmit = (e: SyntheticEvent) => {
-    e.preventDefault();
-    login(email, password);
-  };
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    values,
+    errors,
+    touched,
+  } = useForm<LoginValues>({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    onSubmit: ({ email, password }) => {
+      login(email, password);
+    },
+  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -58,9 +73,11 @@ const LoginForm = (props: LoginFormProps) => {
             name="email"
             autoComplete="email"
             autoFocus
-            value={email}
-            onChange={({ target: { value } }) => setEmail(value)}
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
+          {errors.email && touched.email ? <div>{errors.email}</div> : null}
 
           <TextField
             variant="outlined"
@@ -72,10 +89,14 @@ const LoginForm = (props: LoginFormProps) => {
             type="password"
             id="password"
             autoComplete="current-password"
-            value={password}
-            onChange={({ target: { value } }) => setPassword(value)}
+            value={values.password}
+            onChange={handleChange}
           />
+          {errors.password && touched.password ? (
+            <div>{errors.password}</div>
+          ) : null}
 
+          {loginError && <div>{JSON.stringify(loginError, null, 2)}</div>}
           <Button
             disabled={loginLoading}
             type="submit"
