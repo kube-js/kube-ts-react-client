@@ -45,7 +45,7 @@
     "@types/react-router-dom": "4.3.4",
     "@types/redux-logger": "3.0.7",
     "@types/store": "2.0.2",
-    "@types/yup": "^0.26.22",
+    "@types/yup": "0.26.22",
     "react-test-renderer": "16.8.6",
     "redux-devtools": "3.5.0",
     "redux-logger": "3.0.6",
