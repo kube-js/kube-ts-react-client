@@ -15,6 +15,7 @@ import { loginRequested } from '../../redux/auth/actionCreators';
 import { AuthState } from '../../redux/auth/reducer';
 import useStyles from './styles';
 import useForm from '../../utils/hooks/useForm';
+import loginSchema from '../../utils/schemas/login';
 
 interface LoginFormProps extends AuthState, RouterProps {
   readonly login: (
@@ -45,9 +46,23 @@ const LoginForm = (props: LoginFormProps) => {
       email: '',
       password: '',
     },
-    onSubmit: ({ email, password }) => {
+    onSubmit: async ({ email, password }) => {
       login(email, password);
     },
+    validate: ({ email, password }) => {
+      try {
+        loginSchema.validateSync({ email, password }, { abortEarly: false });
+
+        return {};
+      } catch (err) {
+        console.log('err', err);
+        return {
+          [err.path]: err.message,
+        };
+      }
+    },
+    validateOnChange: true,
+    validateOnBlur: true,
   });
 
   return (

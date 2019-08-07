@@ -1,15 +1,16 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useFormik, { formReducer } from './index';
+import useForm, { formReducer } from './index';
 import { TEST_EMAIL, TEST_PASSWORD } from '../../tests/testData';
 import {
   SET_FIELD_VALUE,
   SET_FIELD_TOUCHED,
-  SET_ALL_FIELD_TOUCHED,
   SET_ERRORS,
+  SUBMIT_REQUESTED,
 } from './actions';
 
 describe('@formReducer', () => {
   const defaultState = {
+    isSubmitting: false,
     values: {
       email: '',
       password: '',
@@ -75,11 +76,12 @@ describe('@formReducer', () => {
 
   it('returns changed touched for email field', () => {
     const result = formReducer(defaultState, {
-      type: SET_ALL_FIELD_TOUCHED,
+      type: SUBMIT_REQUESTED,
     });
 
     expect(result).toEqual({
       ...defaultState,
+      isSubmitting: true,
       touched: {
         email: true,
         password: true,
@@ -88,25 +90,25 @@ describe('@formReducer', () => {
   });
 });
 
-describe('@useFormik', () => {
+describe('@useForm', () => {
   const defaultOptions = {
     initialValues: {
       email: '',
       password: '',
     },
-    onSubmit: jest.fn(),
-    validate: jest.fn(),
+    onSubmit: jest.fn(() => Promise.resolve()),
+    validate: jest.fn(() => ({})),
   };
 
   it('returns initial state', () => {
-    const { result } = renderHook(() => useFormik(defaultOptions));
+    const { result } = renderHook(() => useForm(defaultOptions));
 
     expect(result.current).toMatchSnapshot();
   });
 
-  it('handles change', () => {
+  it('handles change', async () => {
     const { result, waitForNextUpdate } = renderHook(() =>
-      useFormik(defaultOptions)
+      useForm(defaultOptions)
     );
 
     const mock = jest.fn();
@@ -116,18 +118,21 @@ describe('@useFormik', () => {
       target: { name: 'email', value: TEST_EMAIL },
     } as React.ChangeEvent<HTMLInputElement>;
 
-    act(() => {
+    const func: any = async () => {
       result.current.handleChange(event);
-      waitForNextUpdate().then(() => {
-        expect(result.current).toMatchSnapshot();
-        expect(mock).toBeCalledTimes(1);
-      });
-    });
+
+      await waitForNextUpdate();
+    };
+
+    await act(func);
+
+    expect(result.current).toMatchSnapshot();
+    expect(mock).toBeCalledTimes(1);
   });
 
-  it('handles blur', async done => {
+  it('handles blur', async () => {
     const { result, waitForNextUpdate } = renderHook(() =>
-      useFormik(defaultOptions)
+      useForm(defaultOptions)
     );
 
     const mock = jest.fn();
@@ -137,18 +142,19 @@ describe('@useFormik', () => {
       target: { name: 'email' },
     } as React.ChangeEvent<HTMLInputElement>;
 
-    act(() => {
+    const func: any = async () => {
       result.current.handleBlur(event);
 
-      waitForNextUpdate().then(() => {
-        expect(result.current).toMatchSnapshot();
-        expect(mock).toBeCalledTimes(1);
-        done();
-      });
-    });
+      await waitForNextUpdate();
+    };
+
+    await act(func);
+
+    expect(result.current).toMatchSnapshot();
+    expect(mock).toBeCalledTimes(1);
   });
 
-  it('handles submit', async done => {
+  describe('@handleSubmit', () => {
     const values = {
       email: TEST_EMAIL,
       password: TEST_PASSWORD,
@@ -161,20 +167,69 @@ describe('@useFormik', () => {
         ...values,
       },
     };
-    const { result, waitForNextUpdate } = renderHook(() => useFormik(options));
 
     const event = {
       preventDefault: () => {},
     } as React.FormEvent<HTMLFormElement>;
 
-    act(() => {
-      result.current.handleSubmit(event);
+    it('when validation and submit successful', async () => {
+      const { result, waitForNextUpdate } = renderHook(() =>
+        useForm(options)
+      );
 
-      waitForNextUpdate().then(() => {
-        expect(result.current).toMatchSnapshot();
-        expect(options.onSubmit).toBeCalledWith(values);
-        done();
-      });
+      const func: any = async () => {
+        result.current.handleSubmit(event);
+
+        await waitForNextUpdate();
+      };
+
+      await act(func);
+
+      expect(result.current).toMatchSnapshot();
+      expect(options.onSubmit).toBeCalledWith(values);
+    });
+
+    it('when validation successful and submit unsuccessful', async () => {
+      const { result, waitForNextUpdate } = renderHook(() =>
+        useForm({
+          ...options,
+          onSubmit: () => Promise.reject(new Error('submitting error')),
+        })
+      );
+
+      const func: any = async () => {
+        result.current.handleSubmit(event);
+
+        await waitForNextUpdate();
+      };
+
+      await act(func);
+
+      expect(result.current).toMatchSnapshot();
+      expect(options.onSubmit).toBeCalledWith(values);
+    });
+
+    it('when validation unsuccessful', async () => {
+      const { result, waitForNextUpdate } = renderHook(() =>
+        useForm({
+          ...options,
+          validate: jest.fn(() => ({
+            email: 'Invalid email',
+            password: 'Invalid password',
+          })),
+        })
+      );
+
+      const func: any = async () => {
+        result.current.handleSubmit(event);
+
+        await waitForNextUpdate();
+      };
+
+      await act(func);
+
+      expect(result.current).toMatchSnapshot();
+      expect(options.onSubmit).toBeCalledWith(values);
     });
   });
 });
