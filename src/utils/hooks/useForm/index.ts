@@ -4,8 +4,10 @@ import _identity from 'ramda/src/identity';
 import {
   SET_FIELD_TOUCHED,
   SET_FIELD_VALUE,
-  SET_ALL_FIELD_TOUCHED,
   SET_ERRORS,
+  SUBMIT_FAILED,
+  SUBMIT_SUCCEEDED,
+  SUBMIT_REQUESTED,
 } from './actions';
 
 export interface FormAction {
@@ -19,6 +21,7 @@ export type Values<T> = { readonly [P in keyof T]?: any };
 export type Errors<T> = { readonly [P in keyof T]?: string };
 
 export interface State<T> {
+  readonly isSubmitting: boolean;
   readonly values: Values<T>;
   readonly touched: Touched<T>;
   readonly errors: Errors<T>;
@@ -44,18 +47,34 @@ export const formReducer = <T>(state: State<T>, action: FormAction) => {
         },
       };
 
-    case SET_ALL_FIELD_TOUCHED:
+    case SUBMIT_REQUESTED:
       return {
         ...state,
+        isSubmitting: true,
         touched: Object.keys(state.values).reduce((acc, next) => {
           return { ...acc, [next]: true };
         }, {}),
       };
 
+    case SUBMIT_SUCCEEDED:
+      return {
+        ...state,
+        isSubmitting: false,
+      };
+
+    case SUBMIT_FAILED:
+      return {
+        ...state,
+        isSubmitting: false,
+      };
+
     case SET_ERRORS:
       return {
         ...state,
-        errors: action.payload,
+        errors: {
+          ...state.errors,
+          ...action.payload,
+        },
       };
 
     default:
@@ -65,9 +84,10 @@ export const formReducer = <T>(state: State<T>, action: FormAction) => {
 
 export interface Options<T> {
   readonly initialValues: T;
-  readonly onSubmit: (values: Values<T>) => void;
-  readonly validate?: (values: Values<T>) => Promise<Errors<T>>;
+  readonly onSubmit: (values: Values<T>) => Promise<any>;
+  readonly validate?: (values: Values<T>) => Errors<T>;
   readonly validateOnChange?: boolean;
+  readonly validateOnBlur?: boolean;
 }
 
 export interface FormHook<T> extends State<T> {
@@ -76,13 +96,15 @@ export interface FormHook<T> extends State<T> {
   readonly handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
-function useForm<Values>({
+function useForm<T>({
   initialValues,
   onSubmit,
-  validate = () => Promise.resolve({}),
+  validate = () => ({}),
   validateOnChange = false,
-}: Options<Values>): FormHook<Values> {
-  const reducerState: State<Values> = {
+  validateOnBlur = false,
+}: Options<T>): FormHook<T> {
+  const reducerState: State<T> = {
+    isSubmitting: false,
     errors: {},
     touched: {},
     values: initialValues,
@@ -92,13 +114,8 @@ function useForm<Values>({
 
   useEffect(() => {
     if (validateOnChange) {
-      validate(state.values)
-        .then(() => {
-          dispatch({ type: SET_ERRORS, payload: {} });
-        })
-        .catch(errors => {
-          dispatch({ type: SET_ERRORS, payload: errors });
-        });
+      const errors = validate(state.values);
+      dispatch({ type: SET_ERRORS, payload: errors });
     }
   }, [state.values]);
 
@@ -115,17 +132,32 @@ function useForm<Values>({
 
     const { name } = event.target;
 
+    if (validateOnBlur) {
+      const errors = validate(state.values);
+      dispatch({ type: SET_ERRORS, payload: errors });
+    }
+
     dispatch({ type: SET_FIELD_TOUCHED, payload: { name } });
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    dispatch({ type: SUBMIT_REQUESTED });
 
-    dispatch({ type: SET_ALL_FIELD_TOUCHED });
+    const errors = validate(state.values);
 
-    onSubmit(state.values);
+    if (Object.keys(errors).length) {
+      dispatch({ type: SUBMIT_FAILED });
+      dispatch({ type: SET_ERRORS, payload: errors });
+    }
+
+    try {
+      await onSubmit(state.values);
+      dispatch({ type: SUBMIT_SUCCEEDED });
+    } catch (err) {
+      dispatch({ type: SUBMIT_FAILED });
+    }
   };
-
   return {
     handleBlur,
     handleChange,
