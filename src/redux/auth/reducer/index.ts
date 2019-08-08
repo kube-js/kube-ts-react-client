@@ -4,9 +4,9 @@ import {
   LOGIN_REQUESTED,
   LOGIN_SUCCEEDED,
   LOGOUT_REQUESTED,
+  REGISTER_FAILED,
   REGISTER_REQUESTED,
   REGISTER_SUCCEEDED,
-  REGISTER_FAILED,
 } from '../actions';
 
 export interface ReduxAction {
@@ -26,8 +26,8 @@ export interface AuthState {
 
 const initialState: AuthState = {
   loginError: null,
-  registerError: null,
   loginLoading: false,
+  registerError: null,
   registerLoading: false,
   roles: null,
   token: null,

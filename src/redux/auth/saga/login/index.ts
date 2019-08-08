@@ -30,7 +30,10 @@ export const loginCreator = (options: Options) =>
 
       yield put(loginSucceeded({ user, token, roles }));
     } catch (error) {
-      yield put(loginFailed(JSON.stringify(error)));
+      // FYI: https://github.com/sindresorhus/ky/issues/107
+      const { message } = yield error.response.json();
+      
+      yield put(loginFailed(message));
     }
   };
 
