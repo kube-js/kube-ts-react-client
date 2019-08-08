@@ -8,14 +8,14 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { Formik } from 'formik';
 import React from 'react';
 import { RouterProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { loginRequested } from '../../redux/auth/actionCreators';
 import { AuthState } from '../../redux/auth/reducer';
-import useStyles from './styles';
-import useForm from '../../utils/hooks/useForm';
 import loginSchema from '../../utils/schemas/login';
+import useStyles from './styles';
 
 interface LoginFormProps extends AuthState, RouterProps {
   readonly login: (
@@ -34,37 +34,6 @@ const LoginForm = (props: LoginFormProps) => {
 
   const { loginLoading, loginError, login } = props;
 
-  const {
-    handleSubmit,
-    handleChange,
-    handleBlur,
-    values,
-    errors,
-    touched,
-  } = useForm<LoginValues>({
-    initialValues: {
-      email: '',
-      password: '',
-    },
-    onSubmit: async ({ email, password }) => {
-      login(email, password);
-    },
-    validate: ({ email, password }) => {
-      try {
-        loginSchema.validateSync({ email, password }, { abortEarly: false });
-
-        return {};
-      } catch (err) {
-        console.log('err', err);
-        return {
-          [err.path]: err.message,
-        };
-      }
-    },
-    validateOnChange: true,
-    validateOnBlur: true,
-  });
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -77,66 +46,98 @@ const LoginForm = (props: LoginFormProps) => {
           Login
         </Typography>
 
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={values.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {errors.email && touched.email ? <div>{errors.email}</div> : null}
+        <Formik
+          validationSchema={loginSchema}
+          initialValues={{ email: '', password: '' }}
+          validateOnChange={false}
+          onSubmit={async ({ email, password }) => login(email, password)}
+          render={({
+            handleSubmit,
+            handleChange,
+            handleBlur,
+            values,
+            errors,
+            touched,
+          }) => {
+            const hasEmailError = Boolean(errors.email && touched.email);
+            const hasPasswordError = Boolean(
+              errors.password && touched.password
+            );
 
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={values.password}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {errors.password && touched.password ? (
-            <div>{errors.password}</div>
-          ) : null}
+            return (
+              <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                <TextField
+                  helperText={errors.email}
+                  error={hasEmailError}
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  value={values.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
 
-          {loginError && <div>{JSON.stringify(loginError, null, 2)}</div>}
-          <Button
-            disabled={loginLoading}
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Log in
-          </Button>
+                <TextField
+                  helperText={errors.password}
+                  error={hasPasswordError}
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  value={values.password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
 
-          <Grid container>
-            <Grid item xs>
-              <Link to="/forgot-password">Forgot password?</Link>
-            </Grid>
-            <Grid item>
-              <Link to="/register">Don't have an account? Register</Link>
-            </Grid>
-          </Grid>
-        </form>
+                {loginError && (
+                  <div
+                    style={{
+                      border: '1px solid red',
+                      color: 'red',
+                      padding: '10px',
+                    }}
+                  >
+                    {loginError}
+                  </div>
+                )}
+
+                <Button
+                  disabled={loginLoading}
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Log in
+                </Button>
+
+                <Grid container>
+                  <Grid item xs>
+                    <Link to="/forgot-password">Forgot password?</Link>
+                  </Grid>
+                  <Grid item>
+                    <Link to="/register">Don't have an account? Register</Link>
+                  </Grid>
+                </Grid>
+              </form>
+            );
+          }}
+        />
       </div>
     </Container>
   );
 };
-
 // tslint:disable-next-line:max-file-line-count
 export default LoginForm;
