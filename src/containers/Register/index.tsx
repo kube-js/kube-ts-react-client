@@ -7,7 +7,8 @@ import {
 } from '../../redux/auth/actionCreators/index';
 import { State } from '../../redux/rootReducer';
 
-const mapStateToProps = ({ auth: { registerLoading } }: State) => ({
+const mapStateToProps = ({ auth: { registerLoading, registerError } }: State) => ({
+  registerError,
   registerLoading,
 });
 

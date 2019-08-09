@@ -7,13 +7,13 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import clsx from 'clsx';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LogoutButton from '../../atoms/LogoutButton';
+import SearchBox from '../../atoms/SearchBox';
 import { LOGIN, REGISTER } from '../../constants/routes';
 import OnlyAuthenticated from '../Auth/OnlyAuthenticated';
 import OnlyUnauthenticated from '../Auth/OnlyUnauthenticated';
-import LogoutButton from '../LogoutButton';
 import NavBarMenu from '../NavBarMenu';
 import NavBarMobileMenu from '../NavBarMobileMenu';
-import SearchBox from '../SearchBox';
 import useStyles from './styles';
 
 export interface NavBarProps {

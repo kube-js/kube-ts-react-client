@@ -10,7 +10,12 @@ import {
   REGISTER_SUCCEEDED,
 } from '../actions/index';
 
-export const loginRequested = (email: string, password: string) => ({
+export interface LoginOptions {
+  readonly email: string;
+  readonly password: string;
+}
+
+export const loginRequested = ({ email, password }: LoginOptions) => ({
   payload: { email, password },
   type: LOGIN_REQUESTED,
 });
@@ -66,8 +71,6 @@ export const authDataRetrievalSucceeded = ({
 
 export interface RegisterOptions {
   readonly email: string;
-  readonly firstName: string;
-  readonly lastName: string;
   readonly password: string;
   readonly passwordConfirmation: string;
 }
@@ -101,5 +104,5 @@ export const registerFailed = (error: any) => ({
     error,
   },
   type: REGISTER_FAILED,
-// tslint:disable-next-line:max-file-line-count
+  // tslint:disable-next-line:max-file-line-count
 });

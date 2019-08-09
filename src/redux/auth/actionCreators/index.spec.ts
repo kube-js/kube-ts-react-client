@@ -1,7 +1,5 @@
 import {
   TEST_EMAIL,
-  TEST_FIRSTNAME,
-  TEST_LASTNAME,
   TEST_PASSWORD,
   TEST_ROLES,
   TEST_TOKEN,
@@ -22,7 +20,9 @@ import * as actions from './index';
 
 describe('auth actions', () => {
   it('loginRequested creates LOGIN_REQUESTED', () => {
-    expect(actions.loginRequested(TEST_EMAIL, TEST_PASSWORD)).toEqual({
+    expect(
+      actions.loginRequested({ email: TEST_EMAIL, password: TEST_PASSWORD })
+    ).toEqual({
       payload: {
         email: TEST_EMAIL,
         password: TEST_PASSWORD,
@@ -53,9 +53,8 @@ describe('auth actions', () => {
   it('registerRequested creates REGISTER_REQUESTED', () => {
     const payload = {
       email: TEST_EMAIL,
-      firstName: TEST_FIRSTNAME,
-      lastName: TEST_LASTNAME,
-      password: TEST_EMAIL,
+      password: TEST_PASSWORD,
+      passwordConfirmation: TEST_PASSWORD,
     };
 
     expect(actions.registerRequested(payload)).toEqual({
