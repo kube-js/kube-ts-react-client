@@ -2,8 +2,8 @@ import Button from '@material-ui/core/Button';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import useStyles from '../../components/Layout/styles';
 import { logoutRequested } from '../../redux/auth/actionCreators';
-import useStyles from '../Layout/styles';
 
 export interface LogoutButtonProps {
   readonly logout: () => ReturnType<typeof logoutRequested>;

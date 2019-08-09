@@ -12,16 +12,14 @@ import { Formik } from 'formik';
 import React from 'react';
 import { RouterProps } from 'react-router';
 import { Link } from 'react-router-dom';
-import { loginRequested } from '../../redux/auth/actionCreators';
+import PasswordField from '../../atoms/PasswordField';
+import { LoginOptions, loginRequested  } from '../../redux/auth/actionCreators';
 import { AuthState } from '../../redux/auth/reducer';
 import loginSchema from '../../utils/schemas/login';
 import useStyles from './styles';
 
 interface LoginFormProps extends AuthState, RouterProps {
-  readonly login: (
-    email: string,
-    password: string
-  ) => ReturnType<typeof loginRequested>;
+  readonly login: (options: LoginOptions) => ReturnType<typeof loginRequested>;
 }
 
 export interface LoginValues {
@@ -50,7 +48,7 @@ const LoginForm = (props: LoginFormProps) => {
           validationSchema={loginSchema}
           initialValues={{ email: '', password: '' }}
           validateOnChange={false}
-          onSubmit={async ({ email, password }) => login(email, password)}
+          onSubmit={login}
           render={({
             handleSubmit,
             handleChange,
@@ -83,7 +81,7 @@ const LoginForm = (props: LoginFormProps) => {
                   onBlur={handleBlur}
                 />
 
-                <TextField
+                <PasswordField
                   helperText={errors.password}
                   error={hasPasswordError}
                   variant="outlined"
@@ -92,7 +90,6 @@ const LoginForm = (props: LoginFormProps) => {
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
                   id="password"
                   autoComplete="current-password"
                   value={values.password}
@@ -118,6 +115,7 @@ const LoginForm = (props: LoginFormProps) => {
                   fullWidth
                   variant="contained"
                   color="primary"
+                  size="large"
                   className={classes.submit}
                 >
                   Log in

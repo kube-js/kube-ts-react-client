@@ -8,9 +8,9 @@ import {
   LOGIN_REQUESTED,
   LOGIN_SUCCEEDED,
   LOGOUT_REQUESTED,
+  REGISTER_FAILED,
   REGISTER_REQUESTED,
   REGISTER_SUCCEEDED,
-  REGISTER_FAILED,
 } from '../actions';
 import authReducer from './index';
 
@@ -93,10 +93,10 @@ describe('@authReducer', () => {
     const result = authReducer(
       {
         loginError: error,
+        loginLoading: false,
         registerError: error,
         token: TEST_TOKEN,
         user: TEST_USER,
-        loginLoading: false,
       },
       action
     );
@@ -153,8 +153,9 @@ describe('@authReducer', () => {
 
     expect(result).toEqual({
       ...initialState,
-      registerLoading: false,
       registerError: error,
+      registerLoading: false,
     });
   });
+// tslint:disable-next-line:max-file-line-count
 });

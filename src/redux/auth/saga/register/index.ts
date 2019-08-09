@@ -32,7 +32,10 @@ export const registerCreator = (options: Options) =>
 
       yield put(registerSucceeded({ user, token, roles }));
     } catch (error) {
-      yield put(registerFailed(JSON.stringify(error)));
+      // FYI: https://github.com/sindresorhus/ky/issues/107
+      const { message } = yield error.response.json();
+  
+      yield put(registerFailed(message));
     }
   };
 
