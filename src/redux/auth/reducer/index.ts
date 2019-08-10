@@ -7,6 +7,9 @@ import {
   REGISTER_FAILED,
   REGISTER_REQUESTED,
   REGISTER_SUCCEEDED,
+  REMIND_PASSWORD_FAILED,
+  REMIND_PASSWORD_REQUESTED,
+  REMIND_PASSWORD_SUCCEEDED,
 } from '../actions';
 
 export interface ReduxAction {
@@ -22,6 +25,8 @@ export interface AuthState {
   readonly loginLoading?: boolean;
   readonly registerError?: any;
   readonly registerLoading?: boolean;
+  readonly remindPasswordError?: any;
+  readonly remindPasswordLoading?: boolean;
 }
 
 const initialState: AuthState = {
@@ -29,6 +34,8 @@ const initialState: AuthState = {
   loginLoading: false,
   registerError: null,
   registerLoading: false,
+  remindPasswordError: null,
+  remindPasswordLoading: false,
   roles: null,
   token: null,
   user: null,
@@ -46,7 +53,14 @@ const authReducer = (
     case LOGIN_SUCCEEDED: {
       const { user, token, roles } = action.payload;
 
-      return { ...state, loginError: null, loginLoading: false, user, token, roles  };
+      return {
+        ...state,
+        loginError: null,
+        loginLoading: false,
+        roles,
+        token,
+        user,
+      };
     }
 
     case LOGIN_FAILED: {
@@ -64,7 +78,14 @@ const authReducer = (
     case REGISTER_SUCCEEDED: {
       const { user, token, roles } = action.payload;
 
-      return { ...state, user, token, roles, registerError: null, registerLoading: false };
+      return {
+        ...state,
+        registerError: null,
+        registerLoading: false,
+        roles,
+        token,
+        user,
+      };
     }
 
     case REGISTER_FAILED: {
@@ -74,6 +95,29 @@ const authReducer = (
         registerLoading: false,
       };
     }
+    case REMIND_PASSWORD_REQUESTED: {
+      return {
+        ...state,
+        remindPasswordError: null,
+        remindPasswordLoading: true,
+      };
+    }
+
+    case REMIND_PASSWORD_SUCCEEDED: {
+      return {
+        ...state,
+        remindPasswordError: null,
+        remindPasswordLoading: false,
+      };
+    }
+
+    case REMIND_PASSWORD_FAILED: {
+      return {
+        ...initialState,
+        remindPasswordError: action.payload.error,
+        remindPasswordLoading: false,
+      };
+    }
 
     case LOGOUT_REQUESTED: {
       return initialState;
@@ -81,7 +125,7 @@ const authReducer = (
 
     case AUTH_DATA_RETRIEVAL_SUCCEEDED: {
       const { token, roles, user } = action.payload;
-      
+
       return {
         ...initialState,
         roles,
@@ -95,4 +139,5 @@ const authReducer = (
   }
 };
 
+// tslint:disable-next-line:max-file-line-count
 export default authReducer;

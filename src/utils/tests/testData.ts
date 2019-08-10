@@ -21,3 +21,5 @@ export const TEST_PASSWORD = 'password';
 export const TEST_FIRSTNAME = 'John';
 
 export const TEST_LASTNAME = 'Doe';
+
+export const TEST_MESSAGE = 'test';

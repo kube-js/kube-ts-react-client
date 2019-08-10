@@ -1,4 +1,5 @@
 import {
+  TEST_MESSAGE,
   TEST_ROLES,
   TEST_TOKEN,
   TEST_USER,
@@ -11,6 +12,9 @@ import {
   REGISTER_FAILED,
   REGISTER_REQUESTED,
   REGISTER_SUCCEEDED,
+  REMIND_PASSWORD_FAILED,
+  REMIND_PASSWORD_REQUESTED,
+  REMIND_PASSWORD_SUCCEEDED,
 } from '../actions';
 import authReducer from './index';
 
@@ -22,6 +26,8 @@ describe('@authReducer', () => {
     loginLoading: false,
     registerError: null,
     registerLoading: false,
+    remindPasswordError: null,
+    remindPasswordLoading: false,
     roles: null,
     token: null,
     user: null,
@@ -157,5 +163,55 @@ describe('@authReducer', () => {
       registerLoading: false,
     });
   });
-// tslint:disable-next-line:max-file-line-count
+
+  it('returns state for REMIND_PASSWORD_REQUESTED', () => {
+    const action = { type: REMIND_PASSWORD_REQUESTED };
+
+    const result = authReducer(undefined, action);
+
+    expect(result).toEqual({
+      ...initialState,
+      remindPasswordLoading: true,
+    });
+  });
+
+  it('returns state for REMIND_PASSWORD_SUCCEEDED', () => {
+    const action = { type: REMIND_PASSWORD_SUCCEEDED };
+
+    const result = authReducer(
+      {
+        ...initialState,
+        remindPasswordError: error,
+        remindPasswordLoading: true,
+      },
+      action
+    );
+
+    expect(result).toEqual({
+      ...initialState,
+      remindPasswordError: null,
+      remindPasswordLoading: false,
+    });
+  });
+
+  it('returns state for REMIND_PASSWORD_FAILED', () => {
+    const payload = { error };
+
+    const action = { type: REMIND_PASSWORD_FAILED, payload };
+
+    const result = authReducer(
+      {
+        ...initialState,
+        remindPasswordLoading: true,
+      },
+      action
+    );
+
+    expect(result).toEqual({
+      ...initialState,
+      remindPasswordError: error,
+      remindPasswordLoading: false,
+    });
+  });
+  // tslint:disable-next-line:max-file-line-count
 });

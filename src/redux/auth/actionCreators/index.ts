@@ -1,3 +1,4 @@
+import { RemindPasswordValues } from '../../../components/RemindPasswordForm';
 import {
   AUTH_DATA_RETRIEVAL_REQUESTED,
   AUTH_DATA_RETRIEVAL_SUCCEEDED,
@@ -8,6 +9,9 @@ import {
   REGISTER_FAILED,
   REGISTER_REQUESTED,
   REGISTER_SUCCEEDED,
+  REMIND_PASSWORD_FAILED,
+  REMIND_PASSWORD_REQUESTED,
+  REMIND_PASSWORD_SUCCEEDED,
 } from '../actions/index';
 
 export interface LoginOptions {
@@ -104,5 +108,23 @@ export const registerFailed = (error: any) => ({
     error,
   },
   type: REGISTER_FAILED,
-  // tslint:disable-next-line:max-file-line-count
 });
+
+export const remindPasswordRequested = ({ email }: RemindPasswordValues) => ({
+  payload: {
+    email,
+  },
+  type: REMIND_PASSWORD_REQUESTED,
+});
+
+export const remindPasswordSucceeded = () => ({
+  type: REMIND_PASSWORD_SUCCEEDED,
+});
+
+export const remindPasswordFailed = (error: any) => ({
+  payload: {
+    error,
+  },
+  type: REMIND_PASSWORD_FAILED,
+});
+// tslint:disable-next-line:max-file-line-count

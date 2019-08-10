@@ -1,5 +1,6 @@
 import {
   TEST_EMAIL,
+  TEST_MESSAGE,
   TEST_PASSWORD,
   TEST_ROLES,
   TEST_TOKEN,
@@ -15,6 +16,9 @@ import {
   REGISTER_FAILED,
   REGISTER_REQUESTED,
   REGISTER_SUCCEEDED,
+  REMIND_PASSWORD_FAILED,
+  REMIND_PASSWORD_REQUESTED,
+  REMIND_PASSWORD_SUCCEEDED,
 } from '../actions';
 import * as actions from './index';
 
@@ -110,6 +114,31 @@ describe('auth actions', () => {
     expect(actions.authDataRetrievalSucceeded(payload)).toEqual({
       payload,
       type: AUTH_DATA_RETRIEVAL_SUCCEEDED,
+    });
+  });
+
+  it('remindPasswordRequested creates REMIND_PASSWORD_REQUESTED', () => {
+    expect(actions.remindPasswordRequested({ email: TEST_EMAIL })).toEqual({
+      payload: {
+        email: TEST_EMAIL,
+      },
+      type: REMIND_PASSWORD_REQUESTED,
+    });
+  });
+
+  it('remindPasswordSucceeded creates REMIND_PASSWORD_SUCCEDED', () => {
+    expect(actions.remindPasswordSucceeded()).toEqual({
+      type: REMIND_PASSWORD_SUCCEEDED,
+    });
+  });
+
+  it('remindPasswordFailed creates REMIND_PASSWORD_FAILED', () => {
+    const error = new Error('test');
+    const payload = { error };
+
+    expect(actions.remindPasswordFailed(error)).toEqual({
+      payload,
+      type: REMIND_PASSWORD_FAILED,
     });
   });
   // tslint:disable-next-line:max-file-line-count
