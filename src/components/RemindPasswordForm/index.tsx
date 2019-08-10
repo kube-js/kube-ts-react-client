@@ -12,21 +12,26 @@ import { Formik } from 'formik';
 import React from 'react';
 import { RouterProps } from 'react-router';
 import { Link } from 'react-router-dom';
-import PasswordField from '../../atoms/PasswordField';
-import { REGISTER, REMIND_PASSWORD } from '../../constants/routes';
-import { LoginOptions, loginRequested } from '../../redux/auth/actionCreators';
+import { LOGIN } from '../../constants/routes';
+import { remindPasswordRequested } from '../../redux/auth/actionCreators';
 import { AuthState } from '../../redux/auth/reducer';
-import loginSchema from '../../utils/schemas/login';
+import remindPasswordSchema from '../../utils/schemas/remindPassword';
 import useStyles from './styles';
 
-interface LoginFormProps extends AuthState, RouterProps {
-  readonly login: (options: LoginOptions) => ReturnType<typeof loginRequested>;
+interface RemindPasswordProps extends AuthState, RouterProps {
+  readonly remindPassword: (
+    values: RemindPasswordValues
+  ) => ReturnType<typeof remindPasswordRequested>;
 }
 
-const LoginForm = (props: LoginFormProps) => {
+export interface RemindPasswordValues {
+  readonly email: string;
+}
+
+const RemindPasswordForm = (props: RemindPasswordProps) => {
   const classes = useStyles();
 
-  const { loginLoading, loginError, login } = props;
+  const { remindPasswordLoading, remindPasswordError, remindPassword } = props;
 
   return (
     <Container component="main" maxWidth="xs">
@@ -37,14 +42,14 @@ const LoginForm = (props: LoginFormProps) => {
         </Avatar>
 
         <Typography component="h1" variant="h5">
-          Login
+          Remind Password
         </Typography>
 
         <Formik
-          validationSchema={loginSchema}
-          initialValues={{ email: '', password: '' }}
+          validationSchema={remindPasswordSchema}
+          initialValues={{ email: '' }}
           validateOnChange={false}
-          onSubmit={login}
+          onSubmit={remindPassword}
           render={({
             handleSubmit,
             handleChange,
@@ -54,9 +59,6 @@ const LoginForm = (props: LoginFormProps) => {
             touched,
           }) => {
             const hasEmailError = Boolean(errors.email && touched.email);
-            const hasPasswordError = Boolean(
-              errors.password && touched.password
-            );
 
             return (
               <form className={classes.form} noValidate onSubmit={handleSubmit}>
@@ -77,23 +79,7 @@ const LoginForm = (props: LoginFormProps) => {
                   onBlur={handleBlur}
                 />
 
-                <PasswordField
-                  helperText={errors.password}
-                  error={hasPasswordError}
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  id="password"
-                  autoComplete="current-password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-
-                {loginError && (
+                {remindPasswordError && (
                   <div
                     style={{
                       border: '1px solid red',
@@ -101,12 +87,12 @@ const LoginForm = (props: LoginFormProps) => {
                       padding: '10px',
                     }}
                   >
-                    {loginError}
+                    {remindPasswordError}
                   </div>
                 )}
 
                 <Button
-                  disabled={loginLoading}
+                  disabled={remindPasswordLoading}
                   type="submit"
                   fullWidth
                   variant="contained"
@@ -114,15 +100,12 @@ const LoginForm = (props: LoginFormProps) => {
                   size="large"
                   className={classes.submit}
                 >
-                  Log in
+                  Remind password
                 </Button>
 
                 <Grid container>
                   <Grid item xs>
-                    <Link to={REMIND_PASSWORD}>Forgot password?</Link>
-                  </Grid>
-                  <Grid item>
-                    <Link to={REGISTER}>Don't have an account? Register</Link>
+                    <Link to={LOGIN}>Back to login</Link>
                   </Grid>
                 </Grid>
               </form>
@@ -134,4 +117,4 @@ const LoginForm = (props: LoginFormProps) => {
   );
 };
 // tslint:disable-next-line:max-file-line-count
-export default LoginForm;
+export default RemindPasswordForm;
