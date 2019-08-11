@@ -10,6 +10,12 @@ import {
   REMIND_PASSWORD_FAILED,
   REMIND_PASSWORD_REQUESTED,
   REMIND_PASSWORD_SUCCEEDED,
+  RESET_PASSWORD_FAILED,
+  RESET_PASSWORD_REQUESTED,
+  RESET_PASSWORD_SUCCEEDED,
+  VERIFY_ACCOUNT_FAILED,
+  VERIFY_ACCOUNT_REQUESTED,
+  VERIFY_ACCOUNT_SUCCEEDED,
 } from '../actions';
 
 export interface ReduxAction {
@@ -27,6 +33,10 @@ export interface AuthState {
   readonly registerLoading?: boolean;
   readonly remindPasswordError?: any;
   readonly remindPasswordLoading?: boolean;
+  readonly resetPasswordError?: any;
+  readonly resetPasswordLoading?: boolean;
+  readonly verifyAccountError?: any;
+  readonly verifyAccountLoading?: boolean;
 }
 
 const initialState: AuthState = {
@@ -36,9 +46,13 @@ const initialState: AuthState = {
   registerLoading: false,
   remindPasswordError: null,
   remindPasswordLoading: false,
+  resetPasswordError: null,
+  resetPasswordLoading: false,
   roles: null,
   token: null,
   user: null,
+  verifyAccountError: null,
+  verifyAccountLoading: false,
 };
 
 const authReducer = (
@@ -116,6 +130,54 @@ const authReducer = (
         ...initialState,
         remindPasswordError: action.payload.error,
         remindPasswordLoading: false,
+      };
+    }
+
+    case RESET_PASSWORD_REQUESTED: {
+      return {
+        ...state,
+        resetPasswordError: null,
+        resetPasswordLoading: true,
+      };
+    }
+
+    case RESET_PASSWORD_SUCCEEDED: {
+      return {
+        ...state,
+        resetPasswordError: null,
+        resetPasswordLoading: false,
+      };
+    }
+
+    case RESET_PASSWORD_FAILED: {
+      return {
+        ...initialState,
+        resetPasswordError: action.payload.error,
+        resetPasswordLoading: false,
+      };
+    }
+
+    case VERIFY_ACCOUNT_REQUESTED: {
+      return {
+        ...state,
+        verifyAccountError: null,
+        verifyAccountLoading: true,
+      };
+    }
+
+    case VERIFY_ACCOUNT_SUCCEEDED: {
+      return {
+        ...state,
+        verifyAccountError: null,
+        verifyAccountLoading: false,
+      };
+    }
+
+    case VERIFY_ACCOUNT_FAILED: {
+      return {
+        ...initialState,
+        verifyAccountError: action.payload.error,
+        verifyAccountLoading: false,
       };
     }
 

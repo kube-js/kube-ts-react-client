@@ -35,6 +35,7 @@ export const registerCreator = (options: Options) =>
       // FYI: https://github.com/sindresorhus/ky/issues/107
       const { message } = yield error.response.json();
   
+      // TODO: implement snackbar
       yield put(registerFailed(message));
     }
   };

@@ -32,7 +32,8 @@ export const loginCreator = (options: Options) =>
     } catch (error) {
       // FYI: https://github.com/sindresorhus/ky/issues/107
       const { message } = yield error.response.json();
-      
+
+      // TODO: implement snackbar
       yield put(loginFailed(message));
     }
   };

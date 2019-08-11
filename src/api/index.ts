@@ -1,6 +1,11 @@
 import { toCamel, toSnake } from 'convert-keys';
 import { ResponsePromise } from 'ky';
-import { RegisterOptions } from '../redux/auth/actionCreators';
+import {
+  RegisterOptions,
+  RemindPasswordOptions,
+  ResetPasswordOptions,
+  VerifyAccountOptions,
+} from '../redux/auth/actionCreators';
 import http from '../services/http';
 
 export interface Options {
@@ -18,9 +23,22 @@ export interface AuthResponse {
   readonly roles: string[];
 }
 
+export interface BaseResponse {
+  readonly message: string;
+}
+
 export interface AuthApi {
   readonly login: (options: LoginOptions) => Promise<AuthResponse>;
   readonly register: (options: RegisterOptions) => Promise<AuthResponse>;
+  readonly remindPassword: (
+    options: RemindPasswordOptions
+  ) => Promise<BaseResponse>;
+  readonly resetPassword: (
+    options: ResetPasswordOptions
+  ) => Promise<BaseResponse>;
+  readonly verifyAccount: (
+    options: VerifyAccountOptions
+  ) => Promise<BaseResponse>;
 }
 
 export interface Api {
@@ -39,6 +57,18 @@ const createApi = ({ httpClient }: Options): Api => ({
     register: (options: RegisterOptions) =>
       normalisePromise<AuthResponse>(
         httpClient.post('auth/register', { json: toSnake(options) })
+      ),
+    remindPassword: (options: RemindPasswordOptions) =>
+      normalisePromise<BaseResponse>(
+        httpClient.post('auth/remind-password', { json: toSnake(options) })
+      ),
+    resetPassword: (options: ResetPasswordOptions) =>
+      normalisePromise<BaseResponse>(
+        httpClient.post('auth/reset-password', { json: toSnake(options) })
+      ),
+    verifyAccount: (options: VerifyAccountOptions) =>
+      normalisePromise<BaseResponse>(
+        httpClient.post('auth/verify-account', { json: toSnake(options) })
       ),
   },
 });
