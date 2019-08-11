@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Formik } from 'formik';
 import React from 'react';
-import { RouterProps } from 'react-router';
+import { RouteProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { LOGIN } from '../../constants/routes';
 import { remindPasswordRequested } from '../../redux/auth/actionCreators';
@@ -18,7 +18,7 @@ import { AuthState } from '../../redux/auth/reducer';
 import remindPasswordSchema from '../../utils/schemas/remindPassword';
 import useStyles from './styles';
 
-interface RemindPasswordProps extends AuthState, RouterProps {
+interface RemindPasswordProps extends AuthState, RouteProps {
   readonly remindPassword: (
     values: RemindPasswordValues
   ) => ReturnType<typeof remindPasswordRequested>;

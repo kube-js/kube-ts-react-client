@@ -1,4 +1,3 @@
-import { RemindPasswordValues } from '../../../components/RemindPasswordForm';
 import {
   AUTH_DATA_RETRIEVAL_REQUESTED,
   AUTH_DATA_RETRIEVAL_SUCCEEDED,
@@ -12,6 +11,12 @@ import {
   REMIND_PASSWORD_FAILED,
   REMIND_PASSWORD_REQUESTED,
   REMIND_PASSWORD_SUCCEEDED,
+  RESET_PASSWORD_FAILED,
+  RESET_PASSWORD_REQUESTED,
+  RESET_PASSWORD_SUCCEEDED,
+  VERIFY_ACCOUNT_FAILED,
+  VERIFY_ACCOUNT_REQUESTED,
+  VERIFY_ACCOUNT_SUCCEEDED,
 } from '../actions/index';
 
 export interface LoginOptions {
@@ -110,7 +115,11 @@ export const registerFailed = (error: any) => ({
   type: REGISTER_FAILED,
 });
 
-export const remindPasswordRequested = ({ email }: RemindPasswordValues) => ({
+export interface RemindPasswordOptions {
+  readonly email: string;
+}
+
+export const remindPasswordRequested = ({ email }: RemindPasswordOptions) => ({
   payload: {
     email,
   },
@@ -126,5 +135,65 @@ export const remindPasswordFailed = (error: any) => ({
     error,
   },
   type: REMIND_PASSWORD_FAILED,
+});
+
+export interface ResetPasswordOptions {
+  readonly email: string;
+  readonly password: string;
+  readonly passwordConfirmation: string;
+  readonly token: string;
+}
+
+export const resetPasswordRequested = ({
+  email,
+  password,
+  passwordConfirmation,
+  token,
+}: ResetPasswordOptions) => ({
+  payload: {
+    email,
+    password,
+    passwordConfirmation,
+    token,
+  },
+  type: RESET_PASSWORD_REQUESTED,
+});
+
+export const resetPasswordSucceeded = () => ({
+  type: RESET_PASSWORD_SUCCEEDED,
+});
+
+export const resetPasswordFailed = (error: any) => ({
+  payload: {
+    error,
+  },
+  type: RESET_PASSWORD_FAILED,
+});
+
+export interface VerifyAccountOptions {
+  readonly email: string;
+  readonly token: string;
+}
+
+export const verifyAccountRequested = ({
+  email,
+  token,
+}: VerifyAccountOptions) => ({
+  payload: {
+    email,
+    token,
+  },
+  type: VERIFY_ACCOUNT_REQUESTED,
+});
+
+export const verifyAccountSucceeded = () => ({
+  type: VERIFY_ACCOUNT_SUCCEEDED,
+});
+
+export const verifyAccountFailed = (error: any) => ({
+  payload: {
+    error,
+  },
+  type: VERIFY_ACCOUNT_FAILED,
 });
 // tslint:disable-next-line:max-file-line-count

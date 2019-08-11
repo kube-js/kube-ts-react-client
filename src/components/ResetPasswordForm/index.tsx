@@ -8,29 +8,40 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Formik } from 'formik';
+import _defaultTo from 'ramda/src/defaultTo';
 import React from 'react';
 import { RouteProps } from 'react-router';
-import { Link } from 'react-router-dom';
 import PasswordField from '../../atoms/PasswordField';
-import { LOGIN } from '../../constants/routes';
 import {
-  RegisterOptions,
-  registerRequested,
+  ResetPasswordOptions,
+  resetPasswordRequested,
 } from '../../redux/auth/actionCreators';
 import { AuthState } from '../../redux/auth/reducer';
-import registerSchema from '../../utils/schemas/register';
+import resetPasswordSchema from '../../utils/schemas/resetPassword';
 import useStyles from './styles';
 
-interface RegisterFormProps extends AuthState, RouteProps {
-  readonly register: (
-    options: RegisterOptions
-  ) => ReturnType<typeof registerRequested>;
+interface ResetPasswordFormProps extends AuthState, RouteProps {
+  readonly resetPassword: (
+    options: ResetPasswordOptions
+  ) => ReturnType<typeof resetPasswordRequested>;
 }
 
-const RegisterForm = (props: RegisterFormProps) => {
+const ResetPasswordForm = ({
+  resetPasswordLoading,
+  resetPasswordError,
+  resetPassword,
+  location,
+}: ResetPasswordFormProps) => {
   const classes = useStyles();
 
-  const { registerLoading, registerError, register } = props;
+  const params =
+    location !== undefined ? new URLSearchParams(location.search) : null;
+
+  const tokenParam = params !== null ? params.get('token') : '';
+  const emailParam = params !== null ? params.get('email') : '';
+
+  const token = _defaultTo('')(tokenParam);
+  const email = _defaultTo('')(emailParam);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -40,14 +51,14 @@ const RegisterForm = (props: RegisterFormProps) => {
         </Avatar>
 
         <Typography component="h1" variant="h5">
-          Register
+          Reset password
         </Typography>
 
         <Formik
-          validationSchema={registerSchema}
-          initialValues={{ email: '', password: '', passwordConfirmation: '' }}
+          validationSchema={resetPasswordSchema}
+          initialValues={{ email, password: '', passwordConfirmation: '' }}
           validateOnChange={false}
-          onSubmit={register}
+          onSubmit={values => resetPassword({ ...values, token })}
           render={({
             handleSubmit,
             handleChange,
@@ -92,7 +103,7 @@ const RegisterForm = (props: RegisterFormProps) => {
                       required
                       fullWidth
                       name="password"
-                      label="Password"
+                      label="New password"
                       id="password"
                       autoComplete="off"
                       value={values.password}
@@ -109,7 +120,7 @@ const RegisterForm = (props: RegisterFormProps) => {
                       required
                       fullWidth
                       name="passwordConfirmation"
-                      label="Password confirmation"
+                      label="New password confirmation"
                       id="passwordConfirmation"
                       autoComplete="off"
                       value={values.passwordConfirmation}
@@ -118,7 +129,7 @@ const RegisterForm = (props: RegisterFormProps) => {
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    {registerError && (
+                    {resetPasswordError && (
                       <div
                         style={{
                           border: '1px solid red',
@@ -126,27 +137,21 @@ const RegisterForm = (props: RegisterFormProps) => {
                           padding: '10px',
                         }}
                       >
-                        {registerError}
+                        {resetPasswordError}
                       </div>
                     )}
 
                     <Button
                       type="submit"
-                      disabled={registerLoading}
+                      disabled={resetPasswordLoading}
                       fullWidth
                       variant="contained"
                       color="primary"
                       size="large"
                       className={classes.submit}
                     >
-                      Register
+                      Reset password
                     </Button>
-                  </Grid>
-                </Grid>
-
-                <Grid container justify="flex-end">
-                  <Grid item>
-                    <Link to={LOGIN}>Already have an account? Log in</Link>
                   </Grid>
                 </Grid>
               </form>
@@ -159,4 +164,4 @@ const RegisterForm = (props: RegisterFormProps) => {
 };
 
 // tslint:disable-next-line:max-file-line-count
-export default RegisterForm;
+export default ResetPasswordForm;

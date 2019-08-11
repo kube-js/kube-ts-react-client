@@ -9,7 +9,9 @@ import {
   LOGIN,
   REGISTER,
   REMIND_PASSWORD,
+  RESET_PASSWORD,
   ROOT,
+  VERIFY,
 } from './constants/routes';
 import Loading from './pages/Loading';
 
@@ -18,6 +20,8 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const Register = lazy(() => import('./pages/Register'));
 const Login = lazy(() => import('./pages/Login'));
 const RemindPassword = lazy(() => import('./pages/RemindPassword'));
+const ResetPassword = lazy(() => import('./pages/ResetPassword'));
+const VerifyAccount = lazy(() => import('./pages/VerifyAccount'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 
 const App = () => (
@@ -27,6 +31,8 @@ const App = () => (
       <Suspense fallback={<Loading />}>
         <Switch>
           <Route exact path={ROOT} component={Home} />
+          <Route exact path={RESET_PASSWORD} component={ResetPassword} />
+          <Route exact path={VERIFY} component={VerifyAccount} />
           <UnauthenticatedRoute exact path={REGISTER} component={Register} />
           <UnauthenticatedRoute exact path={LOGIN} component={Login} />
           <UnauthenticatedRoute

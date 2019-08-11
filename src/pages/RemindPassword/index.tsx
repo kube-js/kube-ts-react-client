@@ -1,7 +1,7 @@
 import React from 'react';
-import { RouterProps } from 'react-router';
+import { RouteProps } from 'react-router';
 import RemindPasswordContainer from '../../containers/RemindPassword';
 
-const RemindPassword = (props: RouterProps) => <RemindPasswordContainer {...props} />;
+const RemindPassword = (props: RouteProps) => <RemindPasswordContainer {...props} />;
 
 export default RemindPassword;

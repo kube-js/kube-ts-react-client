@@ -1,6 +1,5 @@
 import {
   TEST_EMAIL,
-  TEST_MESSAGE,
   TEST_PASSWORD,
   TEST_ROLES,
   TEST_TOKEN,
@@ -19,6 +18,12 @@ import {
   REMIND_PASSWORD_FAILED,
   REMIND_PASSWORD_REQUESTED,
   REMIND_PASSWORD_SUCCEEDED,
+  RESET_PASSWORD_FAILED,
+  RESET_PASSWORD_REQUESTED,
+  RESET_PASSWORD_SUCCEEDED,
+  VERIFY_ACCOUNT_FAILED,
+  VERIFY_ACCOUNT_REQUESTED,
+  VERIFY_ACCOUNT_SUCCEEDED,
 } from '../actions';
 import * as actions from './index';
 
@@ -139,6 +144,64 @@ describe('auth actions', () => {
     expect(actions.remindPasswordFailed(error)).toEqual({
       payload,
       type: REMIND_PASSWORD_FAILED,
+    });
+  });
+
+  it('resetPasswordRequested creates RESET_PASSWORD_REQUESTED', () => {
+    const payload = {
+      email: TEST_EMAIL,
+      password: TEST_PASSWORD,
+      passwordConfirmation: TEST_PASSWORD,
+      token: TEST_TOKEN,
+    };
+
+    expect(actions.resetPasswordRequested(payload)).toEqual({
+      payload,
+      type: RESET_PASSWORD_REQUESTED,
+    });
+  });
+
+  it('resetPasswordSucceeded creates RESET_PASSWORD_SUCCEEDED', () => {
+    expect(actions.resetPasswordSucceeded()).toEqual({
+      type: RESET_PASSWORD_SUCCEEDED,
+    });
+  });
+
+  it('resetPasswordFailed creates RESET_PASSWORD_FAILED', () => {
+    const error = new Error('test');
+    const payload = { error };
+
+    expect(actions.resetPasswordFailed(error)).toEqual({
+      payload,
+      type: RESET_PASSWORD_FAILED,
+    });
+  });
+
+  it('verifyAccountRequested creates VERIFY_ACCOUNT_REQUESTED', () => {
+    const payload = {
+      email: TEST_EMAIL,
+      token: TEST_TOKEN,
+    };
+
+    expect(actions.verifyAccountRequested(payload)).toEqual({
+      payload,
+      type: VERIFY_ACCOUNT_REQUESTED,
+    });
+  });
+
+  it('verifyAccountSucceeded creates VERIFY_ACCOUNT_SUCCEEDED', () => {
+    expect(actions.verifyAccountSucceeded()).toEqual({
+      type: VERIFY_ACCOUNT_SUCCEEDED,
+    });
+  });
+
+  it('verifyAccountFailed creates VERIFY_ACCOUNT_FAILED', () => {
+    const error = new Error('test');
+    const payload = { error };
+
+    expect(actions.verifyAccountFailed(error)).toEqual({
+      payload,
+      type: VERIFY_ACCOUNT_FAILED,
     });
   });
   // tslint:disable-next-line:max-file-line-count

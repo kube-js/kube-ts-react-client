@@ -15,6 +15,12 @@ import {
   REMIND_PASSWORD_FAILED,
   REMIND_PASSWORD_REQUESTED,
   REMIND_PASSWORD_SUCCEEDED,
+  RESET_PASSWORD_FAILED,
+  RESET_PASSWORD_REQUESTED,
+  RESET_PASSWORD_SUCCEEDED,
+  VERIFY_ACCOUNT_FAILED,
+  VERIFY_ACCOUNT_REQUESTED,
+  VERIFY_ACCOUNT_SUCCEEDED,
 } from '../actions';
 import authReducer from './index';
 
@@ -28,9 +34,13 @@ describe('@authReducer', () => {
     registerLoading: false,
     remindPasswordError: null,
     remindPasswordLoading: false,
+    resetPasswordError: null,
+    resetPasswordLoading: false,
     roles: null,
     token: null,
     user: null,
+    verifyAccountError: null,
+    verifyAccountLoading: false,
   };
 
   it('returns initial state', () => {
@@ -211,6 +221,106 @@ describe('@authReducer', () => {
       ...initialState,
       remindPasswordError: error,
       remindPasswordLoading: false,
+    });
+  });
+
+  it('returns state for RESET_PASSWORD_REQUESTED', () => {
+    const action = { type: RESET_PASSWORD_REQUESTED };
+
+    const result = authReducer(undefined, action);
+
+    expect(result).toEqual({
+      ...initialState,
+      resetPasswordLoading: true,
+    });
+  });
+
+  it('returns state for RESET_PASSWORD_SUCCEEDED', () => {
+    const action = { type: RESET_PASSWORD_SUCCEEDED };
+
+    const result = authReducer(
+      {
+        ...initialState,
+        resetPasswordError: error,
+        resetPasswordLoading: true,
+      },
+      action
+    );
+
+    expect(result).toEqual({
+      ...initialState,
+      resetPasswordError: null,
+      resetPasswordLoading: false,
+    });
+  });
+
+  it('returns state for RESET_PASSWORD_FAILED', () => {
+    const payload = { error };
+
+    const action = { type: RESET_PASSWORD_FAILED, payload };
+
+    const result = authReducer(
+      {
+        ...initialState,
+        resetPasswordLoading: true,
+      },
+      action
+    );
+
+    expect(result).toEqual({
+      ...initialState,
+      resetPasswordError: error,
+      resetPasswordLoading: false,
+    });
+  });
+
+  it('returns state for VERIFY_ACCOUNT_REQUESTED', () => {
+    const action = { type: VERIFY_ACCOUNT_REQUESTED };
+
+    const result = authReducer(undefined, action);
+
+    expect(result).toEqual({
+      ...initialState,
+      verifyAccountLoading: true,
+    });
+  });
+
+  it('returns state for VERIFY_ACCOUNT_SUCCEEDED', () => {
+    const action = { type: VERIFY_ACCOUNT_SUCCEEDED };
+
+    const result = authReducer(
+      {
+        ...initialState,
+        verifyAccountError: error,
+        verifyAccountLoading: true,
+      },
+      action
+    );
+
+    expect(result).toEqual({
+      ...initialState,
+      verifyAccountError: null,
+      verifyAccountLoading: false,
+    });
+  });
+
+  it('returns state for VERIFY_ACCOUNT_FAILED', () => {
+    const payload = { error };
+
+    const action = { type: VERIFY_ACCOUNT_FAILED, payload };
+
+    const result = authReducer(
+      {
+        ...initialState,
+        verifyAccountLoading: true,
+      },
+      action
+    );
+
+    expect(result).toEqual({
+      ...initialState,
+      verifyAccountError: error,
+      verifyAccountLoading: false,
     });
   });
   // tslint:disable-next-line:max-file-line-count

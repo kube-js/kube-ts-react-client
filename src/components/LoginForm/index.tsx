@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Formik } from 'formik';
 import React from 'react';
-import { RouterProps } from 'react-router';
+import { RouteProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import PasswordField from '../../atoms/PasswordField';
 import { REGISTER, REMIND_PASSWORD } from '../../constants/routes';
@@ -19,7 +19,7 @@ import { AuthState } from '../../redux/auth/reducer';
 import loginSchema from '../../utils/schemas/login';
 import useStyles from './styles';
 
-interface LoginFormProps extends AuthState, RouterProps {
+interface LoginFormProps extends AuthState, RouteProps {
   readonly login: (options: LoginOptions) => ReturnType<typeof loginRequested>;
 }
 
