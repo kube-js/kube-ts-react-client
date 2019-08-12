@@ -5,6 +5,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './app';
+import ErrorBoundary from './components/ErrorBoundaries/App';
 import { authDataRetrievalRequested } from './redux/auth/actionCreators';
 import configureStore, { history } from './redux/configureStore';
 import defaultTheme from './themes/default';
@@ -17,7 +18,9 @@ render(
   <Provider store={store}>
     <ThemeProvider theme={defaultTheme}>
       <ConnectedRouter history={history}>
-        <App />
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
       </ConnectedRouter>
     </ThemeProvider>
   </Provider>,
