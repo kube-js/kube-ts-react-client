@@ -31,7 +31,7 @@ const RegisterForm = (props: RegisterFormProps) => {
   const classes = useStyles();
 
   const { registerLoading, registerError, register } = props;
-
+  
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
