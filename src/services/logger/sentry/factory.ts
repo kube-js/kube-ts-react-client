@@ -11,7 +11,12 @@ const sentryFactory = ({ dsn }: SentryLoggerOptions): LoggerFacade => {
   });
 
   return {
-    captureException: (exception: any) => Sentry.captureException(exception),
+    captureException: (error: any, errorInfo: any) => {
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        Sentry.captureException(error);
+      });
+    },
     captureMessage: (message: string, level?: Severity) =>
       Sentry.captureMessage(message, level),
   };

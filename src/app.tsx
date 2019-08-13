@@ -43,9 +43,17 @@ const App = () => (
               path={REMIND_PASSWORD}
               component={RemindPassword}
             />
-            
+
             <AuthenticatedRoute exact path={DASHBOARD} component={Dashboard} />
 
+            {/* TODO: remove below error route */}
+            <Route
+              path="/error"
+              exact
+              render={() => {
+                throw new Error('test error');
+              }}
+            />
             <Route component={NotFound} />
           </Switch>
         </ErrorBoundary>

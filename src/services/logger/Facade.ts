@@ -10,5 +10,5 @@ export declare enum Severity {
 
 export interface LoggerFacade {
   readonly captureMessage: (message: string, level?: Severity) => void;
-  readonly captureException: (message: string) => void;
+  readonly captureException: (error: any, errorInfo: any) => void;
 }

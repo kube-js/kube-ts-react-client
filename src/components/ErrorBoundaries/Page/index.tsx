@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { ROOT } from '../../../constants/routes';
 import LoggerContext from '../../../contexts/logger';
-import { LoggerFacade, Severity } from '../../../services/logger/Facade';
+import { LoggerFacade } from '../../../services/logger/Facade';
 
 export interface Props {
   readonly children: any;
@@ -19,11 +19,7 @@ class ErrorBoundary extends Component<Props, State> {
 
   // tslint:disable-next-line:prefer-function-over-method
   public componentDidCatch(error: any, errorInfo: any) {
-    this.props.logger.captureMessage(
-      // tslint:disable-next-line:no-magic-numbers
-      JSON.stringify({ error, errorInfo }, null, 2),
-      'error' as Severity.Error
-    );
+    this.props.logger.captureException(error, errorInfo);
     this.setState({ hasError: true });
   }
 

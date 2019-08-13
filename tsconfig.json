@@ -6,6 +6,9 @@
       "dom.iterable",
       "esnext"
     ],
+    "sourceMap": true,
+    "inlineSources": true,
+    "sourceRoot": "/",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

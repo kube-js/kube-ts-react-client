@@ -6,7 +6,7 @@ export interface DummyLoggerOptions {
 }
 
 const dummyFactory = ({ silent }: DummyLoggerOptions): LoggerFacade => ({
-  captureException: (exception: any) => silent || console.error(exception),
+  captureException: (error: any, errorInfo: any) => silent || console.error(error, errorInfo),
   captureMessage: (message: string, level?: Severity) =>
     silent ||
     console.log({
