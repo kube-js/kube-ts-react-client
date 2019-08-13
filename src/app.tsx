@@ -3,6 +3,7 @@ import React, { Fragment, lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router';
 import AuthenticatedRoute from './components/Auth/AuthenticatedRoute';
 import UnauthenticatedRoute from './components/Auth/UnauthenticatedRoute';
+import ErrorBoundary from './components/ErrorBoundaries/Page/index';
 import Layout from './components/Layout';
 import {
   DASHBOARD,
@@ -29,20 +30,25 @@ const App = () => (
     <CssBaseline />
     <Layout>
       <Suspense fallback={<Loading />}>
-        <Switch>
-          <Route exact path={ROOT} component={Home} />
-          <Route exact path={RESET_PASSWORD} component={ResetPassword} />
-          <Route exact path={VERIFY} component={VerifyAccount} />
-          <UnauthenticatedRoute exact path={REGISTER} component={Register} />
-          <UnauthenticatedRoute exact path={LOGIN} component={Login} />
-          <UnauthenticatedRoute
-            exact
-            path={REMIND_PASSWORD}
-            component={RemindPassword}
-          />
-          <AuthenticatedRoute exact path={DASHBOARD} component={Dashboard} />
-          <Route component={NotFound} />
-        </Switch>
+        <ErrorBoundary>
+          <Switch>
+            <Route exact path={ROOT} component={Home} />
+            <Route exact path={RESET_PASSWORD} component={ResetPassword} />
+            <Route exact path={VERIFY} component={VerifyAccount} />
+
+            <UnauthenticatedRoute exact path={REGISTER} component={Register} />
+            <UnauthenticatedRoute exact path={LOGIN} component={Login} />
+            <UnauthenticatedRoute
+              exact
+              path={REMIND_PASSWORD}
+              component={RemindPassword}
+            />
+            
+            <AuthenticatedRoute exact path={DASHBOARD} component={Dashboard} />
+
+            <Route component={NotFound} />
+          </Switch>
+        </ErrorBoundary>
       </Suspense>
     </Layout>
   </Fragment>

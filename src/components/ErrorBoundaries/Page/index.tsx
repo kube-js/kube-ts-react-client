@@ -2,9 +2,12 @@ import { Typography } from '@material-ui/core';
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { ROOT } from '../../../constants/routes';
+import LoggerContext from '../../../contexts/logger';
+import { LoggerFacade, Severity } from '../../../services/logger/Facade';
 
 export interface Props {
   readonly children: any;
+  readonly logger: LoggerFacade;
 }
 
 export interface State {
@@ -14,15 +17,20 @@ export interface State {
 class ErrorBoundary extends Component<Props, State> {
   public state = { hasError: false };
 
-  public static getDerivedStateFromError(error: any) {
-    // Update state so the next render will show the fallback UI.
-    return { hasError: true };
-  }
-
   // tslint:disable-next-line:prefer-function-over-method
   public componentDidCatch(error: any, errorInfo: any) {
-    // TODO: logErrorToMyService(error, errorInfo);
+    this.props.logger.captureMessage(
+      // tslint:disable-next-line:no-magic-numbers
+      JSON.stringify({ error, errorInfo }, null, 2),
+      'error' as Severity.Error
+    );
+    this.setState({ hasError: true });
   }
+
+  public handleClick = () =>
+    this.setState({
+      hasError: false,
+    });
 
   public render() {
     const { children } = this.props;
@@ -39,7 +47,9 @@ class ErrorBoundary extends Component<Props, State> {
           <Typography component="h1" variant="h5">
             Something went wrong...
           </Typography>
-          <Link to={ROOT}>Refresh the page</Link>
+          <Link onClick={this.handleClick} to={ROOT}>
+            Refresh the page
+          </Link>
         </Fragment>
       );
     }
@@ -48,4 +58,8 @@ class ErrorBoundary extends Component<Props, State> {
   }
 }
 
-export default ErrorBoundary;
+export default (props: any) => (
+  <LoggerContext.Consumer>
+    {logger => <ErrorBoundary {...props} logger={logger} />}
+  </LoggerContext.Consumer>
+);
