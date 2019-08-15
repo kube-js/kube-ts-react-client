@@ -1,6 +1,7 @@
 /* istanbul ignore next */
 import { ThemeProvider } from '@material-ui/styles';
 import { ConnectedRouter } from 'connected-react-router';
+import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
@@ -23,7 +24,9 @@ render(
     <LoggerContext.Provider value={logger}>
       <ThemeProvider theme={defaultTheme}>
         <ConnectedRouter history={history}>
-          <App />
+          <SnackbarProvider>
+            <App />
+          </SnackbarProvider>
         </ConnectedRouter>
       </ThemeProvider>
     </LoggerContext.Provider>
