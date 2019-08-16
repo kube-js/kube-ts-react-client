@@ -34,15 +34,15 @@ export default (notifications = initialState, action: NotificationAction) => {
 
     case CLOSE_SNACKBAR:
       return notifications.map((item: Notification) =>
-        action.payload.dismissAll ||
-        action.payload.notification.key === action.payload.key
+        action.payload.notification.dismissAll ||
+        item.key === action.payload.notification.key
           ? { ...item, dismissed: true }
           : { ...item }
       );
 
     case REMOVE_SNACKBAR:
       return notifications.filter(
-        (item: Notification) => item.key !== action.payload.key
+        (item: Notification) => item.key !== action.payload.notification.key
       );
 
     default:

@@ -6,20 +6,30 @@ export interface Options {
 }
 
 export const enqueueSnackbar = (notification: Notification) => ({
-  notification: {
-    ...notification,
-    key: notification.key || new Date().getTime() + Math.random(),
+  payload: {
+    notification: {
+      ...notification,
+      key: notification.key,
+    },
   },
   type: ENQUEUE_SNACKBAR,
 });
 
-export const closeSnackbar = (key: string) => ({
-  dismissAll: !key, // dismiss all if no key has been defined
-  key,
+export const closeSnackbar = (key?: string) => ({
+  payload: {
+    notification: {
+      dismissAll: !key, // dismiss all if no key has been defined
+      key,
+    },
+  },
   type: CLOSE_SNACKBAR,
 });
 
 export const removeSnackbar = (key: string) => ({
-  key,
+  payload: {
+    notification: {
+      key,
+    },
+  },
   type: REMOVE_SNACKBAR,
 });
