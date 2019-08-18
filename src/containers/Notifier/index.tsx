@@ -1,18 +1,26 @@
-import { withSnackbar, WithSnackbarProps } from 'notistack';
-import { useEffect, useRef, useState } from 'react';
+import { Button } from '@material-ui/core';
+import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
+import { useSnackbar } from 'notistack';
+import React, { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import { removeSnackbar } from '../../redux/notifications/actionCreators';
+import actions from '../../redux/notifications/actionCreators';
 import { Notification } from '../../redux/notifications/reducer';
 import { State } from '../../redux/rootReducer';
-
-export interface Props extends WithSnackbarProps {
-  readonly enqueueSnackbar: any;
+export interface Props {
+  readonly closeNotification: any;
+  readonly removeSnackbar: any;
   readonly notifications: Notification[];
 }
 
-const Notifier = ({ closeSnackbar, enqueueSnackbar, notifications }: Props) => {
+const Notifier = ({
+  closeNotification,
+  removeSnackbar,
+  notifications,
+}: Props) => {
   const mounted = useRef(false);
+
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const initialDisplayedIds: string[] = [];
 
@@ -25,16 +33,29 @@ const Notifier = ({ closeSnackbar, enqueueSnackbar, notifications }: Props) => {
       notifications.forEach((notification: Notification) => {
         if (!displayedIds.includes(notification.key)) {
           enqueueSnackbar(notification.message, {
-            onClose: (event: any, reason: any, key: any) => {
+            action: () => (
+              <Button
+                color="inherit"
+                onClick={() => {
+                  closeNotification(notification.key);
+                  closeSnackbar(notification.key);
+                  // removeSnackbar(notification.key);
+                }}
+              >
+                <CloseOutlinedIcon color="inherit" /> close
+              </Button>
+            ),
+            onClose: (
+              event: SyntheticEvent<Element, Event>,
+              reason: string
+            ) => {
               if (notification.onClose) {
-                notification.onClose(event, reason, key);
+                notification.onClose(event, reason);
               }
               // Dispatch action to remove snackbar from redux store
-              removeSnackbar(notification.key);
+              closeNotification(notification.key);
             },
-            variant: 'warning',
             ...notification,
-            dismissed: notification.dismissed.toString(),
           });
 
           storeDisplayedIds([...displayedIds, notification.key]);
@@ -54,10 +75,15 @@ const mapStateToProps = ({ notifications }: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators({ removeSnackbar }, dispatch);
+  bindActionCreators(
+    {
+      closeNotification: actions.closeSnackbar,
+      removeSnackbar: actions.removeSnackbar,
+    },
+    dispatch
+  );
 
-export default withSnackbar(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-  // tslint:disable-next-line:max-file-line-count
-)(Notifier) as any);
+)(Notifier);

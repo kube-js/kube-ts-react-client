@@ -6,6 +6,7 @@ import {
   AUTH_DATA_USER,
 } from '../../../../constants/auth';
 import store from '../../../../services/store';
+import { enqueueSnackbar } from '../../../notifications/actionCreators';
 import {
   registerFailed,
   RegisterOptions,
@@ -34,8 +35,14 @@ export const registerCreator = (options: Options) =>
     } catch (error) {
       // FYI: https://github.com/sindresorhus/ky/issues/107
       const { message } = yield error.response.json();
-  
-      // TODO: implement snackbar
+
+      yield put(
+        enqueueSnackbar({
+          message,
+          variant: 'error',
+        })
+      );
+
       yield put(registerFailed(message));
     }
   };

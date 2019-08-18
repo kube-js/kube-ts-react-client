@@ -16,7 +16,6 @@ import { LOGIN } from '../../constants/routes';
 import { remindPasswordRequested } from '../../redux/auth/actionCreators';
 import { AuthState } from '../../redux/auth/reducer';
 import remindPasswordSchema from '../../utils/schemas/remindPassword';
-import ErrorMessage from '../ErrorMessage';
 import useStyles from './styles';
 
 interface RemindPasswordProps extends AuthState, RouteProps {
@@ -32,7 +31,7 @@ export interface RemindPasswordValues {
 const RemindPasswordForm = (props: RemindPasswordProps) => {
   const classes = useStyles();
 
-  const { remindPasswordLoading, remindPasswordError, remindPassword } = props;
+  const { remindPasswordLoading, remindPassword } = props;
 
   return (
     <Container component="main" maxWidth="xs">
@@ -79,10 +78,6 @@ const RemindPasswordForm = (props: RemindPasswordProps) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-
-                {remindPasswordError && (
-                  <ErrorMessage>{remindPasswordError}</ErrorMessage>
-                )}
 
                 <Button
                   disabled={remindPasswordLoading}

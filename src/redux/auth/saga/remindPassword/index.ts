@@ -1,5 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import api, { Api } from '../../../../api';
+import { enqueueSnackbar } from '../../../notifications/actionCreators';
 import {
   remindPasswordFailed,
   remindPasswordSucceeded,
@@ -19,16 +20,26 @@ export const remindPasswordCreator = (options: Options) =>
         email,
       });
 
-      // TODO: implement snackbar
-      // tslint:disable-next-line:no-console
-      console.log(message);
+      yield put(
+        enqueueSnackbar({
+          message,
+          variant: 'success',
+        })
+      );
+
       yield put(remindPasswordSucceeded());
     } catch (error) {
       // FYI: https://github.com/sindresorhus/ky/issues/107
       const { message } = yield error.response.json();
 
-      // TODO: implement snackbar
       yield put(remindPasswordFailed(message));
+
+      yield put(
+        enqueueSnackbar({
+          message,
+          variant: 'error',
+        })
+      );
     }
   };
 

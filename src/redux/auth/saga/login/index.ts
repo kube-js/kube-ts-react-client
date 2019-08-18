@@ -6,6 +6,7 @@ import {
   AUTH_DATA_USER,
 } from '../../../../constants/auth';
 import store from '../../../../services/store';
+import { enqueueSnackbar } from '../../../notifications/actionCreators';
 import { loginFailed, loginSucceeded } from '../../actionCreators';
 import { LOGIN_REQUESTED } from '../../actions';
 
@@ -33,8 +34,14 @@ export const loginCreator = (options: Options) =>
       // FYI: https://github.com/sindresorhus/ky/issues/107
       const { message } = yield error.response.json();
 
-      // TODO: implement snackbar
       yield put(loginFailed(message));
+
+      yield put(
+        enqueueSnackbar({
+          message,
+          variant: 'error',
+        })
+      );
     }
   };
 

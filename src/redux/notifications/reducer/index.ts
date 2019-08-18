@@ -2,6 +2,7 @@ import { CLOSE_SNACKBAR, ENQUEUE_SNACKBAR, REMOVE_SNACKBAR } from '../actions';
 
 export interface Notification {
   readonly [key: string]: any;
+  readonly message: string | React.ReactNode;
   readonly dismissed: boolean;
   readonly key: string;
 }

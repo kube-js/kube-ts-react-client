@@ -1,7 +1,8 @@
-import { push } from 'connected-react-router'
+import { push } from 'connected-react-router';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import api, { Api } from '../../../../api';
 import { LOGIN } from '../../../../constants/routes';
+import { enqueueSnackbar } from '../../../notifications/actionCreators';
 import {
   resetPasswordFailed,
   ResetPasswordOptions,
@@ -16,17 +17,33 @@ export interface Options {
 export const resetPasswordCreator = (options: Options) =>
   function* resetPassword(action: { payload: ResetPasswordOptions }) {
     try {
-      yield call(options.api.auth.resetPassword, action.payload);
+      const { message } = yield call(
+        options.api.auth.resetPassword,
+        action.payload
+      );
 
-      // TODO: implement snackbar
       yield put(resetPasswordSucceeded());
+
+      yield put(
+        enqueueSnackbar({
+          message,
+          variant: 'success'
+        })
+      );
+
       yield put(push(LOGIN));
     } catch (error) {
       // FYI: https://github.com/sindresorhus/ky/issues/107
       const { message } = yield error.response.json();
 
-      // TODO: implement snackbar
       yield put(resetPasswordFailed(message));
+
+      yield put(
+        enqueueSnackbar({
+          message,
+          variant: 'error'
+        })
+      );
     }
   };
 

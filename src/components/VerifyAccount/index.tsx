@@ -10,6 +10,7 @@ import {
   verifyAccountRequested,
 } from '../../redux/auth/actionCreators';
 import { AuthState } from '../../redux/auth/reducer';
+import ErrorMessage from '../ErrorMessage';
 import useStyles from './styles';
 
 interface VerifyAccountProps extends AuthState, RouteProps {
@@ -60,7 +61,7 @@ const VerifyAccount = ({
           </div>
         )}
 
-        {displayError && <div>{verifyAccountError}</div>}
+        {displayError && <ErrorMessage>{verifyAccountError}</ErrorMessage>}
       </div>
     </Container>
   );

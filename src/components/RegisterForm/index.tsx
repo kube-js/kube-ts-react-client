@@ -19,7 +19,6 @@ import {
 } from '../../redux/auth/actionCreators';
 import { AuthState } from '../../redux/auth/reducer';
 import registerSchema from '../../utils/schemas/register';
-import ErrorMessage from '../ErrorMessage';
 import useStyles from './styles';
 
 interface RegisterFormProps extends AuthState, RouteProps {
@@ -119,11 +118,6 @@ const RegisterForm = (props: RegisterFormProps) => {
                     />
                   </Grid>
                   <Grid item xs={12}>
-
-                    {registerError && (
-                      <ErrorMessage>{registerError}</ErrorMessage>
-                    )}
-
                     <Button
                       type="submit"
                       disabled={registerLoading}

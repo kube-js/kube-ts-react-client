@@ -27,7 +27,7 @@ interface LoginFormProps extends AuthState, RouteProps {
 const LoginForm = (props: LoginFormProps) => {
   const classes = useStyles();
 
-  const { loginLoading, loginError, login } = props;
+  const { loginLoading, login } = props;
 
   return (
     <Container component="main" maxWidth="xs">
@@ -93,8 +93,6 @@ const LoginForm = (props: LoginFormProps) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-
-                {loginError && <ErrorMessage>{loginError}</ErrorMessage>}
 
                 <Button
                   disabled={loginLoading}
