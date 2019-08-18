@@ -19,6 +19,7 @@ import {
 } from '../../redux/auth/actionCreators';
 import { AuthState } from '../../redux/auth/reducer';
 import registerSchema from '../../utils/schemas/register';
+import ErrorMessage from '../ErrorMessage';
 import useStyles from './styles';
 
 interface RegisterFormProps extends AuthState, RouteProps {
@@ -31,7 +32,7 @@ const RegisterForm = (props: RegisterFormProps) => {
   const classes = useStyles();
 
   const { registerLoading, registerError, register } = props;
-  
+
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
@@ -118,16 +119,9 @@ const RegisterForm = (props: RegisterFormProps) => {
                     />
                   </Grid>
                   <Grid item xs={12}>
+
                     {registerError && (
-                      <div
-                        style={{
-                          border: '1px solid red',
-                          color: 'red',
-                          padding: '10px',
-                        }}
-                      >
-                        {registerError}
-                      </div>
+                      <ErrorMessage>{registerError}</ErrorMessage>
                     )}
 
                     <Button

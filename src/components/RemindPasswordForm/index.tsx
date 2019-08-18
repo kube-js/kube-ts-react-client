@@ -16,6 +16,7 @@ import { LOGIN } from '../../constants/routes';
 import { remindPasswordRequested } from '../../redux/auth/actionCreators';
 import { AuthState } from '../../redux/auth/reducer';
 import remindPasswordSchema from '../../utils/schemas/remindPassword';
+import ErrorMessage from '../ErrorMessage';
 import useStyles from './styles';
 
 interface RemindPasswordProps extends AuthState, RouteProps {
@@ -80,15 +81,7 @@ const RemindPasswordForm = (props: RemindPasswordProps) => {
                 />
 
                 {remindPasswordError && (
-                  <div
-                    style={{
-                      border: '1px solid red',
-                      color: 'red',
-                      padding: '10px',
-                    }}
-                  >
-                    {remindPasswordError}
-                  </div>
+                  <ErrorMessage>{remindPasswordError}</ErrorMessage>
                 )}
 
                 <Button

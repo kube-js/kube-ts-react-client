@@ -1,4 +1,4 @@
-import { withSnackbar /* WithSnackbarProps */ } from 'notistack';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
 import { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
@@ -6,10 +6,8 @@ import { removeSnackbar } from '../../redux/notifications/actionCreators';
 import { Notification } from '../../redux/notifications/reducer';
 import { State } from '../../redux/rootReducer';
 
-export interface Props {
-  readonly closeSnackbar: any;
+export interface Props extends WithSnackbarProps {
   readonly enqueueSnackbar: any;
-  readonly removeSnackbar: any;
   readonly notifications: Notification[];
 }
 

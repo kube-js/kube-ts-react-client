@@ -18,6 +18,7 @@ import {
 } from '../../redux/auth/actionCreators';
 import { AuthState } from '../../redux/auth/reducer';
 import resetPasswordSchema from '../../utils/schemas/resetPassword';
+import ErrorMessage from '../ErrorMessage';
 import useStyles from './styles';
 
 interface ResetPasswordFormProps extends AuthState, RouteProps {
@@ -130,15 +131,7 @@ const ResetPasswordForm = ({
                   </Grid>
                   <Grid item xs={12}>
                     {resetPasswordError && (
-                      <div
-                        style={{
-                          border: '1px solid red',
-                          color: 'red',
-                          padding: '10px',
-                        }}
-                      >
-                        {resetPasswordError}
-                      </div>
+                      <ErrorMessage>{resetPasswordError}</ErrorMessage>
                     )}
 
                     <Button
