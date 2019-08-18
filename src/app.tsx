@@ -14,13 +14,13 @@ import {
   ROOT,
   VERIFY,
 } from './constants/routes';
+import Home from './containers/Home';
 import Loading from './containers/Loading';
+import Login from './containers/Login';
+import NotFound from './containers/NotFound';
 import Notifier from './containers/Notifier';
+import Register from './containers/Register';
 
-const Home = lazy(() => import('./containers/Home'));
-const NotFound = lazy(() => import('./containers/NotFound'));
-const Register = lazy(() => import('./containers/Register'));
-const Login = lazy(() => import('./containers/Login'));
 const RemindPassword = lazy(() => import('./containers/RemindPassword'));
 const ResetPassword = lazy(() => import('./containers/ResetPassword'));
 const VerifyAccount = lazy(() => import('./containers/VerifyAccount'));
@@ -57,14 +57,6 @@ const App = () => (
                 component={Dashboard}
               />
 
-              {/* TODO: remove below error route */}
-              <Route
-                path="/error"
-                exact
-                render={() => {
-                  throw new Error('test error');
-                }}
-              />
               <Route component={NotFound} />
             </Switch>
           </ErrorBoundary>
