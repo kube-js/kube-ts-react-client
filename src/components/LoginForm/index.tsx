@@ -17,6 +17,7 @@ import { REGISTER, REMIND_PASSWORD } from '../../constants/routes';
 import { LoginOptions, loginRequested } from '../../redux/auth/actionCreators';
 import { AuthState } from '../../redux/auth/reducer';
 import loginSchema from '../../utils/schemas/login';
+import ErrorMessage from '../ErrorMessage';
 import useStyles from './styles';
 
 interface LoginFormProps extends AuthState, RouteProps {
@@ -93,17 +94,7 @@ const LoginForm = (props: LoginFormProps) => {
                   onBlur={handleBlur}
                 />
 
-                {loginError && (
-                  <div
-                    style={{
-                      border: '1px solid red',
-                      color: 'red',
-                      padding: '10px',
-                    }}
-                  >
-                    {loginError}
-                  </div>
-                )}
+                {loginError && <ErrorMessage>{loginError}</ErrorMessage>}
 
                 <Button
                   disabled={loginLoading}

@@ -15,6 +15,7 @@ import {
   VERIFY,
 } from './constants/routes';
 import Loading from './containers/Loading';
+import Notifier from './containers/Notifier';
 
 const Home = lazy(() => import('./containers/Home'));
 const NotFound = lazy(() => import('./containers/NotFound'));
@@ -28,6 +29,7 @@ const Dashboard = lazy(() => import('./containers/Dashboard'));
 const App = () => (
   <Fragment>
     <CssBaseline />
+    <Notifier />
     <Layout>
       <Suspense fallback={<Loading />}>
         <StrictMode>
