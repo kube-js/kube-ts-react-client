@@ -8,18 +8,13 @@ import actions from '../../redux/notifications/actionCreators';
 import { Notification } from '../../redux/notifications/reducer';
 import { State } from '../../redux/rootReducer';
 export interface Props {
-  readonly closeNotification: any;
-  readonly removeSnackbar: any;
+  readonly markAsDismissed: typeof actions.closeSnackbar;
   readonly notifications: Notification[];
+  readonly removeSnackbar: typeof actions.removeSnackbar;
 }
 
-const Notifier = ({
-  closeNotification,
-  removeSnackbar,
-  notifications,
-}: Props) => {
+const Notifier = ({ markAsDismissed, notifications }: Props) => {
   const mounted = useRef(false);
-
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const initialDisplayedIds: string[] = [];
@@ -30,16 +25,18 @@ const Notifier = ({
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      notifications.forEach((notification: Notification) => {
+      notifications.forEach(({ dismissed, ...notification }: Notification) => {
         if (!displayedIds.includes(notification.key)) {
           enqueueSnackbar(notification.message, {
             action: () => (
               <Button
                 color="inherit"
+                size="small"
                 onClick={() => {
-                  closeNotification(notification.key);
                   closeSnackbar(notification.key);
-                  // removeSnackbar(notification.key);
+
+                  // dissmiss notification in redux store
+                  markAsDismissed(notification.key);
                 }}
               >
                 <CloseOutlinedIcon color="inherit" /> close
@@ -52,16 +49,18 @@ const Notifier = ({
               if (notification.onClose) {
                 notification.onClose(event, reason);
               }
-              // Dispatch action to remove snackbar from redux store
-              closeNotification(notification.key);
+              closeSnackbar(notification.key);
+
+              // dissmiss notification in redux store
+              markAsDismissed(notification.key);
             },
             ...notification,
+            ContentProps: {
+              style: { overflowWrap: 'break-word', width: '250px' },
+            },
           });
 
           storeDisplayedIds([...displayedIds, notification.key]);
-        } else if (notification.dismissed) {
-          closeSnackbar(notification.key);
-          removeSnackbar(notification.key);
         }
       });
     }
@@ -77,7 +76,7 @@ const mapStateToProps = ({ notifications }: State) => ({
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
-      closeNotification: actions.closeSnackbar,
+      markAsDismissed: actions.closeSnackbar,
       removeSnackbar: actions.removeSnackbar,
     },
     dispatch

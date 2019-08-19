@@ -11,6 +11,8 @@ const ErrorMessage = ({ children, ...props }: Props) => (
     border="1px solid red"
     padding="10px"
     borderRadius="3px"
+    display="flex"
+    alignItems="center"
     {...props}
   >
     {children}
