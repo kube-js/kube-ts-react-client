@@ -4,17 +4,17 @@ import { useSnackbar } from 'notistack';
 import React, { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import actions from '../../redux/notifications/actionCreators';
-import { Notification } from '../../redux/notifications/reducer';
+import actions from '../../redux/alerts/actionCreators';
+import { Alert } from '../../redux/alerts/reducer';
 import { State } from '../../redux/rootReducer';
 export interface Props {
-  readonly markAsDismissed: typeof actions.closeSnackbar;
-  readonly notifications: Notification[];
+  readonly alerts: Alert[];
   readonly removeSnackbar: typeof actions.removeSnackbar;
 }
 
-const Notifier = ({ markAsDismissed, notifications }: Props) => {
+const Notifier = ({ removeSnackbar, alerts }: Props) => {
   const mounted = useRef(false);
+
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const initialDisplayedIds: string[] = [];
@@ -25,42 +25,41 @@ const Notifier = ({ markAsDismissed, notifications }: Props) => {
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      notifications.forEach(({ dismissed, ...notification }: Notification) => {
-        if (!displayedIds.includes(notification.key)) {
-          enqueueSnackbar(notification.message, {
+      alerts.forEach((alert: Alert) => {
+        if (!displayedIds.includes(alert.key)) {
+          enqueueSnackbar(alert.message, {
             action: () => (
               <Button
                 color="inherit"
                 size="small"
+                aria-label="Close"
                 onClick={() => {
-                  closeSnackbar(notification.key);
+                  closeSnackbar(alert.key);
 
-                  // dissmiss notification in redux store
-                  markAsDismissed(notification.key);
+                  removeSnackbar(alert.key);
                 }}
               >
-                <CloseOutlinedIcon color="inherit" /> close
+                <CloseOutlinedIcon color="inherit" />
               </Button>
             ),
             onClose: (
               event: SyntheticEvent<Element, Event>,
               reason: string
             ) => {
-              if (notification.onClose) {
-                notification.onClose(event, reason);
+              if (alert.onClose) {
+                alert.onClose(event, reason);
               }
-              closeSnackbar(notification.key);
+              closeSnackbar(alert.key);
 
-              // dissmiss notification in redux store
-              markAsDismissed(notification.key);
+              removeSnackbar(alert.key);
             },
-            ...notification,
+            ...alert,
             ContentProps: {
-              style: { overflowWrap: 'break-word', width: '250px' },
+              style: { overflowWrap: 'break-word', maxWidth: '400px' },
             },
           });
 
-          storeDisplayedIds([...displayedIds, notification.key]);
+          storeDisplayedIds([...displayedIds, alert.key]);
         }
       });
     }
@@ -69,14 +68,13 @@ const Notifier = ({ markAsDismissed, notifications }: Props) => {
   return null;
 };
 
-const mapStateToProps = ({ notifications }: State) => ({
-  notifications,
+const mapStateToProps = ({ alerts }: State) => ({
+  alerts,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
-      markAsDismissed: actions.closeSnackbar,
       removeSnackbar: actions.removeSnackbar,
     },
     dispatch

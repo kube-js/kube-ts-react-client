@@ -12,6 +12,7 @@ import React from 'react';
 import { RouteProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import PasswordField from '../../atoms/PasswordField';
+import { PASSWORD_HELPER_TEXT } from '../../constants';
 import { LOGIN } from '../../constants/routes';
 import {
   RegisterOptions,
@@ -30,7 +31,7 @@ interface RegisterFormProps extends AuthState, RouteProps {
 const RegisterForm = (props: RegisterFormProps) => {
   const classes = useStyles();
 
-  const { registerLoading, registerError, register } = props;
+  const { registerLoading, register } = props;
 
   return (
     <Container component="main" maxWidth="xs">
@@ -57,9 +58,11 @@ const RegisterForm = (props: RegisterFormProps) => {
             touched,
           }) => {
             const hasEmailError = Boolean(errors.email && touched.email);
+
             const hasPasswordError = Boolean(
               errors.password && touched.password
             );
+
             const hasPasswordConfirmationError = Boolean(
               errors.passwordConfirmation && touched.passwordConfirmation
             );
@@ -86,7 +89,7 @@ const RegisterForm = (props: RegisterFormProps) => {
 
                   <Grid item xs={12}>
                     <PasswordField
-                      helperText={errors.password}
+                      helperText={PASSWORD_HELPER_TEXT}
                       error={hasPasswordError}
                       variant="outlined"
                       required
@@ -103,7 +106,7 @@ const RegisterForm = (props: RegisterFormProps) => {
 
                   <Grid item xs={12}>
                     <PasswordField
-                      helperText={errors.passwordConfirmation}
+                      helperText={PASSWORD_HELPER_TEXT}
                       error={hasPasswordConfirmationError}
                       variant="outlined"
                       required

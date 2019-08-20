@@ -1,8 +1,7 @@
 import { push } from 'connected-react-router';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import api, { Api } from '../../../../api';
-import { LOGIN } from '../../../../constants/routes';
-import { enqueueSnackbar } from '../../../notifications/actionCreators';
+import { enqueueSnackbar } from '../../../alerts/actionCreators';
 import {
   verifyAccountFailed,
   VerifyAccountOptions,
