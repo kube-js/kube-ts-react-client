@@ -12,6 +12,7 @@ import _defaultTo from 'ramda/src/defaultTo';
 import React from 'react';
 import { RouteProps } from 'react-router';
 import PasswordField from '../../atoms/PasswordField';
+import { PASSWORD_HELPER_TEXT } from '../../constants';
 import {
   ResetPasswordOptions,
   resetPasswordRequested,
@@ -96,7 +97,7 @@ const ResetPasswordForm = ({
 
                   <Grid item xs={12}>
                     <PasswordField
-                      helperText={errors.password}
+                      helperText={PASSWORD_HELPER_TEXT}
                       error={hasPasswordError}
                       variant="outlined"
                       required
@@ -113,7 +114,7 @@ const ResetPasswordForm = ({
 
                   <Grid item xs={12}>
                     <PasswordField
-                      helperText={errors.passwordConfirmation}
+                      helperText={PASSWORD_HELPER_TEXT}
                       error={hasPasswordConfirmationError}
                       variant="outlined"
                       required

@@ -1,18 +1,18 @@
 import { connectRouter, RouterState } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 import { combineReducers } from 'redux';
+import alertsReducer, { AlertState } from './alerts/reducer';
 import authReducer, { AuthState } from './auth/reducer';
-import notificationReducer, { NotificationState } from './notifications/reducer';
 
 export interface State {
   readonly router: RouterState;
   readonly auth: AuthState;
-  readonly notifications: NotificationState;
+  readonly alerts: AlertState;
 }
 
 export default (history: ReturnType<typeof createBrowserHistory>) =>
   combineReducers<State>({
+    alerts: alertsReducer, 
     auth: authReducer,
-    notifications: notificationReducer, 
     router: connectRouter(history),
   });

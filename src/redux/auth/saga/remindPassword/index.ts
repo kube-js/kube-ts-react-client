@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import api, { Api } from '../../../../api';
-import { enqueueSnackbar } from '../../../notifications/actionCreators';
+import { enqueueSnackbar } from '../../../alerts/actionCreators';
 import {
   remindPasswordFailed,
   remindPasswordSucceeded,

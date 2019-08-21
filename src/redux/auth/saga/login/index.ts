@@ -6,7 +6,7 @@ import {
   AUTH_DATA_USER,
 } from '../../../../constants/auth';
 import store from '../../../../services/store';
-import { enqueueSnackbar } from '../../../notifications/actionCreators';
+import { enqueueSnackbar } from '../../../alerts/actionCreators';
 import { loginFailed, loginSucceeded } from '../../actionCreators';
 import { LOGIN_REQUESTED } from '../../actions';
 
