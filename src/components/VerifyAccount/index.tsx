@@ -41,7 +41,6 @@ const VerifyAccount = ({
     }
   }, []);
 
-  // TODO: rething snackbars messages
   const displaySuccessMessage = Boolean(
     !verifyAccountLoading && !verifyAccountError
   );

@@ -1,4 +1,3 @@
-import { push } from 'connected-react-router';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import api, { Api } from '../../../../api';
 import { enqueueSnackbar } from '../../../alerts/actionCreators';

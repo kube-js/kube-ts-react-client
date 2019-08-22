@@ -138,20 +138,17 @@ export const remindPasswordFailed = (error: any) => ({
 });
 
 export interface ResetPasswordOptions {
-  readonly email: string;
   readonly password: string;
   readonly passwordConfirmation: string;
   readonly token: string;
 }
 
 export const resetPasswordRequested = ({
-  email,
   password,
   passwordConfirmation,
   token,
 }: ResetPasswordOptions) => ({
   payload: {
-    email,
     password,
     passwordConfirmation,
     token,

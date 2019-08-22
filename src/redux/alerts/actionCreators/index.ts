@@ -26,7 +26,6 @@ export const removeSnackbar = (key: string) => ({
 });
 
 export default {
-  // closeSnackbar,
   enqueueSnackbar,
   removeSnackbar,
 };
