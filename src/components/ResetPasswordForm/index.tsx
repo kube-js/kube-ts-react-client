@@ -4,7 +4,6 @@ import { Grid } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Formik } from 'formik';
@@ -38,10 +37,8 @@ const ResetPasswordForm = ({
     location !== undefined ? new URLSearchParams(location.search) : null;
 
   const tokenParam = params !== null ? params.get('token') : '';
-  const emailParam = params !== null ? params.get('email') : '';
 
   const token = _defaultTo('')(tokenParam);
-  const email = _defaultTo('')(emailParam);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -56,7 +53,7 @@ const ResetPasswordForm = ({
 
         <Formik
           validationSchema={resetPasswordSchema}
-          initialValues={{ email, password: '', passwordConfirmation: '' }}
+          initialValues={{ password: '', passwordConfirmation: '' }}
           validateOnChange={false}
           onSubmit={values => resetPassword({ ...values, token })}
           render={({
@@ -67,7 +64,6 @@ const ResetPasswordForm = ({
             errors,
             touched,
           }) => {
-            const hasEmailError = Boolean(errors.email && touched.email);
             const hasPasswordError = Boolean(
               errors.password && touched.password
             );
@@ -78,23 +74,6 @@ const ResetPasswordForm = ({
             return (
               <form className={classes.form} noValidate onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <TextField
-                      helperText={errors.email}
-                      error={hasEmailError}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
-                      value={values.email}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                  </Grid>
-
                   <Grid item xs={12}>
                     <PasswordField
                       helperText={PASSWORD_HELPER_TEXT}

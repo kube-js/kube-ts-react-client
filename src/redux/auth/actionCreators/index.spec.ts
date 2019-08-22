@@ -149,7 +149,6 @@ describe('auth actions', () => {
 
   it('resetPasswordRequested creates RESET_PASSWORD_REQUESTED', () => {
     const payload = {
-      email: TEST_EMAIL,
       password: TEST_PASSWORD,
       passwordConfirmation: TEST_PASSWORD,
       token: TEST_TOKEN,

@@ -50,7 +50,7 @@ const Dashboard = ({ user, verifyAccount }: Props) => {
             <Link
               style={{ margin: '0 5px', cursor: 'pointer' }}
               onClick={handleVerifyAccount({
-                // TODO: change API to return all user props
+                // TODO: new route for resending verify code: i.e. resend-verify-token
                 email: user.email,
                 token: user.verifyToken,
                 verifyAccount,
@@ -72,8 +72,7 @@ const mapStateToProps = ({ auth: { user } }: State) => user;
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   verifyAccount: ({ email, token }: VerifyAccountOptions) =>
     dispatch(
-      // TODO: 'Account verified successfully. You can now log in.' - change API message
-      // TODO: change so its not redirecting to login, debounce
+      // TODO: implement debounce and server throttling
       verifyAccountRequested({
         email,
         token,

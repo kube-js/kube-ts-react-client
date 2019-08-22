@@ -7,7 +7,7 @@ const InternationalisationContext = createContext({});
 
 class InternationalisationProvider extends Component<any, any> {
   public state = {
-    locale: 'en',
+    locale: navigator.language.split(/[-_]/)[0] || 'en',
   };
 
   public setLocale = (locale: string) => this.setState({ locale });
