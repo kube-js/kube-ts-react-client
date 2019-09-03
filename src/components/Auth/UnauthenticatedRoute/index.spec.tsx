@@ -1,10 +1,7 @@
 // TODO: move that (jest-dom/extend-expect) to setup  file
 // tslint:disable-next-line:no-import-side-effect
 import '@testing-library/jest-dom/extend-expect';
-// TODO: move that (@testing-library/react/cleanup-after-each) to setup file
 import { render } from '@testing-library/react';
-// tslint:disable-next-line:no-import-side-effect
-import '@testing-library/react/cleanup-after-each';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { UnauthenticatedRoute, UnauthenticatedRouteProps } from './index';

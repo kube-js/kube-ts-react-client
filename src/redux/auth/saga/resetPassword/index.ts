@@ -1,7 +1,8 @@
 import { push } from 'connected-react-router';
 import { call, put, takeLatest } from 'redux-saga/effects';
-import api, { Api } from '../../../../api';
+import createApi, { Api, Options as ApiOptions } from '../../../../api';
 import { LOGIN } from '../../../../constants/routes';
+import http from '../../../../services/http';
 import { enqueueSnackbar } from '../../../alerts/actionCreators';
 import {
   resetPasswordFailed,
@@ -11,14 +12,18 @@ import {
 import { RESET_PASSWORD_REQUESTED } from '../../actions';
 
 export interface Options {
-  readonly api: Api;
+  readonly createApi: (options: ApiOptions) => Api;
 }
 
 export const resetPasswordCreator = (options: Options) =>
   function* resetPassword(action: { payload: ResetPasswordOptions }) {
     try {
+      const api = options.createApi({
+        httpClient: http,
+      });
+
       const { message } = yield call(
-        options.api.auth.resetPassword,
+        api.auth.resetPassword,
         action.payload
       );
 
@@ -55,4 +60,4 @@ export const createResetPasswordSaga = (options: Options) =>
     );
   };
 
-export default createResetPasswordSaga({ api });
+export default createResetPasswordSaga({ createApi });

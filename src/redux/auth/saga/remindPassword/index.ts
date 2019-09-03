@@ -1,5 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import api, { Api } from '../../../../api';
+import createApi, { Api, Options as ApiOptions } from '../../../../api';
+import http from '../../../../services/http';
 import { enqueueSnackbar } from '../../../alerts/actionCreators';
 import {
   remindPasswordFailed,
@@ -8,7 +9,7 @@ import {
 import { REMIND_PASSWORD_REQUESTED } from '../../actions';
 
 export interface Options {
-  readonly api: Api;
+  readonly createApi: (options: ApiOptions) => Api;
 }
 
 export const remindPasswordCreator = (options: Options) =>
@@ -16,7 +17,11 @@ export const remindPasswordCreator = (options: Options) =>
     try {
       const { email } = action.payload;
 
-      const { message } = yield call(options.api.auth.remindPassword, {
+      const api = options.createApi({
+        httpClient: http,
+      });
+
+      const { message } = yield call(api.auth.remindPassword, {
         email,
       });
 
@@ -51,4 +56,4 @@ export const createRemindPasswordSaga = (options: Options) =>
     );
   };
 
-export default createRemindPasswordSaga({ api });
+export default createRemindPasswordSaga({ createApi });

@@ -2,21 +2,21 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import VerifyAccount from '../../components/VerifyAccount';
 import {
-  VerifyAccountOptions,
-  verifyAccountRequested,
+  ResendVerifyTokenOptions,
+  resendVerifyTokenRequested,
 } from '../../redux/auth/actionCreators/index';
 import { State } from '../../redux/rootReducer';
 
 const mapStateToProps = ({
-  auth: { verifyAccountLoading, verifyAccountError },
+  auth: { resendVerifyTokenLoading, resendVerifyTokenError },
 }: State) => ({
-  verifyAccountError,
-  verifyAccountLoading,
+  resendVerifyTokenError,
+  resendVerifyTokenLoading,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  verifyAccount: (values: VerifyAccountOptions) =>
-    dispatch(verifyAccountRequested(values)),
+  resendVerifyToken: (values: ResendVerifyTokenOptions) =>
+    dispatch(resendVerifyTokenRequested(values)),
 });
 
 export default connect(

@@ -11,12 +11,12 @@ import {
   REMIND_PASSWORD_FAILED,
   REMIND_PASSWORD_REQUESTED,
   REMIND_PASSWORD_SUCCEEDED,
+  RESEND_VERIFY_TOKEN_FAILED,
+  RESEND_VERIFY_TOKEN_REQUESTED,
+  RESEND_VERIFY_TOKEN_SUCCEEDED,
   RESET_PASSWORD_FAILED,
   RESET_PASSWORD_REQUESTED,
   RESET_PASSWORD_SUCCEEDED,
-  VERIFY_ACCOUNT_FAILED,
-  VERIFY_ACCOUNT_REQUESTED,
-  VERIFY_ACCOUNT_SUCCEEDED,
 } from '../actions/index';
 
 export interface LoginOptions {
@@ -167,30 +167,27 @@ export const resetPasswordFailed = (error: any) => ({
   type: RESET_PASSWORD_FAILED,
 });
 
-export interface VerifyAccountOptions {
+export interface ResendVerifyTokenOptions {
   readonly email: string;
-  readonly token: string;
 }
 
-export const verifyAccountRequested = ({
+export const resendVerifyTokenRequested = ({
   email,
-  token,
-}: VerifyAccountOptions) => ({
+}: ResendVerifyTokenOptions) => ({
   payload: {
     email,
-    token,
   },
-  type: VERIFY_ACCOUNT_REQUESTED,
+  type: RESEND_VERIFY_TOKEN_REQUESTED,
 });
 
-export const verifyAccountSucceeded = () => ({
-  type: VERIFY_ACCOUNT_SUCCEEDED,
+export const resendVerifyTokenSucceeded = () => ({
+  type: RESEND_VERIFY_TOKEN_SUCCEEDED,
 });
 
-export const verifyAccountFailed = (error: any) => ({
+export const resendVerifyTokenFailed = (error: any) => ({
   payload: {
     error,
   },
-  type: VERIFY_ACCOUNT_FAILED,
+  type: RESEND_VERIFY_TOKEN_FAILED,
 });
 // tslint:disable-next-line:max-file-line-count

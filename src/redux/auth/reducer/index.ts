@@ -10,12 +10,12 @@ import {
   REMIND_PASSWORD_FAILED,
   REMIND_PASSWORD_REQUESTED,
   REMIND_PASSWORD_SUCCEEDED,
+  RESEND_VERIFY_TOKEN_FAILED,
+  RESEND_VERIFY_TOKEN_REQUESTED,
+  RESEND_VERIFY_TOKEN_SUCCEEDED,
   RESET_PASSWORD_FAILED,
   RESET_PASSWORD_REQUESTED,
   RESET_PASSWORD_SUCCEEDED,
-  VERIFY_ACCOUNT_FAILED,
-  VERIFY_ACCOUNT_REQUESTED,
-  VERIFY_ACCOUNT_SUCCEEDED,
 } from '../actions';
 
 export interface ReduxAction {
@@ -35,8 +35,8 @@ export interface AuthState {
   readonly remindPasswordLoading?: boolean;
   readonly resetPasswordError?: any;
   readonly resetPasswordLoading?: boolean;
-  readonly verifyAccountError?: any;
-  readonly verifyAccountLoading?: boolean;
+  readonly resendVerifyTokenError?: any;
+  readonly resendVerifyTokenLoading?: boolean;
 }
 
 const initialState: AuthState = {
@@ -46,13 +46,13 @@ const initialState: AuthState = {
   registerLoading: false,
   remindPasswordError: null,
   remindPasswordLoading: false,
+  resendVerifyTokenError: null,
+  resendVerifyTokenLoading: false,
   resetPasswordError: null,
   resetPasswordLoading: false,
   roles: null,
   token: null,
   user: null,
-  verifyAccountError: null,
-  verifyAccountLoading: false,
 };
 
 const authReducer = (
@@ -157,27 +157,27 @@ const authReducer = (
       };
     }
 
-    case VERIFY_ACCOUNT_REQUESTED: {
+    case RESEND_VERIFY_TOKEN_REQUESTED: {
       return {
         ...state,
-        verifyAccountError: null,
-        verifyAccountLoading: true,
+        resendVerifyTokenError: null,
+        resendVerifyTokenLoading: true,
       };
     }
 
-    case VERIFY_ACCOUNT_SUCCEEDED: {
+    case RESEND_VERIFY_TOKEN_SUCCEEDED: {
       return {
         ...state,
-        verifyAccountError: null,
-        verifyAccountLoading: false,
+        resendVerifyTokenError: null,
+        resendVerifyTokenLoading: false,
       };
     }
 
-    case VERIFY_ACCOUNT_FAILED: {
+    case RESEND_VERIFY_TOKEN_FAILED: {
       return {
         ...initialState,
-        verifyAccountError: action.payload.error,
-        verifyAccountLoading: false,
+        resendVerifyTokenError: action.payload.error,
+        resendVerifyTokenLoading: false,
       };
     }
 

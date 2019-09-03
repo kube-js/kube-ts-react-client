@@ -18,12 +18,12 @@ import {
   REMIND_PASSWORD_FAILED,
   REMIND_PASSWORD_REQUESTED,
   REMIND_PASSWORD_SUCCEEDED,
+  RESEND_VERIFY_TOKEN_FAILED,
+  RESEND_VERIFY_TOKEN_REQUESTED,
+  RESEND_VERIFY_TOKEN_SUCCEEDED,
   RESET_PASSWORD_FAILED,
   RESET_PASSWORD_REQUESTED,
   RESET_PASSWORD_SUCCEEDED,
-  VERIFY_ACCOUNT_FAILED,
-  VERIFY_ACCOUNT_REQUESTED,
-  VERIFY_ACCOUNT_SUCCEEDED,
 } from '../actions';
 import * as actions from './index';
 
@@ -176,31 +176,30 @@ describe('auth actions', () => {
     });
   });
 
-  it('verifyAccountRequested creates VERIFY_ACCOUNT_REQUESTED', () => {
+  it('resendVerifyTokenRequested creates RESEND_VERIFY_TOKEN_REQUESTED', () => {
     const payload = {
-      email: TEST_EMAIL,
-      token: TEST_TOKEN,
+      email: TEST_EMAIL
     };
 
-    expect(actions.verifyAccountRequested(payload)).toEqual({
+    expect(actions.resendVerifyTokenRequested(payload)).toEqual({
       payload,
-      type: VERIFY_ACCOUNT_REQUESTED,
+      type: RESEND_VERIFY_TOKEN_REQUESTED,
     });
   });
 
-  it('verifyAccountSucceeded creates VERIFY_ACCOUNT_SUCCEEDED', () => {
-    expect(actions.verifyAccountSucceeded()).toEqual({
-      type: VERIFY_ACCOUNT_SUCCEEDED,
+  it('resendVerifyTokenSucceeded creates RESEND_VERIFY_TOKEN_SUCCEEDED', () => {
+    expect(actions.resendVerifyTokenSucceeded()).toEqual({
+      type: RESEND_VERIFY_TOKEN_SUCCEEDED,
     });
   });
 
-  it('verifyAccountFailed creates VERIFY_ACCOUNT_FAILED', () => {
+  it('resendVerifyTokenFailed creates RESEND_VERIFY_TOKEN_FAILED', () => {
     const error = new Error('test');
     const payload = { error };
 
-    expect(actions.verifyAccountFailed(error)).toEqual({
+    expect(actions.resendVerifyTokenFailed(error)).toEqual({
       payload,
-      type: VERIFY_ACCOUNT_FAILED,
+      type: RESEND_VERIFY_TOKEN_FAILED,
     });
   });
   // tslint:disable-next-line:max-file-line-count

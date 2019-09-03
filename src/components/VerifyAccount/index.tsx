@@ -6,52 +6,52 @@ import { RouteProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { LOGIN } from '../../constants/routes';
 import {
-  VerifyAccountOptions,
-  verifyAccountRequested,
+  ResendVerifyTokenOptions,
+  resendVerifyTokenRequested,
 } from '../../redux/auth/actionCreators';
 import { AuthState } from '../../redux/auth/reducer';
 import ErrorMessage from '../ErrorMessage';
 import useStyles from './styles';
 
-interface VerifyAccountProps extends AuthState, RouteProps {
-  readonly verifyAccount: (
-    options: VerifyAccountOptions
-  ) => ReturnType<typeof verifyAccountRequested>;
+interface ResendVerifyTokenProps extends AuthState, RouteProps {
+  readonly resendVerifyToken: (
+    options: ResendVerifyTokenOptions
+  ) => ReturnType<typeof resendVerifyTokenRequested>;
 }
 
 const VerifyAccount = ({
-  verifyAccountLoading,
-  verifyAccountError,
-  verifyAccount,
-}: VerifyAccountProps) => {
+  resendVerifyTokenLoading,
+  resendVerifyTokenError,
+  resendVerifyToken,
+}: ResendVerifyTokenProps) => {
   const classes = useStyles();
 
   const params =
     location !== undefined ? new URLSearchParams(location.search) : null;
 
-  const tokenParam = params !== null ? params.get('token') : '';
   const emailParam = params !== null ? params.get('email') : '';
 
-  const token = _defaultTo('')(tokenParam);
   const email = _defaultTo('')(emailParam);
 
   useEffect(() => {
-    if (!_isNil(email) && !_isNil(token)) {
-      verifyAccount({ email, token });
+    if (!_isNil(email)) {
+      resendVerifyToken({ email });
     }
   }, []);
 
   const displaySuccessMessage = Boolean(
-    !verifyAccountLoading && !verifyAccountError
+    !resendVerifyTokenLoading && !resendVerifyTokenError
   );
 
-  const displayError = Boolean(!verifyAccountLoading && verifyAccountError);
+  const displayError = Boolean(
+    !resendVerifyTokenLoading && resendVerifyTokenError
+  );
 
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         {/** TODO: implement messages */}
-        {verifyAccountLoading && <div>Verifying account...</div>}
+        {resendVerifyTokenLoading && <div>Verifying account...</div>}
 
         {displaySuccessMessage && (
           <div>
@@ -60,7 +60,7 @@ const VerifyAccount = ({
           </div>
         )}
 
-        {displayError && <ErrorMessage>{verifyAccountError}</ErrorMessage>}
+        {displayError && <ErrorMessage>{resendVerifyTokenError}</ErrorMessage>}
       </div>
     </Container>
   );
