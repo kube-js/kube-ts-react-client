@@ -7,54 +7,46 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import ErrorMessage from '../../components/ErrorMessage';
 import {
-  VerifyAccountOptions,
-  verifyAccountRequested,
+  ResendVerifyTokenOptions,
+  resendVerifyTokenRequested,
 } from '../../redux/auth/actionCreators';
 import { State } from '../../redux/rootReducer';
+import User from '../../types/items/User';
 
-export type VerifyAccountHandler = (
-  options: VerifyAccountOptions
-) => typeof verifyAccountRequested;
+export type ResendVerifyTokenHandler = (
+  options: ResendVerifyTokenOptions
+) => any;
 
-// TODO: install js-items and import item interface
 export interface Props {
-  readonly user?: any;
-  readonly verifyAccount: VerifyAccountHandler;
+  readonly user?: User;
+  readonly resendVerifyToken: ResendVerifyTokenHandler;
 }
 
-export interface HandleVerifyOptions extends VerifyAccountOptions {
-  readonly verifyAccount: VerifyAccountHandler;
+export interface HandleVerifyOptions {
+  readonly resendVerifyToken: ResendVerifyTokenHandler;
+  readonly email: string;
 }
 
-const handleVerifyAccount = ({
-  verifyAccount,
-  email,
-  token,
-}: HandleVerifyOptions) => (e: SyntheticEvent) => {
-  e.preventDefault();
-  verifyAccount({ email, token });
-};
+const Dashboard = ({ user, resendVerifyToken }: Props) => {
+  const isVerified = !_isNil(user) && !_isNil((user as any).verifiedAt);
 
-const Dashboard = ({ user, verifyAccount }: Props) => {
-  const isUnverified = !_isNil(user) && user.verfiedAt === null;
+  // TODO: allow to log in without being verified in kube-ts-server
 
   return (
     <div>
       <h2>Dashboard</h2>
       {/** TODO: implement warning message type */}
-      {isUnverified && (
+      {user && !isVerified && (
         <ErrorMessage>
           <Fragment>
             <ErrorOutlineIcon />
             Account has not been verified yet. Click
             <Link
               style={{ margin: '0 5px', cursor: 'pointer' }}
-              onClick={handleVerifyAccount({
-                // TODO: new route for resending verify code: i.e. resend-verify-token
-                email: user.email,
-                token: user.verifyToken,
-                verifyAccount,
-              })}
+              onClick={(e: SyntheticEvent) => {
+                e.preventDefault();
+                resendVerifyToken({ email: user.email });
+              }}
             >
               here
             </Link>
@@ -67,18 +59,20 @@ const Dashboard = ({ user, verifyAccount }: Props) => {
   );
 };
 
-const mapStateToProps = ({ auth: { user } }: State) => user;
+const mapStateToProps = (state: State) => ({ user: state.auth.user });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  verifyAccount: ({ email, token }: VerifyAccountOptions) =>
+  resendVerifyToken: ({ email }: ResendVerifyTokenOptions) =>
     dispatch(
       // TODO: implement debounce and server throttling
-      verifyAccountRequested({
+      // TODO: implement redux hooks
+      resendVerifyTokenRequested({
         email,
-        token,
       })
     ),
 });
+
+// TODO: how redux connect compare to hooks
 
 export default connect(
   mapStateToProps,

@@ -1,10 +1,11 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import api, { Api } from '../../../../api';
+import createApi, { Api, Options as ApiOptions } from '../../../../api';
 import {
   AUTH_DATA_ROLES,
   AUTH_DATA_TOKEN,
   AUTH_DATA_USER,
 } from '../../../../constants/auth';
+import http from '../../../../services/http';
 import store from '../../../../services/store';
 import { enqueueSnackbar } from '../../../alerts/actionCreators';
 import {
@@ -15,15 +16,19 @@ import {
 import { REGISTER_REQUESTED } from '../../actions';
 
 export interface Options {
-  readonly api: Api;
+  readonly createApi: (options: ApiOptions) => Api;
   readonly store: typeof store;
 }
 
 export const registerCreator = (options: Options) =>
   function* register(action: { payload: RegisterOptions }) {
     try {
+      const api = options.createApi({
+        httpClient: http,
+      });
+
       const { user, token, roles } = yield call(
-        options.api.auth.register,
+        api.auth.register,
         action.payload
       );
 
@@ -52,4 +57,4 @@ export const createRegisterSaga = (options: Options) =>
     yield takeLatest<any>(REGISTER_REQUESTED, registerCreator(options));
   };
 
-export default createRegisterSaga({ api, store });
+export default createRegisterSaga({ createApi, store });

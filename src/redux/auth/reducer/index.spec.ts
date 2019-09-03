@@ -15,12 +15,12 @@ import {
   REMIND_PASSWORD_FAILED,
   REMIND_PASSWORD_REQUESTED,
   REMIND_PASSWORD_SUCCEEDED,
+  RESEND_VERIFY_TOKEN_FAILED,
+  RESEND_VERIFY_TOKEN_REQUESTED,
+  RESEND_VERIFY_TOKEN_SUCCEEDED,
   RESET_PASSWORD_FAILED,
   RESET_PASSWORD_REQUESTED,
   RESET_PASSWORD_SUCCEEDED,
-  VERIFY_ACCOUNT_FAILED,
-  VERIFY_ACCOUNT_REQUESTED,
-  VERIFY_ACCOUNT_SUCCEEDED,
 } from '../actions';
 import authReducer from './index';
 
@@ -34,13 +34,13 @@ describe('@authReducer', () => {
     registerLoading: false,
     remindPasswordError: null,
     remindPasswordLoading: false,
+    resendVerifyTokenError: null,
+    resendVerifyTokenLoading: false,
     resetPasswordError: null,
     resetPasswordLoading: false,
     roles: null,
     token: null,
     user: null,
-    verifyAccountError: null,
-    verifyAccountLoading: false,
   };
 
   it('returns initial state', () => {
@@ -274,53 +274,53 @@ describe('@authReducer', () => {
     });
   });
 
-  it('returns state for VERIFY_ACCOUNT_REQUESTED', () => {
-    const action = { type: VERIFY_ACCOUNT_REQUESTED };
+  it('returns state for RESEND_VERIFY_TOKEN_REQUESTED', () => {
+    const action = { type: RESEND_VERIFY_TOKEN_REQUESTED };
 
     const result = authReducer(undefined, action);
 
     expect(result).toEqual({
       ...initialState,
-      verifyAccountLoading: true,
+      resendVerifyTokenLoading: true,
     });
   });
 
-  it('returns state for VERIFY_ACCOUNT_SUCCEEDED', () => {
-    const action = { type: VERIFY_ACCOUNT_SUCCEEDED };
+  it('returns state for RESEND_VERIFY_TOKEN_SUCCEEDED', () => {
+    const action = { type: RESEND_VERIFY_TOKEN_SUCCEEDED };
 
     const result = authReducer(
       {
         ...initialState,
-        verifyAccountError: error,
-        verifyAccountLoading: true,
+        resendVerifyTokenError: error,
+        resendVerifyTokenLoading: true,
       },
       action
     );
 
     expect(result).toEqual({
       ...initialState,
-      verifyAccountError: null,
-      verifyAccountLoading: false,
+      resendVerifyTokenError: null,
+      resendVerifyTokenLoading: false,
     });
   });
 
-  it('returns state for VERIFY_ACCOUNT_FAILED', () => {
+  it('returns state for RESEND_VERIFY_TOKEN_FAILED', () => {
     const payload = { error };
 
-    const action = { type: VERIFY_ACCOUNT_FAILED, payload };
+    const action = { type: RESEND_VERIFY_TOKEN_FAILED, payload };
 
     const result = authReducer(
       {
         ...initialState,
-        verifyAccountLoading: true,
+        resendVerifyTokenLoading: true,
       },
       action
     );
 
     expect(result).toEqual({
       ...initialState,
-      verifyAccountError: error,
-      verifyAccountLoading: false,
+      resendVerifyTokenError: error,
+      resendVerifyTokenLoading: false,
     });
   });
   // tslint:disable-next-line:max-file-line-count
