@@ -7,6 +7,7 @@ import {
   RemindPasswordOptions,
   ResendVerifyTokenOptions,
   ResetPasswordOptions,
+  VerifyAccountOptions,
 } from '../redux/auth/actionCreators';
 import http from '../services/http';
 import User from '../types/items/User';
@@ -43,6 +44,9 @@ export interface AuthApi {
   ) => Promise<BaseResponse>;
   readonly resendVerifyToken: (
     options: ResendVerifyTokenOptions
+  ) => Promise<BaseResponse>;
+  readonly verifyAccount: (
+    options: VerifyAccountOptions
   ) => Promise<BaseResponse>;
 }
 
@@ -85,6 +89,12 @@ const createApi = ({ httpClient, token }: Options): Api => {
       resetPassword: (options: ResetPasswordOptions) =>
         normalisePromise<BaseResponse>(
           httpClient.post('auth/reset-password', { json: toSnake(options) })
+        ),
+      verifyAccount: (options: VerifyAccountOptions) =>
+        normalisePromise<BaseResponse>(
+          httpClient.post('auth/verify-account', {
+            json: toSnake(options),
+          })
         ),
     },
     users: usersFactory({

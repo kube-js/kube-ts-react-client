@@ -1,5 +1,4 @@
 import {
-  TEST_MESSAGE,
   TEST_ROLES,
   TEST_TOKEN,
   TEST_USER,
@@ -21,6 +20,9 @@ import {
   RESET_PASSWORD_FAILED,
   RESET_PASSWORD_REQUESTED,
   RESET_PASSWORD_SUCCEEDED,
+  VERIFY_ACCOUNT_FAILED,
+  VERIFY_ACCOUNT_REQUESTED,
+  VERIFY_ACCOUNT_SUCCEEDED,
 } from '../actions';
 import authReducer from './index';
 
@@ -41,6 +43,8 @@ describe('@authReducer', () => {
     roles: null,
     token: null,
     user: null,
+    verifyAccountError: null,
+    verifyAccountLoading: false,
   };
 
   it('returns initial state', () => {
@@ -321,6 +325,72 @@ describe('@authReducer', () => {
       ...initialState,
       resendVerifyTokenError: error,
       resendVerifyTokenLoading: false,
+    });
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  it('returns state for VERIFY_ACCOUNT_REQUESTED', () => {
+    const action = { type: VERIFY_ACCOUNT_REQUESTED };
+
+    const result = authReducer(undefined, action);
+
+    expect(result).toEqual({
+      ...initialState,
+      verifyAccountLoading: true,
+    });
+  });
+
+  it('returns state for VERIFY_ACCOUNT_SUCCEEDED', () => {
+    const action = { type: VERIFY_ACCOUNT_SUCCEEDED };
+
+    const result = authReducer(
+      {
+        ...initialState,
+        verifyAccountError: error,
+        verifyAccountLoading: true,
+      },
+      action
+    );
+
+    expect(result).toEqual({
+      ...initialState,
+      verifyAccountError: null,
+      verifyAccountLoading: false,
+    });
+  });
+
+  it('returns state for VERIFY_ACCOUNT_FAILED', () => {
+    const payload = { error };
+
+    const action = { type: VERIFY_ACCOUNT_FAILED, payload };
+
+    const result = authReducer(
+      {
+        ...initialState,
+        verifyAccountLoading: true,
+      },
+      action
+    );
+
+    expect(result).toEqual({
+      ...initialState,
+      verifyAccountError: error,
+      verifyAccountLoading: false,
     });
   });
   // tslint:disable-next-line:max-file-line-count

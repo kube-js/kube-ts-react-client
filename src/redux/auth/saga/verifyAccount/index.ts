@@ -3,29 +3,29 @@ import createApi, { Api, Options as ApiOptions } from '../../../../api';
 import http from '../../../../services/http';
 import { enqueueSnackbar } from '../../../alerts/actionCreators';
 import {
-  resendVerifyTokenFailed,
-  ResendVerifyTokenOptions,
-  resendVerifyTokenSucceeded,
+  verifyAccountFailed,
+  VerifyAccountOptions,
+  verifyAccountSucceeded,
 } from '../../actionCreators';
-import { RESEND_VERIFY_TOKEN_REQUESTED } from '../../actions';
+import { VERIFY_ACCOUNT_REQUESTED } from '../../actions';
 
 export interface Options {
   readonly createApi: (options: ApiOptions) => Api;
 }
 
-export const resendVerifyTokenCreator = (options: Options) =>
-  function* resendVerifyToken(action: { payload: ResendVerifyTokenOptions }) {
+export const verifyAccountCreator = (options: Options) =>
+  function* verifyAccount(action: { payload: VerifyAccountOptions }) {
     try {
       const api = options.createApi({
         httpClient: http,
       });
 
       const { message } = yield call(
-        api.auth.resendVerifyToken,
+        api.auth.verifyAccount,
         action.payload
       );
-      
-      yield put(resendVerifyTokenSucceeded());
+
+      yield put(verifyAccountSucceeded());
 
       yield put(
         enqueueSnackbar({
@@ -44,16 +44,16 @@ export const resendVerifyTokenCreator = (options: Options) =>
         })
       );
 
-      yield put(resendVerifyTokenFailed(message));
+      yield put(verifyAccountFailed(message));
     }
   };
 
-export const createResendVerifyTokenSaga = (options: Options) =>
-  function* resendVerifyTokenSaga() {
+export const createVerifyAccountSaga = (options: Options) =>
+  function* verifyAccountSaga() {
     yield takeLatest<any>(
-      RESEND_VERIFY_TOKEN_REQUESTED,
-      resendVerifyTokenCreator(options)
+      VERIFY_ACCOUNT_REQUESTED,
+      verifyAccountCreator(options)
     );
   };
 
-export default createResendVerifyTokenSaga({ createApi });
+export default createVerifyAccountSaga({ createApi });
