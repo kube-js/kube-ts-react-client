@@ -328,22 +328,6 @@ describe('@authReducer', () => {
     });
   });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   it('returns state for VERIFY_ACCOUNT_REQUESTED', () => {
     const action = { type: VERIFY_ACCOUNT_REQUESTED };
 
