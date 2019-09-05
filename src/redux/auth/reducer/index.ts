@@ -1,3 +1,4 @@
+// tslint:disable:cyclomatic-complexity
 import {
   AUTH_DATA_RETRIEVAL_SUCCEEDED,
   LOGIN_FAILED,
@@ -16,6 +17,9 @@ import {
   RESET_PASSWORD_FAILED,
   RESET_PASSWORD_REQUESTED,
   RESET_PASSWORD_SUCCEEDED,
+  VERIFY_ACCOUNT_FAILED,
+  VERIFY_ACCOUNT_REQUESTED,
+  VERIFY_ACCOUNT_SUCCEEDED,
 } from '../actions';
 
 export interface ReduxAction {
@@ -37,6 +41,8 @@ export interface AuthState {
   readonly resetPasswordLoading?: boolean;
   readonly resendVerifyTokenError?: any;
   readonly resendVerifyTokenLoading?: boolean;
+  readonly verifyAccountError?: any;
+  readonly verifyAccountLoading?: boolean;
 }
 
 const initialState: AuthState = {
@@ -53,6 +59,8 @@ const initialState: AuthState = {
   roles: null,
   token: null,
   user: null,
+  verifyAccountError: null,
+  verifyAccountLoading: false,
 };
 
 const authReducer = (
@@ -151,7 +159,7 @@ const authReducer = (
 
     case RESET_PASSWORD_FAILED: {
       return {
-        ...initialState,
+        ...state,
         resetPasswordError: action.payload.error,
         resetPasswordLoading: false,
       };
@@ -175,9 +183,33 @@ const authReducer = (
 
     case RESEND_VERIFY_TOKEN_FAILED: {
       return {
-        ...initialState,
+        ...state,
         resendVerifyTokenError: action.payload.error,
         resendVerifyTokenLoading: false,
+      };
+    }
+
+    case VERIFY_ACCOUNT_REQUESTED: {
+      return {
+        ...state,
+        verifyAccountError: null,
+        verifyAccountLoading: true,
+      };
+    }
+
+    case VERIFY_ACCOUNT_SUCCEEDED: {
+      return {
+        ...state,
+        verifyAccountError: null,
+        verifyAccountLoading: false,
+      };
+    }
+
+    case VERIFY_ACCOUNT_FAILED: {
+      return {
+        ...state,
+        verifyAccountError: action.payload.error,
+        verifyAccountLoading: false,
       };
     }
 
@@ -189,7 +221,7 @@ const authReducer = (
       const { token, roles, user } = action.payload;
 
       return {
-        ...initialState,
+        ...state,
         roles,
         token,
         user,

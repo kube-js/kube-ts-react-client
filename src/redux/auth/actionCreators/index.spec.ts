@@ -24,6 +24,9 @@ import {
   RESET_PASSWORD_FAILED,
   RESET_PASSWORD_REQUESTED,
   RESET_PASSWORD_SUCCEEDED,
+  VERIFY_ACCOUNT_FAILED,
+  VERIFY_ACCOUNT_REQUESTED,
+  VERIFY_ACCOUNT_SUCCEEDED,
 } from '../actions';
 import * as actions from './index';
 
@@ -178,7 +181,7 @@ describe('auth actions', () => {
 
   it('resendVerifyTokenRequested creates RESEND_VERIFY_TOKEN_REQUESTED', () => {
     const payload = {
-      email: TEST_EMAIL
+      email: TEST_EMAIL,
     };
 
     expect(actions.resendVerifyTokenRequested(payload)).toEqual({
@@ -200,6 +203,34 @@ describe('auth actions', () => {
     expect(actions.resendVerifyTokenFailed(error)).toEqual({
       payload,
       type: RESEND_VERIFY_TOKEN_FAILED,
+    });
+  });
+
+  it('verifyAccountRequested creates RESEND_VERIFY_TOKEN_REQUESTED', () => {
+    const payload = {
+      email: TEST_EMAIL,
+      token: TEST_TOKEN,
+    };
+
+    expect(actions.verifyAccountRequested(payload)).toEqual({
+      payload,
+      type: VERIFY_ACCOUNT_REQUESTED,
+    });
+  });
+
+  it('verifyAccountSucceeded creates VERIFY_ACCOUNT_SUCCEEDED', () => {
+    expect(actions.verifyAccountSucceeded()).toEqual({
+      type: VERIFY_ACCOUNT_SUCCEEDED,
+    });
+  });
+
+  it('verifyAccountFailed creates VERIFY_ACCOUNT_FAILED', () => {
+    const error = new Error('test');
+    const payload = { error };
+
+    expect(actions.verifyAccountFailed(error)).toEqual({
+      payload,
+      type: VERIFY_ACCOUNT_FAILED,
     });
   });
   // tslint:disable-next-line:max-file-line-count
