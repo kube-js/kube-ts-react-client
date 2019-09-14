@@ -17,7 +17,6 @@ import { REGISTER, REMIND_PASSWORD } from '../../constants/routes';
 import { LoginOptions, loginRequested } from '../../redux/auth/actionCreators';
 import { AuthState } from '../../redux/auth/reducer';
 import loginSchema from '../../utils/schemas/login';
-import ErrorMessage from '../ErrorMessage';
 import useStyles from './styles';
 
 interface LoginFormProps extends AuthState, RouteProps {

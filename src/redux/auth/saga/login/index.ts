@@ -36,16 +36,7 @@ export const loginCreator = (options: Options) =>
       // TODO: refactor this
       // TODO: create /me endpoint
       // TODO: replace connect redux with hooks
-      // const anotherApi = options.createApi({
-      //   httpClient: http,
-      //   token,
-      // });
-      // const response = yield call(anotherApi.users.getItems, {
-      //   filter: {},
-      //   pagination: {
-      //     limit: 10,
-      //   },
-      // });
+      // https://itnext.io/how-existing-redux-patterns-compare-to-the-new-redux-hooks-b56134c650d2
 
       store.set(AUTH_DATA_TOKEN, token);
       store.set(AUTH_DATA_ROLES, roles);
