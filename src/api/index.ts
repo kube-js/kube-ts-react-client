@@ -10,7 +10,11 @@ import {
   VerifyAccountOptions,
 } from '../redux/auth/actionCreators';
 import http from '../services/http';
+import Category from '../types/items/Category';
+import Course from '../types/items/Course';
 import User from '../types/items/User';
+import categoriesFactory from './categories/factory';
+import coursesFactory from './courses/factory';
 import usersFactory from './users/factory';
 
 export interface Options {
@@ -52,6 +56,8 @@ export interface AuthApi {
 
 export interface Api {
   readonly auth: AuthApi;
+  readonly categories: Facade<Category>;
+  readonly courses: Facade<Course>;
   readonly users: Facade<User>;
 }
 
@@ -97,6 +103,18 @@ const createApi = ({ httpClient, token }: Options): Api => {
           })
         ),
     },
+    categories: categoriesFactory({
+      kyConfig: {
+        ...baseConfig,
+        prefixUrl: config.apiUrl,
+      },
+    }),
+    courses: coursesFactory({
+      kyConfig: {
+        ...baseConfig,
+        prefixUrl: config.apiUrl,
+      },
+    }),
     users: usersFactory({
       kyConfig: {
         ...baseConfig,

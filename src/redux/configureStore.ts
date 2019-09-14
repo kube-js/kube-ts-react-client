@@ -10,6 +10,8 @@ import remindPasswordSaga from './auth/saga/remindPassword/index';
 import resendVerifyToken from './auth/saga/resendVerifyToken/index';
 import resetPasswordSaga from './auth/saga/resetPassword/index';
 import verifyAccount from './auth/saga/verifyAccount';
+import categoriesSaga from './categories/saga/index';
+import coursesSaga from './courses/saga/index';
 import createRootReducer, { State } from './rootReducer';
 
 export const history = createBrowserHistory();
@@ -39,6 +41,8 @@ export default function configureStore(preloadedState?: State): Store {
   sagaMiddleware.run(resendVerifyToken);
   sagaMiddleware.run(verifyAccount);
   sagaMiddleware.run(authDataSaga);
+  sagaMiddleware.run(coursesSaga);
+  sagaMiddleware.run(categoriesSaga);
 
   return store;
 }
