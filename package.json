@@ -59,7 +59,7 @@
     "@types/redux-logger": "3.0.7",
     "@types/store": "2.0.2",
     "@types/uuid": "3.4.5",
-    "@types/yup": "0.26.23",
+    "@types/yup": "0.26.24",
     "flat": "4.1.0",
     "react-test-renderer": "16.9.0",
     "redux-devtools": "3.5.0",
