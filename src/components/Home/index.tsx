@@ -7,24 +7,36 @@ import { getCategoriesRequested } from '../../redux/categories/actionCreators';
 import { CategoriesState } from '../../redux/categories/reducer';
 import { getCoursesRequested } from '../../redux/courses/actionCreators';
 import { CoursesState } from '../../redux/courses/reducer';
+import { getUsersRequested } from '../../redux/users/actionCreators';
+import { UsersState } from '../../redux/users/reducer';
 import CoursesTabs from '../CoursesTabs';
 import useStyles from './styles';
 
 export interface Options {
+  readonly users: UsersState;
   readonly courses: CoursesState;
   readonly categories: CategoriesState;
   readonly getCourses: () => ReturnType<typeof getCoursesRequested>;
+  readonly getUsers: () => ReturnType<typeof getUsersRequested>;
   readonly getCategories: () => ReturnType<typeof getCategoriesRequested>;
 }
 
-const Home = ({ categories, courses, getCategories, getCourses }: Options) => {
+const Home = ({
+  categories,
+  courses,
+  users,
+  getCategories,
+  getCourses,
+  getUsers,
+}: Options) => {
   const classes = useStyles();
 
   useEffect(() => {
     // TODO: fetch resources with nested models
+    getUsers();
     getCategories();
     getCourses();
-  }, [courses.after, categories.after]);
+  }, [courses.after, categories.after, users.after]);
 
   return (
     <Fragment>
@@ -67,8 +79,14 @@ const Home = ({ categories, courses, getCategories, getCourses }: Options) => {
         </Container>
       </div>
       <Container className={classes.cardGrid} maxWidth="lg">
-        {courses.items !== undefined && categories.items !== undefined ? (
-          <CoursesTabs courses={courses.items} categories={categories.items} />
+        {courses.items !== undefined &&
+        categories.items !== undefined &&
+        users.items !== undefined ? (
+          <CoursesTabs
+            courses={courses.items}
+            categories={categories.items}
+            users={users.items}
+          />
         ) : null}
       </Container>
     </Fragment>

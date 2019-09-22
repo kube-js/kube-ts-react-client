@@ -5,6 +5,7 @@ import alertsReducer, { AlertState } from './alerts/reducer';
 import authReducer, { AuthState } from './auth/reducer';
 import categoriesReducer, { CategoriesState } from './categories/reducer';
 import coursesReducer, { CoursesState } from './courses/reducer';
+import usersReducer, { UsersState } from './users/reducer';
 
 export interface State {
   readonly categories: CategoriesState;
@@ -12,6 +13,7 @@ export interface State {
   readonly router: RouterState;
   readonly auth: AuthState;
   readonly alerts: AlertState;
+  readonly users: UsersState;
 }
 
 export default (history: ReturnType<typeof createBrowserHistory>) =>
@@ -21,4 +23,5 @@ export default (history: ReturnType<typeof createBrowserHistory>) =>
     categories: categoriesReducer,
     courses: coursesReducer,
     router: connectRouter(history),
+    users: usersReducer,
   });
