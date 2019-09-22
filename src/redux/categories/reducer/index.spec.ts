@@ -98,4 +98,5 @@ describe('@categoriesReducer', () => {
       getCategoriesLoading: false,
     });
   });
+// tslint:disable-next-line:max-file-line-count
 });

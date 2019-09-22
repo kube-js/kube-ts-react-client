@@ -4,10 +4,12 @@ import Home from '../../components/Home';
 import { getCategoriesRequested } from '../../redux/categories/actionCreators';
 import { getCoursesRequested } from '../../redux/courses/actionCreators';
 import { State } from '../../redux/rootReducer';
+import { getUsersRequested } from '../../redux/users/actionCreators';
 
-const mapStateToProps = ({ categories, courses }: State) => ({
+const mapStateToProps = ({ categories, courses, users }: State) => ({
   categories,
   courses,
+  users,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -20,6 +22,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(
       // TODO: implement redux hooks
       getCoursesRequested()
+    ),
+  getUsers: () =>
+    dispatch(
+      // TODO: implement redux hooks
+      getUsersRequested()
     ),
 });
 
