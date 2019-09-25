@@ -1,5 +1,5 @@
 // tslint:disable:no-magic-numbers
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   arrow: {
@@ -21,15 +21,32 @@ const useStyles = makeStyles(theme => ({
   },
   card: {
     display: 'flex',
-    margin: '0 10px',
-    padding: '0.5em',
+    flexDirection: 'column',
+    height: '300px',
     width: '100%',
   },
   cardContent: {
-    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
   },
   cardMedia: {
     paddingTop: '56.25%', // 16:9
+  },
+  cardTitle: {
+    lineClamp: 2,
+    textOverflow: 'ellipsis',
+    marginBottom: '10px',
+    height: '42px',
+    fontSize: '15px',
+    fontWeight: 600,
+    lineHeight: '20px',
+    wordBreak: 'break-word',
+  },
+  cardInstructorTitle: {
+    marginBottom: '10px',
+    lineClamp: 1,
+    textOverflow: 'ellipsis',
   },
   icon: {
     marginRight: theme.spacing(2),
@@ -43,7 +60,9 @@ const useStyles = makeStyles(theme => ({
   slider: {
     display: 'flex',
     flexWrap: 'wrap',
-    padding: '1em',
+    '& .slick-slide > div': {
+      margin: '5px',
+    },
   },
 }));
 

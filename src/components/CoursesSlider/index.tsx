@@ -16,6 +16,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import Course from '../../types/items/Course';
+import CourseRating from '../CourseRating';
 import User from '../../types/items/User';
 import useStyles from './styles';
 
@@ -58,31 +59,46 @@ const getUserById = ({
   id: string;
 }): User | undefined => _find(_propEq('id', id))(users);
 
-const Slide = ({ course, user, classes, ...props }: any) => (
-  <Card className={classes.card} {...props}>
-    <CardMedia
-      className={classes.cardMedia}
-      image={course.imageUrl}
-      title="Image title"
-    />
-    <CardContent className={classes.cardContent}>
-      <Typography gutterBottom variant="subtitle1" component="h4">
-        {course.title}
-      </Typography>
+const Slide = ({ course, user, classes }: any) => {
+  const courseRating = Number((Math.random() * 5).toFixed(1));
 
-      {user !== undefined ? (
-        <Typography variant="body2" color="textSecondary" component="p">
-          {user.firstName} {user.lastName}
+  return (
+    <Card className={classes.card}>
+      <CardMedia
+        className={classes.cardMedia}
+        image={course.imageUrl}
+        title="Image title"
+      />
+      <CardContent className={classes.cardContent}>
+        <Typography
+          variant="subtitle1"
+          component="div"
+          className={classes.cardTitle}
+        >
+          {course.title}
         </Typography>
-      ) : null}
-    </CardContent>
-    <CardActions>
-      <Button size="small" color="primary">
-        Enroll
-      </Button>
-    </CardActions>
-  </Card>
-);
+
+        {user !== undefined ? (
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="div"
+            className={classes.cardInstructorTitle}
+          >
+            {user.firstName} {user.lastName}
+          </Typography>
+        ) : null}
+
+        <CourseRating value={courseRating} />
+      </CardContent>
+      <CardActions>
+        <Button size="small" color="primary">
+          Enroll
+        </Button>
+      </CardActions>
+    </Card>
+  );
+};
 
 const CoursesSlider = ({ courses, users }: Options) => {
   const classes = useStyles();
@@ -92,6 +108,7 @@ const CoursesSlider = ({ courses, users }: Options) => {
     centerPadding: '60px',
     className: 'center',
     infinite: true,
+    adaptiveHeight: true,
     lazyLoad: 'ondemand' as any,
     nextArrow: <NextArrow classes={classes} />,
     prevArrow: <PrevArrow classes={classes} />,
@@ -105,7 +122,7 @@ const CoursesSlider = ({ courses, users }: Options) => {
         {courses.map(course => {
           const user = getUserById({ users, id: course.userId });
 
-          return <Slide {...{ course, classes, user }} />;
+          return <Slide {...{ course, classes, user }} key={course.id} />;
         })}
       </Slider>
     </div>
