@@ -9,6 +9,7 @@ import { getCoursesRequested } from '../../redux/courses/actionCreators';
 import { CoursesState } from '../../redux/courses/reducer';
 import { getUsersRequested } from '../../redux/users/actionCreators';
 import { UsersState } from '../../redux/users/reducer';
+import CoursesSlider from '../CoursesSlider';
 import CoursesTabs from '../CoursesTabs';
 import useStyles from './styles';
 
@@ -79,6 +80,15 @@ const Home = ({
         </Container>
       </div>
       <Container className={classes.cardGrid} maxWidth="lg">
+        <Typography
+          component="h4"
+          variant="h4"
+          align="center"
+          color="textPrimary"
+          gutterBottom
+        >
+          Explore our bestsellers
+        </Typography>
         {courses.items !== undefined &&
         categories.items !== undefined &&
         users.items !== undefined ? (
@@ -89,8 +99,26 @@ const Home = ({
           />
         ) : null}
       </Container>
+
+      <Container className={classes.cardGrid} maxWidth="md">
+        <Typography
+          component="h4"
+          variant="h4"
+          align="center"
+          color="textPrimary"
+          gutterBottom
+        >
+          Students are viewing
+        </Typography>
+        {courses.items !== undefined &&
+        categories.items !== undefined &&
+        users.items !== undefined ? (
+          <CoursesSlider courses={courses.items} users={users.items} />
+        ) : null}{' '}
+      </Container>
     </Fragment>
   );
 };
 
+// tslint:disable-next-line:max-file-line-count
 export default Home;
