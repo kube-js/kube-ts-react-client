@@ -92,6 +92,8 @@ const NavBar = ({ handleSidebarOpen, open }: any) => {
                 to={LOGIN}
                 color="inherit"
                 className={classes.link}
+                // TODO: global solution?
+                style={{ textTransform: 'capitalize' }}
               >
                 Login
               </Button>
@@ -101,6 +103,8 @@ const NavBar = ({ handleSidebarOpen, open }: any) => {
                 to={REGISTER}
                 color="inherit"
                 className={classes.link}
+                // TODO: global solution?
+                style={{ textTransform: 'capitalize' }}
               >
                 Register
               </Button>

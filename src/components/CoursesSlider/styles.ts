@@ -19,34 +19,34 @@ const useStyles = makeStyles(theme => ({
     width: '60px',
     zIndex: 20,
   },
-  card: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '300px',
-    width: '100%',
-  },
+  card: {},
   cardContent: {
     display: 'flex',
-    flexDirection: 'column',
     flex: 1,
+    flexDirection: 'column',
+  },
+  cardInstructorTitle: {
+    lineClamp: 1,
+    marginBottom: '10px',
+    textOverflow: 'ellipsis',
   },
   cardMedia: {
     paddingTop: '56.25%', // 16:9
   },
+  cardPrice: {
+    display: 'flex',
+    flexDirection: 'row-reverse',
+    fontWeight: 600,
+  },
   cardTitle: {
-    lineClamp: 2,
-    textOverflow: 'ellipsis',
-    marginBottom: '10px',
-    height: '42px',
     fontSize: '15px',
     fontWeight: 600,
+    height: '42px',
+    lineClamp: 2,
     lineHeight: '20px',
-    wordBreak: 'break-word',
-  },
-  cardInstructorTitle: {
     marginBottom: '10px',
-    lineClamp: 1,
     textOverflow: 'ellipsis',
+    wordBreak: 'break-word',
   },
   icon: {
     marginRight: theme.spacing(2),
@@ -58,11 +58,11 @@ const useStyles = makeStyles(theme => ({
     left: '-25px',
   },
   slider: {
-    display: 'flex',
-    flexWrap: 'wrap',
     '& .slick-slide > div': {
       margin: '5px',
     },
+    display: 'flex',
+    flexWrap: 'wrap',
   },
 }));
 
