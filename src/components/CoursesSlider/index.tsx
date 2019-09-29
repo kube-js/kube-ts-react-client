@@ -15,7 +15,7 @@ import Slider from 'react-slick';
 // tslint:disable:no-import-side-effect
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
-import Course from '../../types/items/Course';
+import { EnhancedCourse } from '../../redux/discoveryItems/actionCreators';
 import User from '../../types/items/User';
 import CourseRating from '../CourseRating';
 import useStyles from './styles';
@@ -47,25 +47,21 @@ const PrevArrow = (props: any) => {
   );
 };
 export interface Options {
-  readonly courses: Course[];
-  readonly users: User[];
+  readonly courses: EnhancedCourse[];
 }
 
-const getUserById = ({
-  users,
-  id,
-}: {
-  users: User[];
-  id: string;
-}): User | undefined => _find(_propEq('id', id))(users);
-
-
 // TODO: extract to separate component
-const Slide = ({ course, user, classes }: any) => {
+const Slide = ({
+  course,
+  classes,
+}: {
+  classes: any;
+  course: EnhancedCourse;
+}) => {
   // TODO: get real rating and price
   const courseRating = Number((Math.random() * 5).toFixed(1));
   // tslint:disable-next-line:no-magic-numbers
-  const coursePrice = Number((Math.random() * 10) + 9).toFixed(2);
+  const coursePrice = Number(Math.random() * 10 + 9).toFixed(2);
 
   return (
     <Card className={classes.card}>
@@ -83,19 +79,16 @@ const Slide = ({ course, user, classes }: any) => {
           {course.title}
         </Typography>
 
-        {user !== undefined ? (
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            component="div"
-            className={classes.cardInstructorTitle}
-          >
-            {user.firstName} {user.lastName}
-          </Typography>
-        ) : null}
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          component="div"
+          className={classes.cardInstructorTitle}
+        >
+          {course.user.firstName} {course.user.lastName}
+        </Typography>
 
         <CourseRating value={courseRating} />
-
 
         <div className={classes.cardPrice}>{`£${coursePrice}`}</div>
       </CardContent>
@@ -113,7 +106,7 @@ const Slide = ({ course, user, classes }: any) => {
 };
 
 // Make reusable
-const CoursesSlider = ({ courses, users }: Options) => {
+const CoursesSlider = ({ courses }: Options) => {
   const classes = useStyles();
 
   const settings = {
@@ -132,11 +125,9 @@ const CoursesSlider = ({ courses, users }: Options) => {
   return (
     <div style={{ maxWidth: '800px' }}>
       <Slider {...settings} className={classes.slider}>
-        {courses.map(course => {
-          const user = getUserById({ users, id: course.userId });
-
-          return <Slide {...{ course, classes, user }} key={course.id} />;
-        })}
+        {courses.map(course => (
+          <Slide {...{ course, classes }} key={course.id} />
+        ))}
       </Slider>
     </div>
   );

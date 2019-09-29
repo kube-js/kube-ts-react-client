@@ -3,41 +3,29 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import React, { Fragment, useEffect } from 'react';
-import { getCategoriesRequested } from '../../redux/categories/actionCreators';
-import { CategoriesState } from '../../redux/categories/reducer';
-import { getCoursesRequested } from '../../redux/courses/actionCreators';
-import { CoursesState } from '../../redux/courses/reducer';
-import { getUsersRequested } from '../../redux/users/actionCreators';
-import { UsersState } from '../../redux/users/reducer';
+import { getDiscoveryItemsRequested } from '../../redux/discoveryItems/actionCreators';
+import { DiscoveryItemsState } from '../../redux/discoveryItems/reducer';
 import CoursesSlider from '../CoursesSlider';
 import CoursesTabs from '../CoursesTabs';
 import useStyles from './styles';
 
 export interface Options {
-  readonly users: UsersState;
-  readonly courses: CoursesState;
-  readonly categories: CategoriesState;
-  readonly getCourses: () => ReturnType<typeof getCoursesRequested>;
-  readonly getUsers: () => ReturnType<typeof getUsersRequested>;
-  readonly getCategories: () => ReturnType<typeof getCategoriesRequested>;
+  readonly discoveryItems: DiscoveryItemsState;
+  readonly getDiscoveryItems: () => ReturnType<
+    typeof getDiscoveryItemsRequested
+  >;
 }
 
 const Home = ({
-  categories,
-  courses,
-  users,
-  getCategories,
-  getCourses,
-  getUsers,
+  discoveryItems: { bestSellers, mostViewed },
+  getDiscoveryItems,
 }: Options) => {
   const classes = useStyles();
 
   useEffect(() => {
     // TODO: fetch resources with nested models
-    getUsers();
-    getCategories();
-    getCourses();
-  }, [courses.after, categories.after, users.after]);
+    getDiscoveryItems();
+  }, [bestSellers.courses.length]);
 
   return (
     <Fragment>
@@ -89,15 +77,11 @@ const Home = ({
         >
           Explore our bestsellers
         </Typography>
-        {courses.items !== undefined &&
-        categories.items !== undefined &&
-        users.items !== undefined ? (
-          <CoursesTabs
-            courses={courses.items}
-            categories={categories.items}
-            users={users.items}
-          />
-        ) : null}
+
+        <CoursesTabs
+          courses={bestSellers.courses}
+          categories={bestSellers.categories}
+        />
       </Container>
 
       <Container className={classes.cardGrid} maxWidth="md">
@@ -110,11 +94,8 @@ const Home = ({
         >
           Students are viewing
         </Typography>
-        {courses.items !== undefined &&
-        categories.items !== undefined &&
-        users.items !== undefined ? (
-          <CoursesSlider courses={courses.items} users={users.items} />
-        ) : null}{' '}
+
+        <CoursesSlider courses={mostViewed.courses} />
       </Container>
     </Fragment>
   );
