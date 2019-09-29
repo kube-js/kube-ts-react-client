@@ -9,6 +9,7 @@ import {
   ResetPasswordOptions,
   VerifyAccountOptions,
 } from '../redux/auth/actionCreators';
+import { DiscoveryItemsResult } from '../redux/discoveryItems/actionCreators';
 import http from '../services/http';
 import Category from '../types/items/Category';
 import Course from '../types/items/Course';
@@ -54,11 +55,23 @@ export interface AuthApi {
   ) => Promise<BaseResponse>;
 }
 
+export type SearchParams =
+  | string
+  | { [key: string]: string | number }
+  | URLSearchParams;
+
+export interface DiscoveryItemsOptions {
+  readonly searchParams?: SearchParams;
+}
+
 export interface Api {
   readonly auth: AuthApi;
   readonly categories: Facade<Category>;
   readonly courses: Facade<Course>;
   readonly users: Facade<User>;
+  readonly getDiscoveryItems: (
+    options: DiscoveryItemsOptions
+  ) => Promise<DiscoveryItemsResult>;
 }
 
 export const normalisePromise = <T>(promise: ResponsePromise): Promise<T> =>
@@ -115,6 +128,12 @@ const createApi = ({ httpClient, token }: Options): Api => {
         prefixUrl: config.apiUrl,
       },
     }),
+    getDiscoveryItems: ({ searchParams }: DiscoveryItemsOptions) =>
+      normalisePromise<DiscoveryItemsResult>(
+        httpClient.get('discovery-items', {
+          searchParams,
+        })
+      ),
     users: usersFactory({
       kyConfig: {
         ...baseConfig,

@@ -6,9 +6,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import _pluck from 'ramda/src/pluck';
 import React from 'react';
+import { EnhancedCourse } from '../../redux/discoveryItems/actionCreators';
 import Category from '../../types/items/Category';
-import Course from '../../types/items/Course';
-import User from '../../types/items/User';
 import CoursesSlider from '../CoursesSlider';
 
 export interface TabPanelOptions {
@@ -48,14 +47,15 @@ const useStyles = makeStyles(theme => ({
 
 export interface Options {
   readonly categories: Category[];
-  readonly courses: Course[];
-  readonly users: User[];
+  readonly courses: EnhancedCourse[];
 }
 
-const getCoursesByCategoryId = (courses: Course[], categoryId: string) =>
-  courses.filter(course => course.categoryId === categoryId);
+const getCoursesByCategoryId = (
+  courses: EnhancedCourse[],
+  categoryId: string
+) => courses.filter(course => course.categoryId === categoryId);
 
-const CoursesTabs = ({ categories, courses, users }: Options) => {
+const CoursesTabs = ({ categories, courses }: Options) => {
   const classes = useStyles();
   const [value, setValue] = React.useState<number>(0);
 
@@ -84,7 +84,6 @@ const CoursesTabs = ({ categories, courses, users }: Options) => {
           {/* TODO: redux selectors? */}
           <CoursesSlider
             courses={getCoursesByCategoryId(courses, category.id)}
-            users={users}
           />
         </TabPanel>
       ))}

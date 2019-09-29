@@ -1,32 +1,18 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import Home from '../../components/Home';
-import { getCategoriesRequested } from '../../redux/categories/actionCreators';
-import { getCoursesRequested } from '../../redux/courses/actionCreators';
+import { getDiscoveryItemsRequested } from '../../redux/discoveryItems/actionCreators';
 import { State } from '../../redux/rootReducer';
-import { getUsersRequested } from '../../redux/users/actionCreators';
 
-const mapStateToProps = ({ categories, courses, users }: State) => ({
-  categories,
-  courses,
-  users,
+const mapStateToProps = ({ discoveryItems }: State) => ({
+  discoveryItems,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getCategories: () =>
+  getDiscoveryItems: () =>
     dispatch(
       // TODO: implement redux hooks
-      getCategoriesRequested()
-    ),
-  getCourses: () =>
-    dispatch(
-      // TODO: implement redux hooks
-      getCoursesRequested()
-    ),
-  getUsers: () =>
-    dispatch(
-      // TODO: implement redux hooks
-      getUsersRequested()
+      getDiscoveryItemsRequested()
     ),
 });
 
