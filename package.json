@@ -45,7 +45,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "4.1.0",
     "@testing-library/react": "9.3.0",
-    "@testing-library/react-hooks": "2.0.2",
+    "@testing-library/react-hooks": "2.0.3",
     "@types/flat": "0.0.28",
     "@types/jest": "24.0.18",
     "@types/node": "11.13.22",
