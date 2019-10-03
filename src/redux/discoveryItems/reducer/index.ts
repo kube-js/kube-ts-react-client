@@ -27,7 +27,7 @@ const initialState: DiscoveryItemsState = {
   },
 };
 
-const categoriesReducer = (
+const discoveryItemsReducer = (
   state: DiscoveryItemsState = initialState,
   action: ReduxAction = {}
 ) => {
@@ -63,4 +63,4 @@ const categoriesReducer = (
   }
 };
 
-export default categoriesReducer;
+export default discoveryItemsReducer;

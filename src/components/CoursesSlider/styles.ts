@@ -48,6 +48,10 @@ const useStyles = makeStyles(theme => ({
     textOverflow: 'ellipsis',
     wordBreak: 'break-word',
   },
+  courseLink: {
+    color: theme.palette.action.active,
+    textDecoration: 'none',
+  },
   icon: {
     marginRight: theme.spacing(2),
   },

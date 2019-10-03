@@ -3,9 +3,11 @@ import React, { Fragment, lazy, StrictMode, Suspense } from 'react';
 import { Route, Switch } from 'react-router';
 import AuthenticatedRoute from './components/Auth/AuthenticatedRoute';
 import UnauthenticatedRoute from './components/Auth/UnauthenticatedRoute';
+import CourseView from './components/CourseView';
 import ErrorBoundary from './components/ErrorBoundaries/Page/index';
 import Layout from './components/Layout';
 import {
+  COURSE_VIEW,
   DASHBOARD,
   LOGIN,
   REGISTER,
@@ -36,6 +38,7 @@ const App = () => (
           <ErrorBoundary>
             <Switch>
               <Route exact path={ROOT} component={Home} />
+              <Route exact path={COURSE_VIEW} component={CourseView} />
               <Route exact path={RESET_PASSWORD} component={ResetPassword} />
               <Route exact path={VERIFY} component={VerifyAccount} />
 

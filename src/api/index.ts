@@ -9,6 +9,7 @@ import {
   ResetPasswordOptions,
   VerifyAccountOptions,
 } from '../redux/auth/actionCreators';
+import { CourseDetailsResult } from '../redux/courseDetails/actionCreators';
 import { DiscoveryItemsResult } from '../redux/discoveryItems/actionCreators';
 import http from '../services/http';
 import Category from '../types/items/Category';
@@ -60,18 +61,20 @@ export type SearchParams =
   | { [key: string]: string | number }
   | URLSearchParams;
 
-export interface DiscoveryItemsOptions {
+export type DiscoveryType = 'homepage' | 'course';
+export interface BaseGetOptions {
+  readonly type: DiscoveryType
   readonly searchParams?: SearchParams;
 }
+
+export type GetDiscoveryItems<T> = (options: BaseGetOptions) => Promise<T>;
 
 export interface Api {
   readonly auth: AuthApi;
   readonly categories: Facade<Category>;
   readonly courses: Facade<Course>;
   readonly users: Facade<User>;
-  readonly getDiscoveryItems: (
-    options: DiscoveryItemsOptions
-  ) => Promise<DiscoveryItemsResult>;
+  readonly getDiscoveryItems: GetDiscoveryItems<CourseDetailsResult | DiscoveryItemsResult>;
 }
 
 export const normalisePromise = <T>(promise: ResponsePromise): Promise<T> =>
@@ -80,7 +83,6 @@ export const normalisePromise = <T>(promise: ResponsePromise): Promise<T> =>
 const createApi = ({ httpClient, token }: Options): Api => {
   const baseConfig = {
     headers: {
-      // TODO: extract just token into state - not `Bearer token`
       authorization: token as string,
     },
   };
@@ -128,8 +130,11 @@ const createApi = ({ httpClient, token }: Options): Api => {
         prefixUrl: config.apiUrl,
       },
     }),
-    getDiscoveryItems: ({ searchParams }: DiscoveryItemsOptions) =>
-      normalisePromise<DiscoveryItemsResult>(
+    getDiscoveryItems: <T>({
+      searchParams,
+      type,
+    }: BaseGetOptions): Promise<T> =>
+      normalisePromise(
         httpClient.get('discovery-items', {
           searchParams,
         })
