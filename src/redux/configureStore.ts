@@ -11,6 +11,7 @@ import resendVerifyToken from './auth/saga/resendVerifyToken/index';
 import resetPasswordSaga from './auth/saga/resetPassword/index';
 import verifyAccount from './auth/saga/verifyAccount';
 import categoriesSaga from './categories/saga/index';
+import courseDetailsSaga from './courseDetails/saga/index';
 import coursesSaga from './courses/saga/index';
 import discoveryItemsSaga from './discoveryItems/saga/index';
 import createRootReducer, { State } from './rootReducer';
@@ -47,6 +48,7 @@ export default function configureStore(preloadedState?: State): Store {
   sagaMiddleware.run(categoriesSaga);
   sagaMiddleware.run(usersSaga);
   sagaMiddleware.run(discoveryItemsSaga);
+  sagaMiddleware.run(courseDetailsSaga);
 
   return store;
 }

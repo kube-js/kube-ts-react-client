@@ -17,7 +17,7 @@ export interface Options {
 }
 
 const Home = ({
-  discoveryItems: { bestSellers, mostViewed },
+  discoveryItems: { bestSellers, mostViewed, getDiscoveryItemsLoading },
   getDiscoveryItems,
 }: Options) => {
   const classes = useStyles();
@@ -25,7 +25,7 @@ const Home = ({
   useEffect(() => {
     // TODO: fetch resources with nested models
     getDiscoveryItems();
-  }, [bestSellers.courses.length]);
+  }, [bestSellers.courses.length, mostViewed.courses.length]);
 
   return (
     <Fragment>

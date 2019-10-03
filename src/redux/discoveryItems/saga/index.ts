@@ -1,8 +1,12 @@
 import { toCamel } from 'convert-keys';
 import { call, put, takeLatest } from 'redux-saga/effects';
-import createApi, { Api, Options as ApiOptions } from '../../../api';
+import createApi, {
+  Api,
+  Options as ApiOptions,
+} from '../../../api';
 import http from '../../../services/http';
 import {
+  DiscoveryItemsResult,
   getDiscoveryItemsFailed,
   getDiscoveryItemsSucceeded,
 } from '../actionCreators';
@@ -19,7 +23,7 @@ export const getDiscoveryItemsCreator = (options: Options) =>
         httpClient: http,
       });
 
-      const result = yield call(api.getDiscoveryItems, {
+      const result: DiscoveryItemsResult = yield call(api.getDiscoveryItems as any, {
         searchParams: { type: 'homepage' },
       });
 
