@@ -43,7 +43,7 @@
     "yup": "0.27.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "4.1.0",
+    "@testing-library/jest-dom": "4.1.1",
     "@testing-library/react": "9.3.0",
     "@testing-library/react-hooks": "2.0.3",
     "@types/flat": "0.0.28",
