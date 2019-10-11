@@ -1,7 +1,6 @@
 // tslint:disable:no-magic-numbers
 import {
   createStyles,
-  fade,
   makeStyles,
   Theme,
 } from '@material-ui/core/styles';
@@ -42,6 +41,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     link: {
       margin: theme.spacing(1, 1.5),
+    },
+    logo: {
+      height: '30px',
+      marginRight: theme.spacing(1),
+      width: '30px',
     },
     logoLink: {
       color: 'white',

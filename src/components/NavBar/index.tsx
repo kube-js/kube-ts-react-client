@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import LogoutButton from '../../atoms/LogoutButton';
 import SearchBox from '../../atoms/SearchBox';
 import { LOGIN, REGISTER } from '../../constants/routes';
+// source: https://www.freepik.com
+import Logo from '../../images/logo.svg';
 import OnlyAuthenticated from '../Auth/OnlyAuthenticated';
 import OnlyUnauthenticated from '../Auth/OnlyUnauthenticated';
 import NavBarMenu from '../NavBarMenu';
@@ -78,7 +80,7 @@ const NavBar = ({ handleSidebarOpen, open }: any) => {
             variant="text"
             className={`${classes.link} ${classes.logoLink}`}
           >
-            kudemy
+            <img className={classes.logo} src={Logo} /> Kudemy
           </Button>
 
           <SearchBox />
