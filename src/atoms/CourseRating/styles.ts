@@ -3,13 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
   rating: {
-    display: 'flex',
     alignItems: 'center',
+    display: 'flex',
   },
   ratingValue: {
-    fontWeight: 600,
     color: 'grey',
     fontSize: '12px',
+    fontWeight: 600,
     marginLeft: '6px'
   },
 }));
