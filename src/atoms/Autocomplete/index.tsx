@@ -3,6 +3,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import TextField from '@material-ui/core/TextField';
+import CloseIcon from '@material-ui/icons/Close';
+import SearchIcon from '@material-ui/icons/Search';
 import Downshift from 'downshift';
 import React from 'react';
 import useStyles from './styles';
@@ -116,7 +118,7 @@ function getSuggestions(
 
 let popperNode: any;
 
-export default function IntegrationDownshift() {
+const Autocomplete = () => {
   const classes = useStyles();
 
   return (
@@ -138,6 +140,9 @@ export default function IntegrationDownshift() {
 
           return (
             <div className={classes.container}>
+              <div className={classes.icon}>
+                <SearchIcon />
+              </div>
               {renderInput({
                 InputLabelProps: getLabelProps({ shrink: true } as any),
                 InputProps: { onBlur, onFocus },
@@ -148,7 +153,11 @@ export default function IntegrationDownshift() {
                   popperNode = node;
                 },
               })}
-
+              {String(inputProps.value).length > 0 && (
+                <div className={[classes.icon, classes.closeIcon].join(' ')}>
+                  <CloseIcon />
+                </div>
+              )}
               <Popper open={isOpen} anchorEl={popperNode}>
                 <div
                   {...(isOpen
@@ -182,4 +191,8 @@ export default function IntegrationDownshift() {
     </div>
   );
   // tslint:disable-next-line:max-file-line-count
-}
+};
+
+// tslint:disable-next-line:max-file-line-count
+export default Autocomplete;
+
