@@ -10,6 +10,7 @@ import remindPasswordSaga from './auth/saga/remindPassword/index';
 import resendVerifyToken from './auth/saga/resendVerifyToken/index';
 import resetPasswordSaga from './auth/saga/resetPassword/index';
 import verifyAccount from './auth/saga/verifyAccount';
+import autocompleteSaga from './autocomplete/saga/index';
 import categoriesSaga from './categories/saga/index';
 import courseDetailsSaga from './courseDetails/saga/index';
 import coursesSaga from './courses/saga/index';
@@ -49,6 +50,7 @@ export default function configureStore(preloadedState?: State): Store {
   sagaMiddleware.run(usersSaga);
   sagaMiddleware.run(discoveryItemsSaga);
   sagaMiddleware.run(courseDetailsSaga);
+  sagaMiddleware.run(autocompleteSaga);
 
   return store;
 }
