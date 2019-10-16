@@ -21,9 +21,6 @@ export const loginCreator = (options: Options) =>
     try {
       const { email, password } = action.payload;
 
-      // TODO: refactor this
-      // const authToken = yield select((state: State) => state.auth.token);
-
       const api = options.createApi({
         httpClient: http,
       });

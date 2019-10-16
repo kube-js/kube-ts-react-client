@@ -9,6 +9,7 @@ import {
   ResetPasswordOptions,
   VerifyAccountOptions,
 } from '../redux/auth/actionCreators';
+import { AutocompleteResults } from '../redux/autocomplete/actionCreators';
 import { CourseDetailsResult } from '../redux/courseDetails/actionCreators';
 import { DiscoveryItemsResult } from '../redux/discoveryItems/actionCreators';
 import http from '../services/http';
@@ -63,18 +64,29 @@ export type SearchParams =
 
 export type DiscoveryType = 'homepage' | 'course';
 export interface BaseGetOptions {
-  readonly type: DiscoveryType
+  readonly type: DiscoveryType;
   readonly searchParams?: SearchParams;
 }
 
 export type GetDiscoveryItems<T> = (options: BaseGetOptions) => Promise<T>;
+
+export interface AutocompleteOptions {
+  readonly term: string;
+}
+
+export type Autocomplete = (
+  options: AutocompleteOptions
+) => Promise<AutocompleteResults>;
 
 export interface Api {
   readonly auth: AuthApi;
   readonly categories: Facade<Category>;
   readonly courses: Facade<Course>;
   readonly users: Facade<User>;
-  readonly getDiscoveryItems: GetDiscoveryItems<CourseDetailsResult | DiscoveryItemsResult>;
+  readonly getDiscoveryItems: GetDiscoveryItems<
+    CourseDetailsResult | DiscoveryItemsResult
+  >;
+  readonly autocomplete: Autocomplete;
 }
 
 export const normalisePromise = <T>(promise: ResponsePromise): Promise<T> =>
@@ -118,6 +130,10 @@ const createApi = ({ httpClient, token }: Options): Api => {
           })
         ),
     },
+    autocomplete: ({ term }: AutocompleteOptions) =>
+      normalisePromise<AutocompleteResults>(
+        httpClient.get('autocomplete', { searchParams: { q: term } })
+      ),
     categories: categoriesFactory({
       kyConfig: {
         ...baseConfig,

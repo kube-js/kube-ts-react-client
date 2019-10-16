@@ -3,6 +3,7 @@ import { createBrowserHistory } from 'history';
 import { combineReducers } from 'redux';
 import alertsReducer, { AlertState } from './alerts/reducer';
 import authReducer, { AuthState } from './auth/reducer';
+import autocompleteReducer, { AutocompleteState } from './autocomplete/reducer';
 import categoriesReducer, { CategoriesState } from './categories/reducer';
 import courseDetailsReducer, { CourseDetailsState } from './courseDetails/reducer';
 import coursesReducer, { CoursesState } from './courses/reducer';
@@ -10,6 +11,7 @@ import discoveryItemsReducer, { DiscoveryItemsState } from './discoveryItems/red
 import usersReducer, { UsersState } from './users/reducer';
 
 export interface State {
+  readonly autocomplete: AutocompleteState;
   readonly categories: CategoriesState;
   readonly courses: CoursesState;
   readonly courseDetails: CourseDetailsState;
@@ -24,6 +26,7 @@ export default (history: ReturnType<typeof createBrowserHistory>) =>
   combineReducers<State>({
     alerts: alertsReducer,
     auth: authReducer,
+    autocomplete: autocompleteReducer,
     categories: categoriesReducer,
     courseDetails: courseDetailsReducer,
     courses: coursesReducer,
