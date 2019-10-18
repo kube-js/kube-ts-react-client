@@ -133,4 +133,3 @@ const Autocomplete = ({value, onChange, suggestions}: any) => {
 
 // tslint:disable-next-line:max-file-line-count
 export default Autocomplete;
-

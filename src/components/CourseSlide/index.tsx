@@ -15,6 +15,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import CourseRating from '../../atoms/CourseRating';
 import { EnhancedCourse } from '../../redux/discoveryItems/actionCreators';
+import assetsUrl from '../../utils/helpers/assetsUrl';
 
 const Slide = ({
   course,
@@ -33,7 +34,7 @@ const Slide = ({
       <Link className={classes.courseLink} to={`/courses/${course.slug}`}>
         <CardMedia
           className={classes.cardMedia}
-          image={course.imageUrl}
+          image={assetsUrl(course.imageUrl)}
           title="Image title"
         />
         <CardContent className={classes.cardContent}>

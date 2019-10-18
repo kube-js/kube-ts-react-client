@@ -3,6 +3,7 @@ import getStringValue from '../utils/helpers/getStringValue';
 
 export interface Config {
   apiUrl: string;
+  assetsUrl: string;
   logger: LoggerFactoryOptions;
 }
 
@@ -10,6 +11,7 @@ const env = (window as any)._env_;
 
 const config: Config = {
   apiUrl: getStringValue(env.REACT_APP_API_URL, 'http://localhost:9000/api/v1'),
+  assetsUrl: getStringValue(env.REACT_APP_ASSETS_URL, 'http://localhost:3000'),
   logger: {
     dummy: {
       silent:

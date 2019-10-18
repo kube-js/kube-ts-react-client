@@ -69,6 +69,7 @@ secret:
 # Configmap [remove "{}", uncomment and change the values below]
 configMap:
   {}
+  # REACT_APP_ASSETS_URL: https://localhost:3000
   # REACT_APP_API_URL: https://localhost:9000/api/v1
   # REACT_APP_SENTRY_DSN: https://yourSentryUrl@sentry.io/yourSentryNumber
   # REACT_APP_LOGGER_TYPE: sentry

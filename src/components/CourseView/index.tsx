@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom';
 import { ROOT } from '../../constants/routes';
 import { getCourseDetailsRequested } from '../../redux/courseDetails/actionCreators';
 import { State } from '../../redux/rootReducer';
+import assetsUrl from '../../utils/helpers/assetsUrl';
 import useStyles from './styles';
 
 export interface Params {
@@ -59,7 +60,7 @@ const CourseView = ({ match }: RouteComponentProps<Params>) => {
           </Grid>
           <Grid item xs={12} sm={3}>
             <Paper className={classes.paper}>
-              <img src={course.imageUrl} style={{ width: '100%' }} />
+              <img src={assetsUrl(course.imageUrl)} style={{ width: '100%' }} />
               <h4>{`£${coursePrice}`}</h4>
               <Button variant="contained" fullWidth color="primary">
                 Add to cart

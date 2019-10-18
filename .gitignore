@@ -63,3 +63,4 @@ build
 env-config.js
 
 /k8s/override.yaml
+.env
