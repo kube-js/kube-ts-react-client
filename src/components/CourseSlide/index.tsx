@@ -7,6 +7,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import _find from 'ramda/src/find';
+import _isNil from 'ramda/src/isNil';
 import _propEq from 'ramda/src/propEq';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -14,7 +15,9 @@ import { Link } from 'react-router-dom';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import CourseRating from '../../atoms/CourseRating';
+import courseImagePlaceholder from '../../images/course_400x180.png';
 import { EnhancedCourse } from '../../redux/discoveryItems/actionCreators';
+import assetsUrl from '../../utils/helpers/assetsUrl';
 
 const Slide = ({
   course,
@@ -28,12 +31,14 @@ const Slide = ({
   // tslint:disable-next-line:no-magic-numbers
   const coursePrice = Number(Math.random() * 10 + 9).toFixed(2);
 
+  const imageUrl = !_isNil(course.imageUrl) ? assetsUrl(course.imageUrl) : courseImagePlaceholder;
+
   return (
     <Card className={classes.card}>
       <Link className={classes.courseLink} to={`/courses/${course.slug}`}>
         <CardMedia
           className={classes.cardMedia}
-          image={course.imageUrl}
+          image={imageUrl}
           title="Image title"
         />
         <CardContent className={classes.cardContent}>

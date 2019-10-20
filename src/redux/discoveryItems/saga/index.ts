@@ -19,6 +19,8 @@ export interface Options {
 export const getDiscoveryItemsCreator = (options: Options) =>
   function* getDiscoveryItems() {
     try {
+      // TODO: https://github.com/rt2zz/redux-persist
+      // TODO: https://github.com/rt2zz/redux-persist/issues/794
       const api = options.createApi({
         httpClient: http,
       });
