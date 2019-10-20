@@ -11,7 +11,7 @@ const env = (window as any)._env_;
 
 const config: Config = {
   apiUrl: getStringValue(env.REACT_APP_API_URL, 'http://localhost:9000/api/v1'),
-  assetsUrl: getStringValue(env.REACT_APP_ASSETS_URL, 'http://localhost:3000'),
+  assetsUrl: getStringValue(env.REACT_APP_ASSETS_URL, '/'),
   logger: {
     dummy: {
       silent:

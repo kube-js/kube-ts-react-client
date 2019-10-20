@@ -1,10 +1,12 @@
 // tslint:disable:no-magic-numbers
 import { Avatar, Button, Container, Grid, Paper } from '@material-ui/core';
+import _isNil from 'ramda/src/isNil';
 import React, { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import { ROOT } from '../../constants/routes';
+import courseImagePlaceholder from '../../images/course_400x180.png';
 import { getCourseDetailsRequested } from '../../redux/courseDetails/actionCreators';
 import { State } from '../../redux/rootReducer';
 import assetsUrl from '../../utils/helpers/assetsUrl';
@@ -34,7 +36,7 @@ const CourseView = ({ match }: RouteComponentProps<Params>) => {
     // TODO: make course placeholder
     return <div>Loading...</div>;
   }
-
+  const imageUrl = !_isNil(course.imageUrl) ? assetsUrl(course.imageUrl) : courseImagePlaceholder;
   const coursePrice = Number(Math.random() * 10 + 9).toFixed(2);
 
   return (
@@ -60,7 +62,7 @@ const CourseView = ({ match }: RouteComponentProps<Params>) => {
           </Grid>
           <Grid item xs={12} sm={3}>
             <Paper className={classes.paper}>
-              <img src={assetsUrl(course.imageUrl)} style={{ width: '100%' }} />
+              <img src={imageUrl} style={{ width: '100%' }} />
               <h4>{`£${coursePrice}`}</h4>
               <Button variant="contained" fullWidth color="primary">
                 Add to cart
