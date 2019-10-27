@@ -1,9 +1,5 @@
 // tslint:disable:no-magic-numbers
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-} from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
 
@@ -53,6 +49,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuButton: {
       marginRight: theme.spacing(2),
+    },
+    searchBox: {
+      maxWidth: '350px',
+      width: '100%'
     },
     sectionDesktop: {
       display: 'none',

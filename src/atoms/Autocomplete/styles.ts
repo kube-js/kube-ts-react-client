@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   icon: {
     alignItems: 'center',
+    color: '#000',
     display: 'flex',
     height: '100%',
     justifyContent: 'center',
@@ -41,11 +42,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(1),
     position: 'absolute',
     right: 0,
-    zIndex: 1,
   },
   root: {
     flexGrow: 1,
-    height: 250,
   },
 }));
 

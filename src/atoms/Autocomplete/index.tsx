@@ -90,10 +90,34 @@ function renderSuggestion(suggestionProps: any) {
   );
 }
 
-let popperNode: any;
+type AutocompleteType = 'navbar' | 'heroContent';
 
-const Autocomplete = () => {
+const autocompleteOptions = {
+  heroContent: {
+    inputProps: {},
+  },
+  navbar: {
+    inputProps: {
+      style: {
+        paddingBottom: '12px',
+        paddingTop: '12px',
+      },
+    },
+  },
+};
+
+interface Options {
+  readonly id: string;
+  readonly type: AutocompleteType;
+}
+
+const Autocomplete = ({ id, type }: Options) => {
   const classes = useStyles();
+
+  const additionalOptions = autocompleteOptions[type];
+
+  // TODO: explore useRef, fix popper width
+  let popperNode: any;
 
   const [value, setValue] = useState('');
   const history = useHistory();
@@ -118,7 +142,7 @@ const Autocomplete = () => {
         item.type === 'course'
           ? `/courses/${item.slug}`
           : `/instructors/${item.email}`;
-
+      setValue('');
       history.push(link);
     } else if (changes.hasOwnProperty('inputValue')) {
       setValue(changes.inputValue);
@@ -128,11 +152,7 @@ const Autocomplete = () => {
 
   return (
     <div className={classes.root}>
-      <Downshift
-        id="downshift-popper"
-        selectedItem={value}
-        onStateChange={handleChange}
-      >
+      <Downshift id={id} selectedItem={value} onStateChange={handleChange}>
         {({
           clearSelection,
           getInputProps,
@@ -145,6 +165,7 @@ const Autocomplete = () => {
         }) => {
           const { onBlur, onFocus, ...inputProps } = getInputProps({
             placeholder: 'What would you like to learn?',
+            ...additionalOptions.inputProps,
           });
 
           return (

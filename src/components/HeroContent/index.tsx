@@ -34,7 +34,7 @@ const HeroContent = () => {
             Find any course and topic and start learning today.
           </Typography>
           <div className={classes.searchBox}>
-            <Autocomplete />
+            <Autocomplete id="heroContent" type="heroContent" />
           </div>
         </Grid>
       </Container>
