@@ -16,15 +16,17 @@ export interface Options {
 }
 
 const Home = ({
-  discoveryItems: { bestSellers, mostViewed, getDiscoveryItemsLoading },
+  discoveryItems: { bestSellers, mostViewed },
   getDiscoveryItems,
 }: Options) => {
   const classes = useStyles();
 
   useEffect(() => {
-    // TODO: fetch resources with nested models
-    getDiscoveryItems();
-  }, [bestSellers.courses.length, mostViewed.courses.length]);
+    const shouldFetchData = [bestSellers.courses, bestSellers.categories, mostViewed.courses].some(items => items.length === 0);
+    if(shouldFetchData){
+      getDiscoveryItems();
+    }  
+  },[]);
 
   return (
     <Fragment>

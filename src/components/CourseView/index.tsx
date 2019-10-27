@@ -29,14 +29,18 @@ const CourseView = ({ match }: RouteComponentProps<Params>) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCourseDetailsRequested(match.params.courseSlug));
+    if(course === undefined || course.slug !== match.params.courseSlug){
+      dispatch(getCourseDetailsRequested(match.params.courseSlug));
+    }
   }, [match.params.courseSlug]);
 
   if (getCourseDetailsLoading || course === undefined) {
     // TODO: make course placeholder
     return <div>Loading...</div>;
   }
-  const imageUrl = !_isNil(course.imageUrl) ? assetsUrl(course.imageUrl) : courseImagePlaceholder;
+  const imageUrl = !_isNil(course.imageUrl)
+    ? assetsUrl(course.imageUrl)
+    : courseImagePlaceholder;
   const coursePrice = Number(Math.random() * 10 + 9).toFixed(2);
 
   return (
