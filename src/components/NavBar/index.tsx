@@ -7,8 +7,8 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import clsx from 'clsx';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Autocomplete from '../../atoms/Autocomplete';
 import LogoutButton from '../../atoms/LogoutButton';
-import SearchBox from '../../atoms/SearchBox';
 import { LOGIN, REGISTER } from '../../constants/routes';
 // source: https://www.freepik.com
 import Logo from '../../images/logo.svg';
@@ -83,7 +83,9 @@ const NavBar = ({ handleSidebarOpen, open }: any) => {
             <img className={classes.logo} src={Logo} /> Kudemy
           </Button>
 
-          <SearchBox />
+          <div className={classes.searchBox}>
+            <Autocomplete id="navbar" type="navbar" />
+          </div>
 
           <div className={classes.grow} />
 

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexGrow: 1,
   },
   searchBox: {
-    
+    height: '250px',
   }
 }));
 
