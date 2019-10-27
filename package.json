@@ -60,7 +60,7 @@
     "@types/react-router-dom": "5.1.0",
     "@types/react-slick": "0.23.4",
     "@types/redux-logger": "3.0.7",
-    "@types/redux-persist": "^4.3.1",
+    "@types/redux-persist": "4.3.1",
     "@types/store": "2.0.2",
     "@types/uuid": "3.4.5",
     "@types/yup": "0.26.24",
