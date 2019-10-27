@@ -2,21 +2,10 @@ import { routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 import { applyMiddleware, compose, createStore, Store } from 'redux';
 import { createLogger } from 'redux-logger';
+import { persistStore } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
-import authDataSaga from './auth/saga/authData/index';
-import loginSaga from './auth/saga/login/index';
-import registerSaga from './auth/saga/register/index';
-import remindPasswordSaga from './auth/saga/remindPassword/index';
-import resendVerifyToken from './auth/saga/resendVerifyToken/index';
-import resetPasswordSaga from './auth/saga/resetPassword/index';
-import verifyAccount from './auth/saga/verifyAccount';
-import autocompleteSaga from './autocomplete/saga/index';
-import categoriesSaga from './categories/saga/index';
-import courseDetailsSaga from './courseDetails/saga/index';
-import coursesSaga from './courses/saga/index';
-import discoveryItemsSaga from './discoveryItems/saga/index';
-import createRootReducer, { State } from './rootReducer';
-import usersSaga from './users/saga/index';
+import createPersistedReducer, { State } from './rootReducer';
+import rootSaga from './rootSaga';
 
 export const history = createBrowserHistory();
 
@@ -33,24 +22,15 @@ export default function configureStore(preloadedState?: State): Store {
   }
 
   const store = createStore(
-    createRootReducer(history),
-    preloadedState,
+    createPersistedReducer(history),
+    preloadedState as any,
     composeEnhancers(applyMiddleware(...middlewares))
   );
-
-  sagaMiddleware.run(loginSaga);
-  sagaMiddleware.run(registerSaga);
-  sagaMiddleware.run(remindPasswordSaga);
-  sagaMiddleware.run(resetPasswordSaga);
-  sagaMiddleware.run(resendVerifyToken);
-  sagaMiddleware.run(verifyAccount);
-  sagaMiddleware.run(authDataSaga);
-  sagaMiddleware.run(coursesSaga);
-  sagaMiddleware.run(categoriesSaga);
-  sagaMiddleware.run(usersSaga);
-  sagaMiddleware.run(discoveryItemsSaga);
-  sagaMiddleware.run(courseDetailsSaga);
-  sagaMiddleware.run(autocompleteSaga);
-
-  return store;
+  
+  
+  sagaMiddleware.run(rootSaga);
+  
+  const persistor = persistStore(store);
+  
+  return { persistor, store } as any;
 }

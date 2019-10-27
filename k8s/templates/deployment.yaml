@@ -24,6 +24,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           # TODO: change image tag to use $CIRCLE_SHA1
+          # TODO: https://stackoverflow.com/questions/54119399/expose-port-80-on-digital-oceans-managed-kubernetes-without-a-load-balancer/55968709#55968709
           # and replace via envsubst [https://www.digitalocean.com/community/tutorials/how-to-automate-deployments-to-digitalocean-kubernetes-with-circleci]
           # image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           image: "{{ .Values.image.repository }}:latest"

@@ -14,7 +14,8 @@ import { Link } from 'react-router-dom';
 // tslint:disable:no-import-side-effect
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
-import CourseRating from '../../atoms/CourseRating';
+// TODO: check slow rendering issue
+// import CourseRating from '../../atoms/CourseRating';
 import courseImagePlaceholder from '../../images/course_400x180.png';
 import { EnhancedCourse } from '../../redux/discoveryItems/actionCreators';
 import assetsUrl from '../../utils/helpers/assetsUrl';
@@ -27,7 +28,7 @@ const Slide = ({
   course: EnhancedCourse;
 }) => {
   // TODO: get real rating and price
-  const courseRating = Number((Math.random() * 5).toFixed(1));
+  // const courseRating = Number((Math.random() * 5).toFixed(1));
   // tslint:disable-next-line:no-magic-numbers
   const coursePrice = Number(Math.random() * 10 + 9).toFixed(2);
 
@@ -59,7 +60,7 @@ const Slide = ({
             {course.user.firstName} {course.user.lastName}
           </Typography>
 
-          <CourseRating value={courseRating} />
+          {/* <CourseRating value={courseRating} /> */}
 
           <div className={classes.cardPrice}>{`£${coursePrice}`}</div>
         </CardContent>

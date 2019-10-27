@@ -1,10 +1,10 @@
 // tslint:disable:no-magic-numbers
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   cardGrid: {
-    paddingBottom: theme.spacing(8),
-    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(4),
+    paddingTop: theme.spacing(4),
   },
   footer: {
     backgroundColor: theme.palette.background.paper,

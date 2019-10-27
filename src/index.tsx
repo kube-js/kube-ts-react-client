@@ -5,6 +5,7 @@ import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import App from './app';
 import config from './config';
 import { InternationalisationProvider } from './contexts/internationalization';
@@ -14,7 +15,7 @@ import configureStore, { history } from './redux/configureStore';
 import loggerFactory from './services/logger';
 import defaultTheme from './themes/default';
 
-const store = configureStore();
+const { persistor, store }: any = configureStore();
 
 const logger = loggerFactory(config.logger);
 
@@ -27,7 +28,9 @@ render(
         <ThemeProvider theme={defaultTheme}>
           <ConnectedRouter history={history}>
             <SnackbarProvider>
-              <App />
+              <PersistGate loading={null} persistor={persistor}>
+                <App />
+              </PersistGate>
             </SnackbarProvider>
           </ConnectedRouter>
         </ThemeProvider>
