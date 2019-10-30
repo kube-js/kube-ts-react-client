@@ -5,4 +5,5 @@ export const RESET_PASSWORD = '/reset-password';
 export const VERIFY = '/verify';
 export const LOGIN = '/login';
 export const DASHBOARD = '/dashboard';
-export const COURSE_VIEW = '/courses/:courseSlug'
+export const COURSE_VIEW = '/courses/:courseSlug';
+export const INSTRUCTOR_VIEW = '/instructors/:username';

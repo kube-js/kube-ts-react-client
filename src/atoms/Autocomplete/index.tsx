@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import SearchIcon from '@material-ui/icons/Search';
 import Downshift from 'downshift';
 import _isNil from 'ramda/src/isNil';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { autocompleteRequested } from '../../redux/autocomplete/actionCreators';
@@ -111,13 +111,14 @@ interface Options {
   readonly type: AutocompleteType;
 }
 
+const POPPER_OFFSET = 4;
+
 const Autocomplete = ({ id, type }: Options) => {
   const classes = useStyles();
 
   const additionalOptions = autocompleteOptions[type];
 
-  // TODO: explore useRef, fix popper width
-  let popperNode: any;
+  const popperNode: any = useRef({});
 
   const [value, setValue] = useState('');
   const history = useHistory();
@@ -141,7 +142,8 @@ const Autocomplete = ({ id, type }: Options) => {
       const link =
         item.type === 'course'
           ? `/courses/${item.slug}`
-          : `/instructors/${item.email}`;
+          // TODO: create username property as uniq db field
+          : `/instructors/${String(item.firstName + item.lastName).toLowerCase()}`;
       setValue('');
       history.push(link);
     } else if (changes.hasOwnProperty('inputValue')) {
@@ -179,16 +181,14 @@ const Autocomplete = ({ id, type }: Options) => {
                 classes,
                 fullWidth: true,
                 inputProps,
-                ref: (node: any) => {
-                  popperNode = node;
-                },
+                ref: popperNode
               })}
               {String(inputProps.value).length > 0 && (
                 <div className={[classes.icon, classes.closeIcon].join(' ')}>
                   <CloseIcon onClick={clearSelection as any} />
                 </div>
               )}
-              <Popper open={isOpen} anchorEl={popperNode}>
+              <Popper open={isOpen} anchorEl={popperNode.current} disablePortal>
                 <div
                   {...(isOpen
                     ? getMenuProps({}, { suppressRefError: true })
@@ -197,8 +197,8 @@ const Autocomplete = ({ id, type }: Options) => {
                   <Paper
                     square
                     style={{
-                      marginTop: 8,
-                      width: popperNode ? popperNode.clientWidth : undefined,
+                      marginTop: '4px',
+                      width: popperNode.current && popperNode.current.clientWidth ? popperNode.current.clientWidth - POPPER_OFFSET : undefined,
                     }}
                   >
                     {results.map((suggestion: any, index: number) =>
