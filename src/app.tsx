@@ -5,10 +5,12 @@ import AuthenticatedRoute from './components/Auth/AuthenticatedRoute';
 import UnauthenticatedRoute from './components/Auth/UnauthenticatedRoute';
 import CourseView from './components/CourseView';
 import ErrorBoundary from './components/ErrorBoundaries/Page/index';
+import InstructorView from './components/InstructorView';
 import Layout from './components/Layout';
 import {
   COURSE_VIEW,
   DASHBOARD,
+  INSTRUCTOR_VIEW,
   LOGIN,
   REGISTER,
   REMIND_PASSWORD,
@@ -41,6 +43,7 @@ const App = () => (
               <Route exact path={COURSE_VIEW} component={CourseView} />
               <Route exact path={RESET_PASSWORD} component={ResetPassword} />
               <Route exact path={VERIFY} component={VerifyAccount} />
+              <Route path={INSTRUCTOR_VIEW} component={InstructorView} />
 
               <UnauthenticatedRoute
                 exact
