@@ -3,6 +3,25 @@
 {{- $ingressPaths := .Values.ingress.paths -}}
 {{- $servicePort := .Values.service.port }}
 {{- $ingressPath := .Values.ingress.path }}
+
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: testing123-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: testing123.example.com             # the domain you want associated
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: testing123-service  # existing service
+              servicePort: 8000                # existing service port
+
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
