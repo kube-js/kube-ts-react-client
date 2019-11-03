@@ -7,6 +7,14 @@ const useStyles = makeStyles(theme => ({
     color: '#fff',
     margin: 10,
   },
+  metaInfo: {
+    backgroundColor: '#24292e',
+    padding: '0',
+    width: '100%',
+  },
+  metaInfoSidebar: {
+    position: 'relative'
+  },
   paper: {
     color: theme.palette.text.primary,
     padding: theme.spacing(2),
@@ -14,6 +22,10 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
+  sidebarCard: {
+    marginTop: '1rem',
+    position: 'absolute',
+  }
 }));
 
 export default useStyles;

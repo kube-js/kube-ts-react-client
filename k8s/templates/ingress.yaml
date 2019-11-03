@@ -3,6 +3,7 @@
 {{- $ingressPaths := .Values.ingress.paths -}}
 {{- $servicePort := .Values.service.port }}
 {{- $ingressPath := .Values.ingress.path }}
+
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:

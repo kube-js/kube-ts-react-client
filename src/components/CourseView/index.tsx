@@ -1,11 +1,10 @@
 // tslint:disable:no-magic-numbers
-import { Avatar, Button, Container, Grid, Paper } from '@material-ui/core';
+import { Button, Container, Grid, Paper } from '@material-ui/core';
 import _isNil from 'ramda/src/isNil';
 import React, { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { Redirect } from 'react-router-dom';
-import { ROOT } from '../../constants/routes';
+import CourseMetaInfo from '../../atoms/CourseMetaInfo';
 import courseImagePlaceholder from '../../images/course_400x180.png';
 import { getCourseDetailsRequested } from '../../redux/courseDetails/actionCreators';
 import { State } from '../../redux/rootReducer';
@@ -19,9 +18,6 @@ export interface Params {
 const CourseView = ({ match }: RouteComponentProps<Params>) => {
   const classes = useStyles();
 
-  if (match.params.courseSlug.trim() === '') {
-    return <Redirect to={ROOT} />;
-  }
   const { course, getCourseDetailsLoading } = useSelector(
     (state: State) => state.courseDetails
   );
@@ -29,7 +25,7 @@ const CourseView = ({ match }: RouteComponentProps<Params>) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(course === undefined || course.slug !== match.params.courseSlug){
+    if (course === undefined || course.slug !== match.params.courseSlug) {
       dispatch(getCourseDetailsRequested(match.params.courseSlug));
     }
   }, [match.params.courseSlug]);
@@ -45,18 +41,31 @@ const CourseView = ({ match }: RouteComponentProps<Params>) => {
 
   return (
     <div className={classes.root}>
-      <Container component="main" maxWidth="lg">
+      <Container component="div" className={classes.metaInfo} maxWidth={false}>
+        <Container component="div" maxWidth="lg">
+          <Grid container spacing={4}>
+            <Grid item xs={12} sm={9}>
+              <CourseMetaInfo course={course} />
+            </Grid>
+            <Grid item xs={12} sm={3} className={classes.metaInfoSidebar}>
+              <Paper className={[classes.sidebarCard, classes.paper].join(' ')}>
+                <img src={imageUrl} style={{ width: '100%' }} />
+                <h4>{`£${coursePrice}`}</h4>
+                <Button variant="contained" fullWidth color="primary">
+                  Add to cart
+                </Button>
+                <Button variant="contained" fullWidth color="secondary">
+                  Buy now
+                </Button>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Container>
+      </Container>
+      <Container>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={9}>
             <Paper className={classes.paper}>
-              <h3>{course.title}</h3>
-              <h4>
-                <Avatar className={classes.avatar}>
-                  {`${(course.user.firstName as string).substr(0, 1)}${(course
-                    .user.lastName as string).substr(0, 1)}`}
-                </Avatar>
-                {course.user.firstName} {course.user.lastName}
-              </h4>
               <div
                 dangerouslySetInnerHTML={{
                   __html: course.description as string,
@@ -64,18 +73,7 @@ const CourseView = ({ match }: RouteComponentProps<Params>) => {
               />
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={3}>
-            <Paper className={classes.paper}>
-              <img src={imageUrl} style={{ width: '100%' }} />
-              <h4>{`£${coursePrice}`}</h4>
-              <Button variant="contained" fullWidth color="primary">
-                Add to cart
-              </Button>
-              <Button variant="contained" fullWidth color="secondary">
-                Buy now
-              </Button>
-            </Paper>
-          </Grid>
+          <Grid item xs={12} sm={3}></Grid>
         </Grid>
       </Container>
     </div>

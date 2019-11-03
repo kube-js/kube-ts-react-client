@@ -166,7 +166,7 @@ const Autocomplete = ({ id, type }: Options) => {
           selectedItem,
         }) => {
           const { onBlur, onFocus, ...inputProps } = getInputProps({
-            placeholder: 'What would you like to learn?',
+            placeholder: 'Search for anything...',
             ...additionalOptions.inputProps,
           });
 
