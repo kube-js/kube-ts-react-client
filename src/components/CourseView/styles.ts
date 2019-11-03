@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
     margin: 10,
   },
   metaInfo: {
-    backgroundColor: '#3a4049',
+    backgroundColor: '#24292e',
     padding: '0',
     width: '100%',
   },

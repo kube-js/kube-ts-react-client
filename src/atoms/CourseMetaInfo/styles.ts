@@ -9,7 +9,8 @@ const useStyles = makeStyles(() => ({
     marginTop: '1rem',
   },
   mainHeadline: {
-    fontSize: '2rem',
+    fontSize: '1.8rem',
+    fontWeight: 'bold',
     marginBottom: '1rem',
     marginTop: '2rem',
   },
