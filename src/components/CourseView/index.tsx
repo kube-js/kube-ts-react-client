@@ -1,10 +1,11 @@
 // tslint:disable:no-magic-numbers
-import { Button, Container, Grid, Paper } from '@material-ui/core';
+import { Button, Container, Grid, Paper, Typography } from '@material-ui/core';
 import _isNil from 'ramda/src/isNil';
 import React, { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import CourseMetaInfo from '../../atoms/CourseMetaInfo';
+import CourseSections from '../../atoms/CourseSections';
 import courseImagePlaceholder from '../../images/course_400x180.png';
 import { getCourseDetailsRequested } from '../../redux/courseDetails/actionCreators';
 import { State } from '../../redux/rootReducer';
@@ -14,6 +15,43 @@ import useStyles from './styles';
 export interface Params {
   readonly courseSlug: string;
 }
+
+// FETCH FROM API
+const sections = [
+  {
+    id: '1',
+    title: 'Introduction and setup',
+  },
+  {
+    id: '2',
+    title: 'Helm basics',
+  },
+  {
+    id: '3',
+    title: 'Jenkins CI/CD setup',
+  },
+  {
+    id: '4',
+    title: 'Dockerizing node.js application',
+  },
+  {
+    id: '5',
+    title: 'Deployment on AWS',
+  },
+].map(section => ({...section, units: [
+  {
+    title: 'Introduction and the goal of this course'
+  },
+  {
+    title: 'V8 Under the Hood'
+  },
+  {
+    title: 'The Javascript Core'
+  },
+  {
+    title: 'RESTful APIs and JSON'
+  }
+]}));
 
 const CourseView = ({ match }: RouteComponentProps<Params>) => {
   const classes = useStyles();
@@ -43,7 +81,7 @@ const CourseView = ({ match }: RouteComponentProps<Params>) => {
     <div className={classes.root}>
       <Container component="div" className={classes.metaInfo} maxWidth={false}>
         <Container component="div" maxWidth="lg">
-          <Grid container spacing={4}>
+          <Grid container spacing={3}>
             <Grid item xs={12} sm={9}>
               <CourseMetaInfo course={course} />
             </Grid>
@@ -66,11 +104,16 @@ const CourseView = ({ match }: RouteComponentProps<Params>) => {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={9}>
             <Paper className={classes.paper}>
-              <div
+              {/* <div
                 dangerouslySetInnerHTML={{
                   __html: course.description as string,
                 }}
-              />
+              /> */}
+              <Typography variant="h3" className={classes.contentHeadline}>
+                Learning content:
+              </Typography>
+              
+              <CourseSections sections={sections} />
             </Paper>
           </Grid>
           <Grid item xs={12} sm={3}></Grid>
@@ -80,4 +123,5 @@ const CourseView = ({ match }: RouteComponentProps<Params>) => {
   );
 };
 
+// tslint:disable-next-line:max-file-line-count
 export default memo(CourseView);
