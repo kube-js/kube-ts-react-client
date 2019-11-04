@@ -7,6 +7,11 @@ const useStyles = makeStyles(theme => ({
     color: '#fff',
     margin: 10,
   },
+  contentHeadline: {
+    fontSize: '1.5rem',
+    lineHeight: '2rem',
+    margin: '1rem 0',
+  },
   metaInfo: {
     backgroundColor: '#24292e',
     padding: '0',
