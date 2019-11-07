@@ -1,5 +1,6 @@
 import React from 'react';
-import CourseSection, { Section } from '../CourseSection';
+import Section from '../../types/items/Section';
+import CourseSection from '../CourseSection';
 
 interface Options {
   readonly sections: Section[];
@@ -23,9 +24,11 @@ const CourseSections = ({ sections }: Options) => {
     }
   };
 
+  const sortedSections = sections.sort((x: Section, y: Section) => x.order - y.order);
+
   return (
     <div>
-      {sections.map(section => (
+      {sortedSections.map(section => (
         <CourseSection
           key={section.id}
           section={section}

@@ -6,8 +6,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import clsx from 'clsx';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Autocomplete from '../../atoms/Autocomplete';
+import LanguageDropdown from '../../atoms/LanguageDropdown';
 import LogoutButton from '../../atoms/LogoutButton';
 import { LOGIN, REGISTER } from '../../constants/routes';
 // source: https://www.freepik.com
@@ -25,6 +27,7 @@ export interface NavBarProps {
 
 const NavBar = ({ handleSidebarOpen, open }: any) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -90,6 +93,8 @@ const NavBar = ({ handleSidebarOpen, open }: any) => {
           <div className={classes.grow} />
 
           <div className={classes.sectionDesktop}>
+            <LanguageDropdown />
+
             <OnlyUnauthenticated>
               <Button
                 component={Link}
@@ -99,7 +104,7 @@ const NavBar = ({ handleSidebarOpen, open }: any) => {
                 // TODO: global solution?
                 style={{ textTransform: 'capitalize' }}
               >
-                Login
+                {t('navbar.login')}
               </Button>
 
               <Button
@@ -110,7 +115,7 @@ const NavBar = ({ handleSidebarOpen, open }: any) => {
                 // TODO: global solution?
                 style={{ textTransform: 'capitalize' }}
               >
-                Register
+                {t('navbar.register')}
               </Button>
             </OnlyUnauthenticated>
 

@@ -4,12 +4,13 @@ import { ConnectedRouter } from 'connected-react-router';
 import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import { render } from 'react-dom';
+import {I18nextProvider} from 'react-i18next';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import App from './app';
 import config from './config';
-import { InternationalisationProvider } from './contexts/internationalization';
 import LoggerContext from './contexts/logger';
+import i18n from './i18n';
 import { authDataRetrievalRequested } from './redux/auth/actionCreators';
 import configureStore, { history } from './redux/configureStore';
 import loggerFactory from './services/logger';
@@ -23,8 +24,8 @@ store.dispatch(authDataRetrievalRequested());
 
 render(
   <Provider store={store}>
-    <LoggerContext.Provider value={logger}>
-      <InternationalisationProvider>
+    <I18nextProvider i18n={i18n}>
+      <LoggerContext.Provider value={logger}>
         <ThemeProvider theme={defaultTheme}>
           <ConnectedRouter history={history}>
             <SnackbarProvider>
@@ -34,8 +35,8 @@ render(
             </SnackbarProvider>
           </ConnectedRouter>
         </ThemeProvider>
-      </InternationalisationProvider>
-    </LoggerContext.Provider>
+      </LoggerContext.Provider>
+    </I18nextProvider>
   </Provider>,
   document.getElementById('root')
 );

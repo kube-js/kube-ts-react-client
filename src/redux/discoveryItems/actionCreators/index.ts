@@ -1,5 +1,6 @@
 import Category from '../../../types/items/Category';
 import Course from '../../../types/items/Course';
+import Section from '../../../types/items/Section';
 import User from '../../../types/items/User';
 import {
   GET_DISCOVERY_ITEMS_FAILED,
@@ -9,6 +10,7 @@ import {
 
 export interface EnhancedCourse extends Course {
   readonly user: User;
+  readonly sections: Section[];
 }
 
 export interface BestSellersResult {

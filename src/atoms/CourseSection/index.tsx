@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import React from 'react';
+import Section from '../../types/items/Section';
 
 const ExpansionPanel = withStyles({
   root: {
@@ -52,12 +53,6 @@ export interface Unit {
   readonly title: string;
 }
 
-export interface Section {
-  readonly id: string;
-  readonly title: string;
-  readonly units: Unit[];
-}
-
 interface Options {
   readonly section: Section;
   readonly expandedIds: string[];
@@ -90,7 +85,7 @@ const CourseSection = ({ section, expandedIds, onChange }: Options) => (
         aria-label="mailbox folders"
       >
         {section.units.map((unit: Unit, index: number) => (
-          <ListItem divider={section.units.length - 1 !== index}>
+          <ListItem key={index} divider={section.units.length - 1 !== index}>
             <>
               <PlayCircleOutlineIcon style={{marginRight: '1rem'}} />
               <ListItemText primary={unit.title}></ListItemText>

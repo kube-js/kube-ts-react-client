@@ -2,7 +2,6 @@ import { Link } from '@material-ui/core';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import _isNil from 'ramda/src/isNil';
 import React, { Fragment, SyntheticEvent } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import ErrorMessage from '../../components/ErrorMessage';
@@ -54,7 +53,6 @@ const Dashboard = ({ user, resendVerifyToken }: Props) => {
           </Fragment>
         </ErrorMessage>
       )}
-      <FormattedMessage id="foo.bar" />
     </div>
   );
 };

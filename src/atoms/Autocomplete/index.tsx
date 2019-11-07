@@ -8,6 +8,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import Downshift from 'downshift';
 import _isNil from 'ramda/src/isNil';
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { autocompleteRequested } from '../../redux/autocomplete/actionCreators';
@@ -115,6 +116,7 @@ const POPPER_OFFSET = 4;
 
 const Autocomplete = ({ id, type }: Options) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const additionalOptions = autocompleteOptions[type];
 
@@ -166,7 +168,7 @@ const Autocomplete = ({ id, type }: Options) => {
           selectedItem,
         }) => {
           const { onBlur, onFocus, ...inputProps } = getInputProps({
-            placeholder: 'Search for anything...',
+            placeholder: t(`${[type]}.search.placeholder`),
             ...additionalOptions.inputProps,
           });
 
