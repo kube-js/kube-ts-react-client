@@ -4,11 +4,13 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import _isNil from 'ramda/src/isNil';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Autocomplete from '../../atoms/Autocomplete';
 import useStyles from './styles';
 
 const HeroContent = () => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     <div className={classes.heroContainer}>
@@ -22,7 +24,7 @@ const HeroContent = () => {
             gutterBottom
             style={{ color: '#fff' }}
           >
-            Learn without limits
+            {t('heroContent.mainHeading')}
           </Typography>
           <Typography
             variant="h6"
@@ -31,7 +33,7 @@ const HeroContent = () => {
             paragraph
             style={{ color: '#fff' }}
           >
-            Find any course and topic and start learning today.
+            {t('heroContent.subHeading')}
           </Typography>
           <div className={classes.searchBox}>
             <Autocomplete id="heroContent" type="heroContent" />

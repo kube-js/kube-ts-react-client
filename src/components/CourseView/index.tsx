@@ -15,44 +15,6 @@ import useStyles from './styles';
 export interface Params {
   readonly courseSlug: string;
 }
-
-// FETCH FROM API
-const sections = [
-  {
-    id: '1',
-    title: 'Introduction and setup',
-  },
-  {
-    id: '2',
-    title: 'Helm basics',
-  },
-  {
-    id: '3',
-    title: 'Jenkins CI/CD setup',
-  },
-  {
-    id: '4',
-    title: 'Dockerizing node.js application',
-  },
-  {
-    id: '5',
-    title: 'Deployment on AWS',
-  },
-].map(section => ({...section, units: [
-  {
-    title: 'Introduction and the goal of this course'
-  },
-  {
-    title: 'V8 Under the Hood'
-  },
-  {
-    title: 'The Javascript Core'
-  },
-  {
-    title: 'RESTful APIs and JSON'
-  }
-]}));
-
 const CourseView = ({ match }: RouteComponentProps<Params>) => {
   const classes = useStyles();
 
@@ -76,6 +38,23 @@ const CourseView = ({ match }: RouteComponentProps<Params>) => {
     ? assetsUrl(course.imageUrl)
     : courseImagePlaceholder;
   const coursePrice = Number(Math.random() * 10 + 9).toFixed(2);
+  const sections = course.sections.map(section => ({
+    ...section,
+    units: [
+      {
+        title: 'Introduction and the goal of this course',
+      },
+      {
+        title: 'V8 Under the Hood',
+      },
+      {
+        title: 'The Javascript Core',
+      },
+      {
+        title: 'RESTful APIs and JSON',
+      },
+    ],
+  }));
 
   return (
     <div className={classes.root}>
@@ -103,18 +82,12 @@ const CourseView = ({ match }: RouteComponentProps<Params>) => {
       <Container>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={9}>
-            <Paper className={classes.paper}>
-              {/* <div
-                dangerouslySetInnerHTML={{
-                  __html: course.description as string,
-                }}
-              /> */}
-              <Typography variant="h3" className={classes.contentHeadline}>
-                Learning content:
-              </Typography>
-              
-              <CourseSections sections={sections} />
-            </Paper>
+  
+            <Typography variant="h3" className={classes.contentHeadline}>
+              Learning content:
+            </Typography>
+
+            <CourseSections sections={sections} />
           </Grid>
           <Grid item xs={12} sm={3}></Grid>
         </Grid>
