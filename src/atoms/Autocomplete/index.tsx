@@ -4,6 +4,8 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
+import OndemandVideoOutlinedIcon from '@material-ui/icons/OndemandVideoOutlined';
+import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import Downshift from 'downshift';
 import _isNil from 'ramda/src/isNil';
@@ -22,6 +24,9 @@ export interface GetFormattedResultsOptions {
   readonly users: User[];
 }
 
+const USERS_RESULT_COUNT = 2;
+const COURSES_RESULT_COUNT = 4;
+
 const getFormattedResults = ({
   courses,
   users,
@@ -32,7 +37,7 @@ const getFormattedResults = ({
       label: course.title,
       type: 'course',
     }))
-    .slice(0, 4);
+    .slice(0, COURSES_RESULT_COUNT);
   const updatedUsers = users
     .map((user: User) => ({
       ...user,
@@ -41,7 +46,7 @@ const getFormattedResults = ({
         : user.email,
       type: 'user',
     }))
-    .slice(0, 2);
+    .slice(0, USERS_RESULT_COUNT);
 
   return [...updatedCourses, ...updatedUsers];
 };
@@ -65,7 +70,7 @@ function renderInput(inputProps: any) {
   );
 }
 
-function renderSuggestion(suggestionProps: any) {
+const renderSuggestion = (suggestionProps: any) => {
   const {
     suggestion,
     index,
@@ -75,6 +80,14 @@ function renderSuggestion(suggestionProps: any) {
   } = suggestionProps;
   const isHighlighted = highlightedIndex === index;
   const isSelected = (selectedItem || '').indexOf(suggestion.label) > -1;
+  const otherProps = isSelected
+    ? {
+        style: {
+          fontWeight: isSelected ? 600 : 400,
+        },
+      }
+    : {};
+  const icon = suggestion.type === 'course' ? <OndemandVideoOutlinedIcon /> : <PersonOutlineOutlinedIcon />;
 
   return (
     <MenuItem
@@ -82,14 +95,12 @@ function renderSuggestion(suggestionProps: any) {
       key={suggestion.label}
       selected={isHighlighted}
       component="div"
-      style={{
-        fontWeight: isSelected ? 500 : 400,
-      }}
+      {...otherProps}
     >
-      {suggestion.label}
+      <>{icon} <span style={{marginLeft: '5px'}}>{suggestion.label}</span></>
     </MenuItem>
   );
-}
+};
 
 type AutocompleteType = 'navbar' | 'heroContent';
 
@@ -144,8 +155,10 @@ const Autocomplete = ({ id, type }: Options) => {
       const link =
         item.type === 'course'
           ? `/courses/${item.slug}`
-          // TODO: create username property as uniq db field
-          : `/instructors/${String(item.firstName + item.lastName).toLowerCase()}`;
+          : // TODO: create username property as uniq db field
+            `/instructors/${String(
+              item.firstName + item.lastName
+            ).toLowerCase()}`;
       setValue('');
       history.push(link);
     } else if (changes.hasOwnProperty('inputValue')) {
@@ -183,7 +196,7 @@ const Autocomplete = ({ id, type }: Options) => {
                 classes,
                 fullWidth: true,
                 inputProps,
-                ref: popperNode
+                ref: popperNode,
               })}
               {String(inputProps.value).length > 0 && (
                 <div className={[classes.icon, classes.closeIcon].join(' ')}>
@@ -200,7 +213,10 @@ const Autocomplete = ({ id, type }: Options) => {
                     square
                     style={{
                       marginTop: '4px',
-                      width: popperNode.current && popperNode.current.clientWidth ? popperNode.current.clientWidth - POPPER_OFFSET : undefined,
+                      width:
+                        popperNode.current && popperNode.current.clientWidth
+                          ? popperNode.current.clientWidth - POPPER_OFFSET
+                          : undefined,
                     }}
                   >
                     {results.map((suggestion: any, index: number) =>
@@ -221,7 +237,6 @@ const Autocomplete = ({ id, type }: Options) => {
       </Downshift>
     </div>
   );
-  // tslint:disable-next-line:max-file-line-count
 };
 
 // tslint:disable-next-line:max-file-line-count

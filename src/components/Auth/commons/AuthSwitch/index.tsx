@@ -1,6 +1,6 @@
 import _isNil from 'ramda/src/isNil';
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { RouteProps } from 'react-router-dom';
 import { State } from '../../../../redux/rootReducer';
 
@@ -14,10 +14,11 @@ export interface AuthSwitchProps {
 }
 
 export const Switch = ({ onlyAuthenticated }: AuthSwitchProps): any => ({
-  isAuthenticated,
   children,
   ...props
 }: OnlyAuthenticatedProps) => {
+  const { user } = useSelector(({ auth }: State) => auth);
+  const isAuthenticated = !_isNil(user);
   const element = React.isValidElement(children)
     ? React.Children.map(children, (child: any) =>
         React.cloneElement(child, props)
@@ -31,12 +32,5 @@ export const Switch = ({ onlyAuthenticated }: AuthSwitchProps): any => ({
   }
 };
 
-const mapStateToProps = ({ auth }: State) => ({
-  isAuthenticated: !_isNil(auth.user),
-});
-
 export default ({ onlyAuthenticated }: AuthSwitchProps) =>
-  connect(
-    mapStateToProps,
-    {}
-  )(Switch({ onlyAuthenticated }) as any);
+  Switch({ onlyAuthenticated });

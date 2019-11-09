@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Formik } from 'formik';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RouteProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { LOGIN } from '../../constants/routes';
@@ -30,6 +31,7 @@ export interface RemindPasswordValues {
 
 const RemindPasswordForm = (props: RemindPasswordProps) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const { remindPasswordLoading, remindPassword } = props;
 
@@ -42,7 +44,7 @@ const RemindPasswordForm = (props: RemindPasswordProps) => {
         </Avatar>
 
         <Typography component="h1" variant="h5">
-          Remind Password
+          {t('auth.remindPassword')}
         </Typography>
 
         <Formik
@@ -70,7 +72,7 @@ const RemindPasswordForm = (props: RemindPasswordProps) => {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label={t('auth.email')}
                   name="email"
                   autoComplete="email"
                   autoFocus
@@ -88,12 +90,12 @@ const RemindPasswordForm = (props: RemindPasswordProps) => {
                   size="large"
                   className={classes.submit}
                 >
-                  Remind password
+                  {t('auth.remindPassword')}
                 </Button>
 
                 <Grid container>
                   <Grid item xs>
-                    <Link to={LOGIN}>Back to login</Link>
+                    <Link to={LOGIN}>{t('auth.backToLogin')}</Link>
                   </Grid>
                 </Grid>
               </form>

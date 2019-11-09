@@ -5,10 +5,12 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import clsx from 'clsx';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import useStyles from './styles';
 
 const PasswordField = (props: any) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -26,7 +28,7 @@ const PasswordField = (props: any) => {
     <TextField
       className={clsx(classes.textField)}
       type={showPassword ? 'text' : 'password'}
-      label="Password"
+      label={t('auth.password')}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">

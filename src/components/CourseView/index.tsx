@@ -2,6 +2,7 @@
 import { Button, Container, Grid, Paper, Typography } from '@material-ui/core';
 import _isNil from 'ramda/src/isNil';
 import React, { memo, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import CourseMetaInfo from '../../atoms/CourseMetaInfo';
@@ -17,6 +18,7 @@ export interface Params {
 }
 const CourseView = ({ match }: RouteComponentProps<Params>) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const { course, getCourseDetailsLoading } = useSelector(
     (state: State) => state.courseDetails
@@ -32,7 +34,7 @@ const CourseView = ({ match }: RouteComponentProps<Params>) => {
 
   if (getCourseDetailsLoading || course === undefined) {
     // TODO: make course placeholder
-    return <div>Loading...</div>;
+    return <div>{t('global.loading')}</div>;
   }
   const imageUrl = !_isNil(course.imageUrl)
     ? assetsUrl(course.imageUrl)
@@ -67,12 +69,15 @@ const CourseView = ({ match }: RouteComponentProps<Params>) => {
             <Grid item xs={12} sm={3} className={classes.metaInfoSidebar}>
               <Paper className={[classes.sidebarCard, classes.paper].join(' ')}>
                 <img src={imageUrl} style={{ width: '100%' }} />
-                <h4>{`£${coursePrice}`}</h4>
-                <Button variant="contained" fullWidth color="primary">
-                  Add to cart
+
+                <Typography variant="h4" style={{margin: '15px 0'}}>{`£${coursePrice}`}</Typography>
+
+                <Button variant="contained" fullWidth color="primary" style={{marginBottom: '5px'}}>
+                  {t('cart.addToCart')}
                 </Button>
+                
                 <Button variant="contained" fullWidth color="secondary">
-                  Buy now
+                  {t('cart.buyNow')}
                 </Button>
               </Paper>
             </Grid>
@@ -82,9 +87,8 @@ const CourseView = ({ match }: RouteComponentProps<Params>) => {
       <Container>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={9}>
-  
             <Typography variant="h3" className={classes.contentHeadline}>
-              Learning content:
+              {t('courseView.learningContent')}
             </Typography>
 
             <CourseSections sections={sections} />

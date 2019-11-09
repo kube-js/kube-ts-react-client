@@ -1,4 +1,3 @@
-/* istanbul ignore next */
 import CssBaseline from '@material-ui/core/CssBaseline';
 import clsx from 'clsx';
 import React, { useState } from 'react';

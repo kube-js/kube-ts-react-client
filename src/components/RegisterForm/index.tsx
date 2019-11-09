@@ -9,10 +9,10 @@ import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Formik } from 'formik';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RouteProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import PasswordField from '../../atoms/PasswordField';
-import { PASSWORD_HELPER_TEXT } from '../../constants';
 import { LOGIN } from '../../constants/routes';
 import {
   RegisterOptions,
@@ -30,6 +30,7 @@ interface RegisterFormProps extends AuthState, RouteProps {
 
 const RegisterForm = (props: RegisterFormProps) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const { registerLoading, register } = props;
 
@@ -41,7 +42,7 @@ const RegisterForm = (props: RegisterFormProps) => {
         </Avatar>
 
         <Typography component="h1" variant="h5">
-          Register
+          {t('auth.register')}
         </Typography>
 
         <Formik
@@ -78,7 +79,7 @@ const RegisterForm = (props: RegisterFormProps) => {
                       required
                       fullWidth
                       id="email"
-                      label="Email Address"
+                      label={t('auth.email')}
                       name="email"
                       autoComplete="email"
                       value={values.email}
@@ -89,13 +90,13 @@ const RegisterForm = (props: RegisterFormProps) => {
 
                   <Grid item xs={12}>
                     <PasswordField
-                      helperText={PASSWORD_HELPER_TEXT}
+                      helperText={t('auth.passwordHelperText')}
                       error={hasPasswordError}
                       variant="outlined"
                       required
                       fullWidth
                       name="password"
-                      label="Password"
+                      label={t('auth.password')}
                       id="password"
                       autoComplete="off"
                       value={values.password}
@@ -106,13 +107,13 @@ const RegisterForm = (props: RegisterFormProps) => {
 
                   <Grid item xs={12}>
                     <PasswordField
-                      helperText={PASSWORD_HELPER_TEXT}
+                      helperText={t('auth.passwordHelperText')}
                       error={hasPasswordConfirmationError}
                       variant="outlined"
                       required
                       fullWidth
                       name="passwordConfirmation"
-                      label="Password confirmation"
+                      label={t('auth.passwordConfirmation')}
                       id="passwordConfirmation"
                       autoComplete="off"
                       value={values.passwordConfirmation}
@@ -130,14 +131,14 @@ const RegisterForm = (props: RegisterFormProps) => {
                       size="large"
                       className={classes.submit}
                     >
-                      Register
+                      {t('auth.registerAction')}
                     </Button>
                   </Grid>
                 </Grid>
 
                 <Grid container justify="flex-end">
                   <Grid item>
-                    <Link to={LOGIN}>Already have an account? Log in</Link>
+                    <Link to={LOGIN}>{t('auth.alreadyHaveAccount')}</Link>
                   </Grid>
                 </Grid>
               </form>

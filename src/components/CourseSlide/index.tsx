@@ -10,6 +10,7 @@ import _find from 'ramda/src/find';
 import _isNil from 'ramda/src/isNil';
 import _propEq from 'ramda/src/propEq';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 // tslint:disable:no-import-side-effect
 import 'slick-carousel/slick/slick-theme.css';
@@ -27,6 +28,7 @@ const Slide = ({
   classes: any;
   course: EnhancedCourse;
 }) => {
+  const { t } = useTranslation();
   // TODO: get real rating and price
   // const courseRating = Number((Math.random() * 5).toFixed(1));
   // tslint:disable-next-line:no-magic-numbers
@@ -40,7 +42,7 @@ const Slide = ({
         <CardMedia
           className={classes.cardMedia}
           image={imageUrl}
-          title="Image title"
+          title={course.title}
         />
         <CardContent className={classes.cardContent}>
           <Typography
@@ -70,7 +72,7 @@ const Slide = ({
             color="primary"
             style={{ textTransform: 'capitalize' }}
           >
-            Add to cart
+            {t('cart.addToCart')}
           </Button>
         </CardActions>
       </Link>

@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Formik } from 'formik';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RouteProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import PasswordField from '../../atoms/PasswordField';
@@ -25,6 +26,7 @@ interface LoginFormProps extends AuthState, RouteProps {
 
 const LoginForm = (props: LoginFormProps) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const { loginLoading, login } = props;
 
@@ -37,7 +39,7 @@ const LoginForm = (props: LoginFormProps) => {
         </Avatar>
 
         <Typography component="h1" variant="h5">
-          Login
+          {t('auth.login')}
         </Typography>
 
         <Formik
@@ -68,7 +70,7 @@ const LoginForm = (props: LoginFormProps) => {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label={t('auth.email')}
                   name="email"
                   autoComplete="email"
                   autoFocus
@@ -85,7 +87,7 @@ const LoginForm = (props: LoginFormProps) => {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label={t('auth.password')}
                   id="password"
                   autoComplete="current-password"
                   value={values.password}
@@ -102,15 +104,17 @@ const LoginForm = (props: LoginFormProps) => {
                   size="large"
                   className={classes.submit}
                 >
-                  Log in
+                  {t('auth.loginAction')}
                 </Button>
 
                 <Grid container>
                   <Grid item xs>
-                    <Link to={REMIND_PASSWORD}>Forgot password?</Link>
+                    <Link to={REMIND_PASSWORD}>
+                      {t('auth.forgotPassword')}
+                    </Link>
                   </Grid>
                   <Grid item>
-                    <Link to={REGISTER}>Don't have an account? Register</Link>
+                    <Link to={REGISTER}>{t('auth.dontHaveAccount')}</Link>
                   </Grid>
                 </Grid>
               </form>
