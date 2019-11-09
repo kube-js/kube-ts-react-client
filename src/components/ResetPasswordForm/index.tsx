@@ -9,9 +9,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Formik } from 'formik';
 import _defaultTo from 'ramda/src/defaultTo';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RouteProps } from 'react-router';
 import PasswordField from '../../atoms/PasswordField';
-import { PASSWORD_HELPER_TEXT } from '../../constants';
 import {
   ResetPasswordOptions,
   resetPasswordRequested,
@@ -32,6 +32,7 @@ const ResetPasswordForm = ({
   location,
 }: ResetPasswordFormProps) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const params =
     location !== undefined ? new URLSearchParams(location.search) : null;
@@ -48,7 +49,7 @@ const ResetPasswordForm = ({
         </Avatar>
 
         <Typography component="h1" variant="h5">
-          Reset password
+          {t('auth.resetPassword')}
         </Typography>
 
         <Formik
@@ -76,13 +77,13 @@ const ResetPasswordForm = ({
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <PasswordField
-                      helperText={PASSWORD_HELPER_TEXT}
+                      helperText={t('auth.passwordHelperText')}
                       error={hasPasswordError}
                       variant="outlined"
                       required
                       fullWidth
                       name="password"
-                      label="New password"
+                      label={t('auth.newPassword')}
                       id="password"
                       autoComplete="off"
                       value={values.password}
@@ -93,13 +94,13 @@ const ResetPasswordForm = ({
 
                   <Grid item xs={12}>
                     <PasswordField
-                      helperText={PASSWORD_HELPER_TEXT}
+                      helperText={t('auth.passwordHelperText')}
                       error={hasPasswordConfirmationError}
                       variant="outlined"
                       required
                       fullWidth
                       name="passwordConfirmation"
-                      label="New password confirmation"
+                      label={t('auth.newPasswordConfirmation')}
                       id="passwordConfirmation"
                       autoComplete="off"
                       value={values.passwordConfirmation}
@@ -117,7 +118,7 @@ const ResetPasswordForm = ({
                       size="large"
                       className={classes.submit}
                     >
-                      Reset password
+                      {t('auth.resetPassword')}
                     </Button>
                   </Grid>
                 </Grid>

@@ -1,6 +1,7 @@
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import React, { Fragment, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getDiscoveryItemsRequested } from '../../redux/discoveryItems/actionCreators';
 import { DiscoveryItemsState } from '../../redux/discoveryItems/reducer';
 import CoursesSlider from '../CoursesSlider';
@@ -20,13 +21,18 @@ const Home = ({
   getDiscoveryItems,
 }: Options) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   useEffect(() => {
-    const shouldFetchData = [bestSellers.courses, bestSellers.categories, mostViewed.courses].some(items => items.length === 0);
-    if(shouldFetchData){
+    const shouldFetchData = [
+      bestSellers.courses,
+      bestSellers.categories,
+      mostViewed.courses,
+    ].some(items => items.length === 0);
+    if (shouldFetchData) {
       getDiscoveryItems();
-    }  
-  },[]);
+    }
+  }, []);
 
   return (
     <Fragment>
@@ -40,7 +46,7 @@ const Home = ({
           color="textPrimary"
           gutterBottom
         >
-          Explore our bestsellers
+          {t('home.exploreOurBestsellers')}
         </Typography>
 
         <CoursesTabs
@@ -57,7 +63,7 @@ const Home = ({
           color="textPrimary"
           gutterBottom
         >
-          Students are viewing
+          {t('home.studentAreViewing')}
         </Typography>
 
         <CoursesSlider courses={mostViewed.courses} />

@@ -7,8 +7,10 @@ interface Options {
 }
 
 const CourseSections = ({ sections }: Options) => {
+  const sortedSections = sections.sort((x: Section, y: Section) => x.order - y.order);
+
   const [expandedIds, setExpandedIds] = React.useState<string[]>([
-    sections[0].id,
+    sortedSections[0].id,
   ]);
 
   const handleChange = (panelId: string) => (
@@ -23,8 +25,6 @@ const CourseSections = ({ sections }: Options) => {
       setExpandedIds(updatedIds);
     }
   };
-
-  const sortedSections = sections.sort((x: Section, y: Section) => x.order - y.order);
 
   return (
     <div>

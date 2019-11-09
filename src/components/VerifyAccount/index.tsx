@@ -2,6 +2,7 @@ import Container from '@material-ui/core/Container';
 import _defaultTo from 'ramda/src/defaultTo';
 import _isNil from 'ramda/src/isNil';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { RouteProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { LOGIN } from '../../constants/routes';
@@ -25,6 +26,7 @@ const VerifyAccount = ({
   verifyAccount,
 }: VerifyAccountProps) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const params =
     location !== undefined ? new URLSearchParams(location.search) : null;
@@ -51,12 +53,12 @@ const VerifyAccount = ({
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         {/** TODO: implement messages */}
-        {verifyAccountLoading && <div>Verifying account...</div>}
+        {verifyAccountLoading && <div>{t('auth.verifyingAccount')}</div>}
 
         {displaySuccessMessage && (
           <div>
-            Account has been verified successfuly. You can now{' '}
-            <Link to={LOGIN}>log in</Link>
+            {t('auth.accountHasBeenVerified')}{' '}
+            <Link to={LOGIN}>{t('auth.loginAction')}</Link>
           </div>
         )}
 

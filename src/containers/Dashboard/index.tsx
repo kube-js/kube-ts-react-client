@@ -2,6 +2,7 @@ import { Link } from '@material-ui/core';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import _isNil from 'ramda/src/isNil';
 import React, { Fragment, SyntheticEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import ErrorMessage from '../../components/ErrorMessage';
@@ -28,12 +29,12 @@ export interface HandleVerifyOptions {
 
 const Dashboard = ({ user, resendVerifyToken }: Props) => {
   const isVerified = !_isNil(user) && !_isNil((user as any).verifiedAt);
-
+  const { t } = useTranslation();
   // TODO: allow to log in without being verified in kube-ts-server
 
   return (
     <div>
-      <h2>Dashboard</h2>
+      <h2>{t('dashboard.mainHeader')}</h2>
       {/** TODO: implement warning message type */}
       {user && !isVerified && (
         <ErrorMessage>

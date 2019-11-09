@@ -40,12 +40,12 @@ const StyledMenuItem = withStyles(theme => ({
   },
 }))(MenuItem);
 
-const langLabels: {[keyof: string]: string} = {
+const langLabels: { [keyof: string]: string } = {
   'en-GB': 'English',
-  'pl-PL': 'Polski'
-}
+  'pl-PL': 'Polski',
+};
 
-export default function LanguageDropdown() {
+const LanguageDropdown = () => {
   // TODO: refactor component
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -56,10 +56,12 @@ export default function LanguageDropdown() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+
   const { i18n } = useTranslation();
 
-  const currentLang = (Array.isArray(i18n.languages)) ? i18n.languages[0] : i18n.languages;
+  const currentLang = Array.isArray(i18n.languages)
+    ? i18n.languages[0]
+    : i18n.languages;
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -67,15 +69,16 @@ export default function LanguageDropdown() {
   };
 
   return (
-    <div style={{display: 'flex', alignItems: 'center'}}>
+    <div style={{ display: 'flex', alignItems: 'center' }}>
       <Button
         aria-controls="customized-menu"
         aria-haspopup="true"
-        variant="contained"
-        color="primary"
+        variant="outlined"
+        color="inherit"
         onClick={handleClick}
       >
-        <LanguageIcon style={{marginRight: '5'}} /> {langLabels[currentLang]} <ExpandMoreIcon  style={{marginLeft: '5'}} />
+        <LanguageIcon style={{ marginRight: '5' }} /> {langLabels[currentLang]}{' '}
+        <ExpandMoreIcon style={{ marginLeft: '5' }} />
       </Button>
       <StyledMenu
         id="customized-menu"
@@ -93,4 +96,7 @@ export default function LanguageDropdown() {
       </StyledMenu>
     </div>
   );
-}
+};
+
+// tslint:disable-next-line:max-file-line-count
+export default LanguageDropdown;

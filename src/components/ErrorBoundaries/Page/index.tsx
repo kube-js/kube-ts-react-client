@@ -1,5 +1,7 @@
 import { Typography } from '@material-ui/core';
+import { TFunction } from 'i18next';
 import React, { Component, Fragment } from 'react';
+import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ROOT } from '../../../constants/routes';
 import LoggerContext from '../../../contexts/logger';
@@ -7,6 +9,7 @@ import { LoggerFacade } from '../../../services/logger/Facade';
 
 export interface Props {
   readonly children: any;
+  readonly t: TFunction;
   readonly logger: LoggerFacade;
 }
 
@@ -29,7 +32,7 @@ class ErrorBoundary extends Component<Props, State> {
     });
 
   public render() {
-    const { children } = this.props;
+    const { children, t } = this.props;
 
     const element = React.isValidElement(children)
       ? React.Children.map(children, (child: any) =>
@@ -41,10 +44,10 @@ class ErrorBoundary extends Component<Props, State> {
       return (
         <Fragment>
           <Typography component="h1" variant="h5">
-            Something went wrong...
+            {t('global.somethingWentWrong')}
           </Typography>
           <Link onClick={this.handleClick} to={ROOT}>
-            Refresh the page
+            {t('global.refreshThePage')}
           </Link>
         </Fragment>
       );
@@ -54,8 +57,8 @@ class ErrorBoundary extends Component<Props, State> {
   }
 }
 
-export default (props: any) => (
+export default withTranslation()((props: any) => (
   <LoggerContext.Consumer>
     {logger => <ErrorBoundary {...props} logger={logger} />}
   </LoggerContext.Consumer>
-);
+));
