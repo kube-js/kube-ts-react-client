@@ -9,7 +9,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Autocomplete from '../../atoms/Autocomplete';
-import LanguageDropdown from '../../atoms/LanguageDropdown';
+import CartDropdown from '../../atoms/CartDropdown';
 import LogoutButton from '../../atoms/LogoutButton';
 import { LOGIN, REGISTER } from '../../constants/routes';
 // source: https://www.freepik.com
@@ -93,7 +93,7 @@ const NavBar = ({ handleSidebarOpen, open }: any) => {
           <div className={classes.grow} />
 
           <div className={classes.sectionDesktop}>
-            <LanguageDropdown />
+            <CartDropdown />
 
             <OnlyUnauthenticated>
               <Button

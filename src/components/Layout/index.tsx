@@ -1,6 +1,7 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import clsx from 'clsx';
 import React, { useState } from 'react';
+import Footer from '../Footer';
 import NavBar from '../NavBar';
 import Sidebar from '../Sidebar';
 import useStyles from './styles';
@@ -11,7 +12,7 @@ export interface Options {
 
 const Layout = ({ children }: Options) => {
   const classes = useStyles();
-  
+
   const [open, setOpen] = useState(false);
 
   function handleSidebarOpen() {
@@ -37,6 +38,7 @@ const Layout = ({ children }: Options) => {
       >
         <div className={classes.drawerHeader} />
         {children}
+        <Footer />
       </main>
     </div>
   );
