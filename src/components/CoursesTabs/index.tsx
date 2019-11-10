@@ -68,7 +68,6 @@ const CoursesTabs = ({ categories, courses }: Options) => {
     <div className={classes.root}>
       <Tabs
         centered={false}
-        disableRipple
         orientation="vertical"
         value={value}
         onChange={handleChange}
