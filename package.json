@@ -52,7 +52,7 @@
     "@testing-library/react": "9.3.2",
     "@testing-library/react-hooks": "3.2.1",
     "@types/flat": "0.0.28",
-    "@types/jest": "24.0.22",
+    "@types/jest": "24.0.23",
     "@types/i18n": "0.8.6",
     "@types/node": "11.15.2",
     "@types/ramda": "0.26.33",
