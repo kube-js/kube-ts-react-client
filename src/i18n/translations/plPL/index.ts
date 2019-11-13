@@ -28,9 +28,12 @@ export default {
     learningContent: 'Treść kursu:'
   },
   dashboard: {
+    accountHasBeenVerified: 'Konto nie zostało jeszcze zweryfikowane. Kliknij',
     mainHeader: 'Panel roboczy',
+    toVerifyYourAccount: 'aby zweryfikować swoje konto.'
   },
   global: {
+    here: 'tutaj',
     loading: 'ładowanie...',
     refreshThePage: ' Odśwież stronę',
     somethingWentWrong: 'Coś poszło nie tak...'

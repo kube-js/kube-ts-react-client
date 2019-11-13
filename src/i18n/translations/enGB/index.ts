@@ -28,9 +28,12 @@ export default {
     learningContent: 'Learning content:'
   },
   dashboard: {
+    accountHasBeenVerified: 'Account has not been verified yet. Click',
     mainHeader: 'Dashboard',
+    toVerifyYourAccount: 'to verify your account.'
   },
   global: {
+    here: 'here',
     loading: 'loading...',
     refreshThePage: ' Refresh the page',
     somethingWentWrong: 'Something went wrong...',
