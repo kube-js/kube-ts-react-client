@@ -7,3 +7,4 @@ export const LOGIN = '/login';
 export const DASHBOARD = '/dashboard';
 export const COURSE_VIEW = '/courses/:courseSlug';
 export const INSTRUCTOR_VIEW = '/instructors/:username';
+export const CART = '/cart';

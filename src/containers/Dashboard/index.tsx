@@ -3,8 +3,7 @@ import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import _isNil from 'ramda/src/isNil';
 import React, { Fragment, SyntheticEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ErrorMessage from '../../components/ErrorMessage';
 import {
   ResendVerifyTokenOptions,
@@ -27,11 +26,20 @@ export interface HandleVerifyOptions {
   readonly email: string;
 }
 
-const Dashboard = ({ user, resendVerifyToken }: Props) => {
-  const isVerified = !_isNil(user) && !_isNil((user as any).verifiedAt);
+const Dashboard = () => {
   const { t } = useTranslation();
-  // TODO: allow to log in without being verified in kube-ts-server
+  const dispatch = useDispatch();
+  const { user } = useSelector(({ auth }: State) => auth);
+  const isVerified = !_isNil(user) && !_isNil((user as any).verifiedAt);
 
+  const resendVerifyToken = ({ email }: ResendVerifyTokenOptions) =>
+    dispatch(
+      resendVerifyTokenRequested({
+        email,
+      })
+    );
+
+  // TODO: allow to log in without being verified in kube-ts-server
   return (
     <div>
       <h2>{t('dashboard.mainHeader')}</h2>
@@ -40,7 +48,7 @@ const Dashboard = ({ user, resendVerifyToken }: Props) => {
         <ErrorMessage>
           <Fragment>
             <ErrorOutlineIcon />
-            Account has not been verified yet. Click
+            {t('dashboard.accountHasBeenVerified')}
             <Link
               style={{ margin: '0 5px', cursor: 'pointer' }}
               onClick={(e: SyntheticEvent) => {
@@ -48,9 +56,9 @@ const Dashboard = ({ user, resendVerifyToken }: Props) => {
                 resendVerifyToken({ email: user.email });
               }}
             >
-              here
+              {t('global.here')}
             </Link>
-            to verify your account.
+            {t('dashboard.toVerifyYourAccount')}
           </Fragment>
         </ErrorMessage>
       )}
@@ -58,22 +66,4 @@ const Dashboard = ({ user, resendVerifyToken }: Props) => {
   );
 };
 
-const mapStateToProps = (state: State) => ({ user: state.auth.user });
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  resendVerifyToken: ({ email }: ResendVerifyTokenOptions) =>
-    dispatch(
-      // TODO: implement debounce and server throttling
-      // TODO: implement redux hooks
-      resendVerifyTokenRequested({
-        email,
-      })
-    ),
-});
-
-// TODO: how redux connect compare to hooks
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Dashboard);
+export default Dashboard;

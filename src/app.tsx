@@ -3,11 +3,13 @@ import React, { Fragment, lazy, StrictMode, Suspense } from 'react';
 import { Route, Switch } from 'react-router';
 import AuthenticatedRoute from './components/Auth/AuthenticatedRoute';
 import UnauthenticatedRoute from './components/Auth/UnauthenticatedRoute';
+import CartView from './components/Cart';
 import CourseView from './components/CourseView';
 import ErrorBoundary from './components/ErrorBoundaries/Page/index';
 import InstructorView from './components/InstructorView';
 import Layout from './components/Layout';
 import {
+  CART,
   COURSE_VIEW,
   DASHBOARD,
   INSTRUCTOR_VIEW,
@@ -62,6 +64,8 @@ const App = () => (
                 path={DASHBOARD}
                 component={Dashboard}
               />
+
+              <Route exact path={CART} component={CartView} />
 
               <Route component={NotFound} />
             </Switch>
