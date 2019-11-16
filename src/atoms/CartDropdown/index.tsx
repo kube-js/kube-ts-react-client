@@ -13,9 +13,11 @@ import { withStyles } from '@material-ui/core/styles';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import _isNil from 'ramda/src/isNil';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import courseImagePlaceholder from '../../images/course_400x180.png';
 import assetsUrl from '../../utils/helpers/assetsUrl';
+import sumBy from '../../utils/helpers/sumBy';
 
 const StyledMenu = withStyles({
   list: {
@@ -46,6 +48,7 @@ const StyledMenu = withStyles({
 const CartDropdown = () => {
   // TODO: refactor component
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { t } = useTranslation();
   const history = useHistory();
 
   const handleClick = (event: any) => {
@@ -56,7 +59,8 @@ const CartDropdown = () => {
     setAnchorEl(null);
   };
 
-  const goToCart = () => {
+  const goToCart = (e: any) => {
+    e.preventDefault();
     handleClose();
     history.push('/cart');
   };
@@ -66,26 +70,31 @@ const CartDropdown = () => {
     history.push(`/courses/${slug}`);
   };
 
-  const cartItems: any[] = [
+  const items: any[] = [
     {
       author: 'Martin Cook',
-      price: '£19.99',
+      id: 1,
+      price: 19.99,
       slug: 'designing-microservices-architecture',
       title: 'Designing microservices architecture',
     },
     {
       author: 'Thomas Tik',
-      price: '£19.99',
+      id: 2,
+      price: 19.99,
       slug: 'designing-microservices-architecture',
       title: 'Designing microservices architecture',
     },
     {
       author: 'Thomas Tik',
-      price: '£19.99',
+      id: 3,
+      price: 19.99,
       slug: 'designing-microservices-architecture',
       title: 'Designing microservices architecture',
     },
   ];
+
+  const total = sumBy('price')(items);
 
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -93,10 +102,11 @@ const CartDropdown = () => {
         aria-controls="customized-menu"
         aria-haspopup="true"
         color="inherit"
-        onClick={handleClick}
-        onMouseOver={handleClick}
+        variant="outlined"
+        onClick={goToCart}
+        onMouseEnter={handleClick}
       >
-        <Badge badgeContent={cartItems.length || null} color="secondary" >
+        <Badge badgeContent={items.length || null} color="secondary">
           <ShoppingCartIcon />
         </Badge>
       </Button>
@@ -112,13 +122,13 @@ const CartDropdown = () => {
           disablePadding
           style={{ maxWidth: 400, width: '100%' }}
         >
-          {cartItems.map(item => {
+          {items.map(item => {
             const imageUrl = _isNil(item.imageUrl)
               ? courseImagePlaceholder
               : assetsUrl(item.imageUrl);
 
             return (
-              <MenuItem onClick={goToCourse(item.slug)}>
+              <MenuItem onClick={goToCourse(item.slug)} key={item.id}>
                 <ListItemAvatar style={{ marginRight: 10 }}>
                   <img
                     src={imageUrl}
@@ -130,9 +140,11 @@ const CartDropdown = () => {
                   primary={item.title}
                   secondary={
                     <>
-                      <span>Instructor: {item.author}</span>
+                      <span>
+                        {t('cart.instructor')}: {item.author}
+                      </span>
                       <br />
-                      Price:
+                      {t('cart.price')}:
                       <span
                         style={{
                           color: '#000',
@@ -141,7 +153,7 @@ const CartDropdown = () => {
                           textAlign: 'right',
                         }}
                       >
-                        {item.price}
+                        £{item.price}
                       </span>
                     </>
                   }
@@ -150,7 +162,9 @@ const CartDropdown = () => {
             );
           })}
           <li style={{ padding: 10 }}>
-            <Typography variant="h6" style={{marginBottom: 10}}>Total: £59.97</Typography>
+            <Typography variant="h6" style={{ marginBottom: 10 }}>
+              {t('cart.total')}: £{total}
+            </Typography>
 
             <Button
               variant="contained"
@@ -158,7 +172,7 @@ const CartDropdown = () => {
               color="secondary"
               onClick={goToCart}
             >
-              Go to cart
+              {t('cart.goToCart')}
             </Button>
           </li>
         </MenuList>

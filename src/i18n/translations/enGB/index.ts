@@ -22,6 +22,14 @@ export default {
   cart: {
     addToCart: 'Add to cart',
     buyNow: 'Buy now',
+    goToCart: 'Go to cart',
+    instructor: 'Instructor',
+    item: 'course',
+    items: 'courses',
+    mainHeadline: 'Shopping cart',
+    price: 'Price',
+    proceedToCheckout: 'Proceed to checkout',
+    total: 'Total',
   },
   courseView: {
     instructor: 'Instructor',
