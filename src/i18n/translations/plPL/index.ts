@@ -21,7 +21,15 @@ export default {
   },
   cart: {
     addToCart: 'Dodaj do koszyka',
-    buyNow: 'Kup teraz'
+    buyNow: 'Kup teraz',
+    goToCart: 'Przejdź do koszyka',
+    instructor: 'Instruktor',
+    item: 'kurs',
+    items: 'kursy',
+    mainHeadline: 'Koszyk',
+    price: 'Cena',
+    proceedToCheckout: 'Przejdź do kasy',
+    total: 'Suma',
   },
   courseView: {
     instructor: 'Instruktor',
