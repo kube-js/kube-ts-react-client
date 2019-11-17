@@ -4,11 +4,13 @@ import _isNil from 'ramda/src/isNil';
 import React, { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps, useHistory } from 'react-router';
 import CourseMetaInfo from '../../atoms/CourseMetaInfo';
 import CourseSections from '../../atoms/CourseSections';
 import courseImagePlaceholder from '../../images/course_400x180.png';
+import { addCartItem } from '../../redux/cart/actionCreators';
 import { getCourseDetailsRequested } from '../../redux/courseDetails/actionCreators';
+import { EnhancedCourse } from '../../redux/discoveryItems/actionCreators';
 import { State } from '../../redux/rootReducer';
 import assetsUrl from '../../utils/helpers/assetsUrl';
 import useStyles from './styles';
@@ -18,13 +20,22 @@ export interface Params {
 }
 const CourseView = ({ match }: RouteComponentProps<Params>) => {
   const classes = useStyles();
+  const history = useHistory();
   const { t } = useTranslation();
 
   const { course, getCourseDetailsLoading } = useSelector(
     (state: State) => state.courseDetails
   );
 
+  const { items } = useSelector((state: State) => state.cart);
+
   const dispatch = useDispatch();
+
+  const addItem = (item: EnhancedCourse) => (e: any) => {
+    e.preventDefault();
+    dispatch(addCartItem(item));
+    history.push({ pathname: '/cart', search: `?newItemId=${item.id}` });
+  };
 
   useEffect(() => {
     if (course === undefined || course.slug !== match.params.courseSlug) {
@@ -36,6 +47,10 @@ const CourseView = ({ match }: RouteComponentProps<Params>) => {
     // TODO: make course placeholder
     return <div>{t('global.loading')}</div>;
   }
+
+  const hasAddedToCart =
+    items.find(item => item.id === course.id) !== undefined;
+
   const imageUrl = !_isNil(course.imageUrl)
     ? assetsUrl(course.imageUrl)
     : courseImagePlaceholder;
@@ -70,12 +85,23 @@ const CourseView = ({ match }: RouteComponentProps<Params>) => {
               <Paper className={[classes.sidebarCard, classes.paper].join(' ')}>
                 <img src={imageUrl} style={{ width: '100%' }} />
 
-                <Typography variant="h4" style={{margin: '15px 0'}}>{`£${coursePrice}`}</Typography>
+                <Typography
+                  variant="h4"
+                  style={{ margin: '15px 0' }}
+                >{`£${coursePrice}`}</Typography>
 
-                <Button variant="contained" fullWidth color="primary" style={{marginBottom: '5px'}}>
-                  {t('cart.addToCart')}
-                </Button>
-                
+                {!hasAddedToCart ? (
+                  <Button
+                    variant="contained"
+                    onClick={addItem(course)}
+                    fullWidth
+                    color="primary"
+                    style={{ marginBottom: '5px' }}
+                  >
+                    {t('cart.addToCart')}
+                  </Button>
+                ) : null}
+
                 <Button variant="contained" fullWidth color="secondary">
                   {t('cart.buyNow')}
                 </Button>

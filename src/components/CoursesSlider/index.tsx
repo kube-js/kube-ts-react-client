@@ -8,7 +8,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import { EnhancedCourse } from '../../redux/discoveryItems/actionCreators';
-import Slide from '../CourseSlide';
+import CourseSlide from '../CourseSlide';
 import useStyles from './styles';
 
 const NextArrow = (props: any) => {
@@ -63,7 +63,7 @@ const CoursesSlider = ({ courses }: Options) => {
       {/** TODO: create slider placeholder */}
       <Slider {...settings} className={classes.slider}>
         {courses.map(course => (
-          <Slide {...{ course, classes }} key={course.id} />
+          <CourseSlide {...{ course }} key={course.id} />
         ))}
       </Slider>
     </div>

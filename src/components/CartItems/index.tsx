@@ -16,7 +16,7 @@ import assetsUrl from '../../utils/helpers/assetsUrl';
 import sumBy from '../../utils/helpers/sumBy';
 import useStyles from './styles';
 
-const CartItems = ({ items }: any) => {
+const CartItems = ({ items, removeItem }: any) => {
   const classes = useStyles();
   const history = useHistory();
   const { t } = useTranslation();
@@ -60,7 +60,7 @@ const CartItems = ({ items }: any) => {
                   >
                     {item.title}
                   </a>
-                  <Button size="small">
+                  <Button size="small" onClick={removeItem(item.id)}>
                     <DeleteIcon />
                   </Button>
                 </TableCell>

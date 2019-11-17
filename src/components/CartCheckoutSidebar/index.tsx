@@ -16,7 +16,7 @@ const CartItems = ({ items }: any) => {
   return (
     <Paper className={classes.paper} square>
       <Typography>
-        {t('cart.total')} ({items.length} {courses}): £{total}
+        {t('cart.total')} ({items.length} {courses}): £{total.toFixed(2)}
       </Typography>
 
       <Button variant="contained" fullWidth color="secondary">

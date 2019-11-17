@@ -1,46 +1,46 @@
 // tslint:disable:no-magic-numbers
 import { Container, Grid, Typography } from '@material-ui/core';
 import _isNil from 'ramda/src/isNil';
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router';
+import { removeCartItem } from '../../redux/cart/actionCreators';
+import { State } from '../../redux/rootReducer';
 import CartCheckoutSidebar from '../CartCheckoutSidebar';
 import CartItems from '../CartItems';
 import useStyles from './styles';
-
-// TODO: get data from redux
-const items: any[] = [
-  {
-    author: 'Martin Cook',
-    id: 1,
-    price: 19.99,
-    slug: 'designing-microservices-architecture',
-    title: 'Designing microservices architecture',
-  },
-  {
-    author: 'Thomas Tik',
-    id: 2,
-    price: 19.99,
-    slug: 'designing-microservices-architecture',
-    title: 'Designing microservices architecture',
-  },
-  {
-    author: 'Thomas Tik',
-    id: 3,
-    price: 19.99,
-    slug: 'designing-microservices-architecture',
-    title: 'Designing microservices architecture',
-  },
-];
 
 const CartView = () => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  // const { course, getCourseDetailsLoading } = useSelector(
-  //   (state: State) => state.courseDetails
-  // );
+  const { search } = useLocation();
 
-  // const dispatch = useDispatch();
+  const params = new URLSearchParams(search);
+
+  const newItemId = params.get('newItemId');
+
+  const initialState = !newItemId;
+
+  const [editMode, setEditMode] = useState(initialState);
+
+  const toggleEditMode = (e: any) => {
+    e.preventDefault();
+
+    return setEditMode(!editMode);
+  };
+
+  const { items } = useSelector((state: State) => state.cart);
+
+  const dispatch = useDispatch();
+
+  const courseItems = items.map(item => ({ ...item, price: 19.99 }));
+
+  const removeItem = (id: string) => (e: any) => {
+    e.preventDefault();
+    dispatch(removeCartItem(id));
+  };
 
   return (
     <div className={classes.root}>
@@ -61,12 +61,16 @@ const CartView = () => {
       </Container>
       <Container>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={9}>
-            <CartItems items={items} />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <CartCheckoutSidebar items={items} />
-          </Grid>
+          {editMode ? (
+            <>
+              <Grid item xs={12} sm={9}>
+                <CartItems items={courseItems} removeItem={removeItem} />
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <CartCheckoutSidebar items={courseItems} />
+              </Grid>
+            </>
+          ) : null}
         </Grid>
       </Container>
     </div>

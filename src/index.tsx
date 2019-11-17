@@ -4,9 +4,11 @@ import { ConnectedRouter } from 'connected-react-router';
 import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import { render } from 'react-dom';
-import {I18nextProvider} from 'react-i18next';
+import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+// tslint:disable-next-line:no-import-side-effect
+import 'url-search-params-polyfill';
 import App from './app';
 import config from './config';
 import LoggerContext from './contexts/logger';

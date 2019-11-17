@@ -6,6 +6,7 @@ import storage from 'redux-persist/lib/storage';
 import alertsReducer, { AlertState } from './alerts/reducer';
 import authReducer, { AuthState } from './auth/reducer';
 import autocompleteReducer, { AutocompleteState } from './autocomplete/reducer';
+import cartReducer, { CartState } from './cart/reducer';
 import categoriesReducer, { CategoriesState } from './categories/reducer';
 import courseDetailsReducer, {
   CourseDetailsState,
@@ -19,6 +20,7 @@ import usersReducer, { UsersState } from './users/reducer';
 export interface State {
   readonly autocomplete: AutocompleteState;
   readonly categories: CategoriesState;
+  readonly cart: CartState;
   readonly courses: CoursesState;
   readonly courseDetails: CourseDetailsState;
   readonly discoveryItems: DiscoveryItemsState;
@@ -41,6 +43,7 @@ const createPersistedReducer = (
     alerts: alertsReducer,
     auth: authReducer,
     autocomplete: autocompleteReducer,
+    cart: cartReducer,
     categories: categoriesReducer,
     courseDetails: courseDetailsReducer,
     courses: coursesReducer,

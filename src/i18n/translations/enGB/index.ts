@@ -21,6 +21,7 @@ export default {
   },
   cart: {
     addToCart: 'Add to cart',
+    addedToCart: 'Added to cart',
     buyNow: 'Buy now',
     goToCart: 'Go to cart',
     instructor: 'Instructor',
