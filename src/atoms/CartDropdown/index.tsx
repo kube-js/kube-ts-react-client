@@ -14,8 +14,10 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import _isNil from 'ramda/src/isNil';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import courseImagePlaceholder from '../../images/course_400x180.png';
+import { State } from '../../redux/rootReducer';
 import assetsUrl from '../../utils/helpers/assetsUrl';
 import sumBy from '../../utils/helpers/sumBy';
 
@@ -49,6 +51,7 @@ const CartDropdown = () => {
   // TODO: refactor component
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { t } = useTranslation();
+  const { items } = useSelector((state: State) => state.cart);
   const history = useHistory();
 
   const handleClick = (event: any) => {
@@ -70,31 +73,10 @@ const CartDropdown = () => {
     history.push(`/courses/${slug}`);
   };
 
-  const items: any[] = [
-    {
-      author: 'Martin Cook',
-      id: 1,
-      price: 19.99,
-      slug: 'designing-microservices-architecture',
-      title: 'Designing microservices architecture',
-    },
-    {
-      author: 'Thomas Tik',
-      id: 2,
-      price: 19.99,
-      slug: 'designing-microservices-architecture',
-      title: 'Designing microservices architecture',
-    },
-    {
-      author: 'Thomas Tik',
-      id: 3,
-      price: 19.99,
-      slug: 'designing-microservices-architecture',
-      title: 'Designing microservices architecture',
-    },
-  ];
+  // TODO: implements pricing on server
+  const courseItems = items.map(item => ({ ...item, price: 19.99 }));
 
-  const total = sumBy('price')(items);
+  const total = sumBy('price')(courseItems);
 
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -106,7 +88,7 @@ const CartDropdown = () => {
         onClick={goToCart}
         onMouseEnter={handleClick}
       >
-        <Badge badgeContent={items.length || null} color="secondary">
+        <Badge badgeContent={items.length} color="secondary">
           <ShoppingCartIcon />
         </Badge>
       </Button>
@@ -122,7 +104,7 @@ const CartDropdown = () => {
           disablePadding
           style={{ maxWidth: 400, width: '100%' }}
         >
-          {items.map(item => {
+          {courseItems.map(item => {
             const imageUrl = _isNil(item.imageUrl)
               ? courseImagePlaceholder
               : assetsUrl(item.imageUrl);
@@ -141,7 +123,8 @@ const CartDropdown = () => {
                   secondary={
                     <>
                       <span>
-                        {t('cart.instructor')}: {item.author}
+                        {t('cart.instructor')}: {item.user.firstName}{' '}
+                        {item.user.lastName}
                       </span>
                       <br />
                       {t('cart.price')}:
@@ -163,7 +146,7 @@ const CartDropdown = () => {
           })}
           <li style={{ padding: 10 }}>
             <Typography variant="h6" style={{ marginBottom: 10 }}>
-              {t('cart.total')}: £{total}
+              {t('cart.total')}: £{total.toFixed(2)}
             </Typography>
 
             <Button

@@ -21,6 +21,7 @@ export default {
   },
   cart: {
     addToCart: 'Dodaj do koszyka',
+    addedToCart: 'Dodano do koszyka',
     buyNow: 'Kup teraz',
     goToCart: 'Przejdź do koszyka',
     instructor: 'Instruktor',
