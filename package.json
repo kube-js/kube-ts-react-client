@@ -10,7 +10,7 @@
     "@material-ui/icons": "4.5.1",
     "@material-ui/lab": "4.0.0-alpha.32",
     "@material-ui/styles": "4.6.0",
-    "@sentry/browser": "5.9.0",
+    "@sentry/browser": "5.9.1",
     "clsx": "1.0.4",
     "codecov": "3.6.1",
     "connected-react-router": "6.6.0",
