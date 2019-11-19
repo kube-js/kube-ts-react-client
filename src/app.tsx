@@ -3,14 +3,16 @@ import React, { Fragment, lazy, StrictMode, Suspense } from 'react';
 import { Route, Switch } from 'react-router';
 import AuthenticatedRoute from './components/Auth/AuthenticatedRoute';
 import UnauthenticatedRoute from './components/Auth/UnauthenticatedRoute';
-import CartView from './components/Cart';
+import CartView from './components/CartView';
+import CheckoutView from './components/CheckoutView';
 import CourseView from './components/CourseView';
 import ErrorBoundary from './components/ErrorBoundaries/Page/index';
 import InstructorView from './components/InstructorView';
 import Layout from './components/Layout';
 import {
   CART,
-  COURSE_VIEW,
+  CHECKOUT,
+  COURSE,
   DASHBOARD,
   INSTRUCTOR_VIEW,
   LOGIN,
@@ -42,7 +44,7 @@ const App = () => (
           <ErrorBoundary>
             <Switch>
               <Route exact path={ROOT} component={Home} />
-              <Route exact path={COURSE_VIEW} component={CourseView} />
+              <Route exact path={COURSE} component={CourseView} />
               <Route exact path={RESET_PASSWORD} component={ResetPassword} />
               <Route exact path={VERIFY} component={VerifyAccount} />
               <Route path={INSTRUCTOR_VIEW} component={InstructorView} />
@@ -66,6 +68,7 @@ const App = () => (
               />
 
               <Route exact path={CART} component={CartView} />
+              <Route exact path={CHECKOUT} component={CheckoutView} />
 
               <Route component={NotFound} />
             </Switch>

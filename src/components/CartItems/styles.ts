@@ -2,9 +2,25 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    addedToBasket: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    addedToBasketContent: {
+      '& svg': {
+        color: 'green',
+      },
+      alignItems: 'center',
+      display: 'flex',
+    },
+    addedToBasketImageWrapper: {
+      '&img': {
+        minWidth: 150,
+      },
+    },
     itemImage: {
-      height: 60,
-      width: 100,
+      height: 100,
+      width: 150,
     },
     root: {
       border: '1px solid rgba(0, 0, 0, .125)',

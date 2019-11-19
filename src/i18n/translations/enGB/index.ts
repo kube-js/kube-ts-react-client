@@ -1,6 +1,7 @@
 export default {
   auth: {
-    accountHasBeenVerified: 'Account has been verified successfuly. You can now',
+    accountHasBeenVerified:
+      'Account has been verified successfuly. You can now',
     alreadyHaveAccount: 'Already have an account? Log in',
     backToLogin: 'Back to login',
     dontHaveAccount: "Don't have an account? Register",
@@ -12,7 +13,8 @@ export default {
     newPasswordConfirmation: 'New password confirmation',
     password: 'Password',
     passwordConfirmation: 'Password confirmation',
-    passwordHelperText: 'Password must be 8 characters long, containing at least: 1 upper and 1 lower case, 1 digit and 1 special characters i.e. one of the following: #?!@$%^&*-',
+    passwordHelperText:
+      'Password must be 8 characters long, containing at least: 1 upper and 1 lower case, 1 digit and 1 special characters i.e. one of the following: #?!@$%^&*-',
     register: 'Registration',
     registerAction: 'Register',
     remindPassword: 'Remind Password',
@@ -23,23 +25,26 @@ export default {
     addToCart: 'Add to cart',
     addedToCart: 'Added to cart',
     buyNow: 'Buy now',
+    editCart: 'Edit cart',
     goToCart: 'Go to cart',
     instructor: 'Instructor',
     item: 'course',
     items: 'courses',
+    keepShopping: 'Keep shopping',
     mainHeadline: 'Shopping cart',
     price: 'Price',
     proceedToCheckout: 'Proceed to checkout',
     total: 'Total',
+    yourCartIsEmpty: 'Your cart is empty',
   },
   courseView: {
     instructor: 'Instructor',
-    learningContent: 'Learning content:'
+    learningContent: 'Learning content:',
   },
   dashboard: {
     accountHasBeenVerified: 'Account has not been verified yet. Click',
     mainHeader: 'Dashboard',
-    toVerifyYourAccount: 'to verify your account.'
+    toVerifyYourAccount: 'to verify your account.',
   },
   global: {
     here: 'here',
@@ -56,7 +61,7 @@ export default {
   },
   home: {
     exploreOurBestsellers: 'Explore our bestsellers',
-    studentAreViewing: 'Student are viewing'
+    studentAreViewing: 'Student are viewing',
   },
   navbar: {
     login: 'Login',
