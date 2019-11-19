@@ -1,10 +1,9 @@
 // tslint:disable:no-magic-numbers
 import { Container, Grid, Typography } from '@material-ui/core';
 import _isNil from 'ramda/src/isNil';
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router';
 import { removeCartItem } from '../../redux/cart/actionCreators';
 import { State } from '../../redux/rootReducer';
 import CartCheckoutSidebar from '../CartCheckoutSidebar';
@@ -14,22 +13,6 @@ import useStyles from './styles';
 const CartView = () => {
   const classes = useStyles();
   const { t } = useTranslation();
-
-  const { search } = useLocation();
-
-  const params = new URLSearchParams(search);
-
-  const newItemId = params.get('newItemId');
-
-  const initialState = !newItemId;
-
-  const [editMode, setEditMode] = useState(initialState);
-
-  const toggleEditMode = (e: any) => {
-    e.preventDefault();
-
-    return setEditMode(!editMode);
-  };
 
   const { items } = useSelector((state: State) => state.cart);
 
@@ -61,15 +44,13 @@ const CartView = () => {
       </Container>
       <Container>
         <Grid container spacing={3}>
-          {editMode ? (
-            <>
-              <Grid item xs={12} sm={9}>
-                <CartItems items={courseItems} removeItem={removeItem} />
-              </Grid>
-              <Grid item xs={12} sm={3}>
-                <CartCheckoutSidebar items={courseItems} />
-              </Grid>
-            </>
+          <Grid item xs={12} sm={items.length > 0 ? 9 : 12}>
+            <CartItems items={courseItems} removeItem={removeItem} />
+          </Grid>
+          {items.length > 0 ? (
+            <Grid item xs={12} sm={3}>
+              <CartCheckoutSidebar items={courseItems} />
+            </Grid>
           ) : null}
         </Grid>
       </Container>
