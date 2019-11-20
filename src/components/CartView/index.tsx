@@ -1,7 +1,7 @@
 // tslint:disable:no-magic-numbers
 import { Container, Grid, Typography } from '@material-ui/core';
 import _isNil from 'ramda/src/isNil';
-import React, { memo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeCartItem } from '../../redux/cart/actionCreators';
@@ -59,4 +59,4 @@ const CartView = () => {
 };
 
 // tslint:disable-next-line:max-file-line-count
-export default memo(CartView);
+export default CartView;
