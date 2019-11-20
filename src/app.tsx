@@ -22,17 +22,17 @@ import {
   ROOT,
   VERIFY,
 } from './constants/routes';
-import Home from './containers/Home';
-import Loading from './containers/Loading';
-import Login from './containers/Login';
-import NotFound from './containers/NotFound';
-import Notifier from './containers/Notifier';
-import Register from './containers/Register';
+import Home from './pages/Home';
+import Loading from './pages/Loading';
+import Login from './pages/Login';
+import NotFound from './pages/NotFound';
+import Notifier from './pages/Notifier';
+import Register from './pages/Register';
 
-const RemindPassword = lazy(() => import('./containers/RemindPassword'));
-const ResetPassword = lazy(() => import('./containers/ResetPassword'));
-const VerifyAccount = lazy(() => import('./containers/VerifyAccount'));
-const Dashboard = lazy(() => import('./containers/Dashboard'));
+const RemindPassword = lazy(() => import('./pages/RemindPassword'));
+const ResetPassword = lazy(() => import('./pages/ResetPassword'));
+const VerifyAccount = lazy(() => import('./pages/VerifyAccount'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
 
 const App = () => (
   <Fragment>
