@@ -12,14 +12,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: theme.spacing(1),
   },
   form: {
-    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(2),
     width: '100%', // Fix IE 11 issue.
   },
   paper: {
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'column',
-    marginTop: theme.spacing(8),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),

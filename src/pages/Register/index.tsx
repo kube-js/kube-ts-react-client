@@ -1,23 +1,11 @@
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { Container } from '@material-ui/core';
+import React from 'react';
 import RegisterForm from '../../components/RegisterForm';
-import {
-  RegisterOptions,
-  registerRequested,
-} from '../../redux/auth/actionCreators/index';
-import { State } from '../../redux/rootReducer';
 
-const mapStateToProps = ({ auth: { registerLoading, registerError } }: State) => ({
-  registerError,
-  registerLoading,
-});
+const Register = () => (
+  <Container component="main" maxWidth="xs" style={{ padding: 48 }}>
+    <RegisterForm />
+  </Container>
+);
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  register: (options: RegisterOptions) =>
-    dispatch(registerRequested(options)),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RegisterForm);
+export default Register;

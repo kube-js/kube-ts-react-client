@@ -4,10 +4,10 @@ import _isNil from 'ramda/src/isNil';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import CartCheckoutSidebar from '../../components/CartCheckoutSidebar';
+import CartItems from '../../components/CartItems';
 import { removeCartItem } from '../../redux/cart/actionCreators';
 import { State } from '../../redux/rootReducer';
-import CartCheckoutSidebar from '../CartCheckoutSidebar';
-import CartItems from '../CartItems';
 import useStyles from './styles';
 
 const CartView = () => {

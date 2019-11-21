@@ -3,11 +3,7 @@ import React, { Fragment, lazy, StrictMode, Suspense } from 'react';
 import { Route, Switch } from 'react-router';
 import AuthenticatedRoute from './components/Auth/AuthenticatedRoute';
 import UnauthenticatedRoute from './components/Auth/UnauthenticatedRoute';
-import CartView from './components/CartView';
-import CheckoutView from './components/CheckoutView';
-import CourseView from './components/CourseView';
 import ErrorBoundary from './components/ErrorBoundaries/Page/index';
-import InstructorView from './components/InstructorView';
 import Layout from './components/Layout';
 import {
   CART,
@@ -22,7 +18,11 @@ import {
   ROOT,
   VERIFY,
 } from './constants/routes';
+import CartView from './pages/Cart';
+import CheckoutView from './pages/Checkout';
+import CourseView from './pages/Course';
 import Home from './pages/Home';
+import InstructorView from './pages/Instructor';
 import Loading from './pages/Loading';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
