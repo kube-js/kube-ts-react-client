@@ -17,7 +17,15 @@ import { State } from '../../redux/rootReducer';
 import loginSchema from '../../utils/schemas/login';
 import useStyles from './styles';
 
-const LoginForm = () => {
+export interface Props {
+  readonly showRemindPassword?: boolean;
+  readonly registerLinkProps?: any;
+}
+
+const LoginForm = ({
+  showRemindPassword = true,
+  registerLinkProps = {},
+}: Props) => {
   const classes = useStyles();
 
   const { t } = useTranslation();
@@ -102,11 +110,15 @@ const LoginForm = () => {
               </Button>
 
               <Grid container>
-                <Grid item xs>
-                  <Link to={REMIND_PASSWORD}>{t('auth.forgotPassword')}</Link>
-                </Grid>
+                {showRemindPassword && (
+                  <Grid item xs>
+                    <Link to={REMIND_PASSWORD}>{t('auth.forgotPassword')}</Link>
+                  </Grid>
+                )}
                 <Grid item>
-                  <Link to={REGISTER}>{t('auth.dontHaveAccount')}</Link>
+                  <Link to={REGISTER} {...registerLinkProps}>
+                    {t('auth.dontHaveAccount')}
+                  </Link>
                 </Grid>
               </Grid>
             </form>

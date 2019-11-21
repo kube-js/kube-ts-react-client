@@ -1,24 +1,75 @@
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import Home from '../../components/Home';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import React, { Fragment, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import CoursesSlider from '../../components/CoursesSlider';
+import CoursesTabs from '../../components/CoursesTabs';
+import HeroContent from '../../components/HeroContent';
 import { getDiscoveryItemsRequested } from '../../redux/discoveryItems/actionCreators';
 import { State } from '../../redux/rootReducer';
+import useStyles from './styles';
 
-const mapStateToProps = ({ discoveryItems }: State) => ({
-  discoveryItems,
-});
+const Home = () => {
+  const classes = useStyles();
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getDiscoveryItems: () =>
-    dispatch(
-      // TODO: implement redux hooks
-      getDiscoveryItemsRequested()
-    ),
-});
+  const { t } = useTranslation();
 
-// TODO: how redux connect compare to hooks
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-  // tslint:disable-next-line:max-file-line-count
-)(Home);
+  const { bestSellers, mostViewed } = useSelector(
+    ({ discoveryItems }: State) => discoveryItems
+  );
+
+  const dispatch = useDispatch();
+
+  const getDiscoveryItems = () => dispatch(getDiscoveryItemsRequested());
+
+  useEffect(() => {
+    const shouldFetchData = [
+      bestSellers.courses,
+      bestSellers.categories,
+      mostViewed.courses,
+    ].some(items => items.length === 0);
+    if (shouldFetchData) {
+      getDiscoveryItems();
+    }
+  }, []);
+
+  return (
+    <Fragment>
+      <HeroContent />
+
+      <Container className={classes.cardGrid} maxWidth="lg">
+        <Typography
+          component="h4"
+          variant="h4"
+          align="center"
+          color="textPrimary"
+          gutterBottom
+        >
+          {t('home.exploreOurBestsellers')}
+        </Typography>
+
+        <CoursesTabs
+          courses={bestSellers.courses}
+          categories={bestSellers.categories}
+        />
+      </Container>
+
+      <Container className={classes.cardGrid} maxWidth="md">
+        <Typography
+          component="h4"
+          variant="h4"
+          align="center"
+          color="textPrimary"
+          gutterBottom
+        >
+          {t('home.studentAreViewing')}
+        </Typography>
+
+        <CoursesSlider courses={mostViewed.courses} />
+      </Container>
+    </Fragment>
+  );
+};
+
+export default Home;
