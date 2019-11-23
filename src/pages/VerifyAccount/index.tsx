@@ -29,6 +29,7 @@ const VerifyAccount = () => {
     dispatch(verifyAccountRequested(options));
 
   const params =
+    // TODO: add polyfill
     location !== undefined ? new URLSearchParams(location.search) : null;
 
   const emailParam = params !== null ? params.get('email') : '';

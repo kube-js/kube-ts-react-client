@@ -37,6 +37,10 @@ export default {
     total: 'Total',
     yourCartIsEmpty: 'Your cart is empty',
   },
+  checkout: {
+    buyNow: 'Buy now',
+    mainHeadline: 'Checkout'
+  },
   courseView: {
     instructor: 'Instructor',
     learningContent: 'Learning content:',
@@ -70,5 +74,12 @@ export default {
     search: {
       placeholder: 'Search for anything...',
     },
+  },
+  payment: {
+    cardNumber: 'Card number',
+    cvc: 'CVC',
+    month: 'MM',
+    nameOnACard: 'Name on a card',
+    year: 'YYYY',
   },
 };
