@@ -28,6 +28,8 @@ import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import Notifier from './pages/Notifier';
 import Register from './pages/Register';
+// tslint:disable-next-line:no-import-side-effect
+import './styles/index.css';
 
 const RemindPassword = lazy(() => import('./pages/RemindPassword'));
 const ResetPassword = lazy(() => import('./pages/ResetPassword'));

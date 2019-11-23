@@ -37,6 +37,10 @@ export default {
     total: 'Suma',
     yourCartIsEmpty: 'Your cart is empty',
   },
+  checkout: {
+    buyNow: 'Kup teraz',
+    mainHeadline: 'Kasa'
+  },
   courseView: {
     instructor: 'Instruktor',
     learningContent: 'Treść kursu:',
@@ -70,5 +74,12 @@ export default {
     search: {
       placeholder: 'Szukaj',
     },
+  },
+  payment: {
+    cardNumber: 'Numer karty',
+    cvc: 'Kod zabezpieczający',
+    month: 'MM',
+    nameOnACard: 'Imię i nazwisko na karcie',
+    year: 'RRRR',
   },
 };

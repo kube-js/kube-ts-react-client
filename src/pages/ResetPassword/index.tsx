@@ -33,6 +33,7 @@ const ResetPasswordForm = () => {
     dispatch(resetPasswordRequested(options));
 
   const params =
+  // TODO: add polyfill
     location !== undefined ? new URLSearchParams(location.search) : null;
 
   const tokenParam = params !== null ? params.get('token') : '';
