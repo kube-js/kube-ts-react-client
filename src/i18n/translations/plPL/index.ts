@@ -39,7 +39,7 @@ export default {
   },
   checkout: {
     buyNow: 'Kup teraz',
-    mainHeadline: 'Kasa'
+    mainHeadline: 'Kasa',
   },
   courseView: {
     instructor: 'Instruktor',
@@ -77,9 +77,8 @@ export default {
   },
   payment: {
     cardNumber: 'Numer karty',
-    cvc: 'Kod zabezpieczający',
-    month: 'MM',
+    cvc: 'Kod zabezpieczający (CVC)',
+    expiry: 'Data ważności (MM/RR)',
     nameOnACard: 'Imię i nazwisko na karcie',
-    year: 'RRRR',
   },
 };

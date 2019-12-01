@@ -6,7 +6,7 @@ replicaCount: 2
 
 image:
   repository: kubejs/kube-ts-react-client
-  tag: 1.6.25
+  tag: 1.7.0
   pullPolicy: Always
   containerPort: 80
 

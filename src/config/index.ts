@@ -1,10 +1,15 @@
 import { LoggerFactoryOptions, LoggerType } from '../services/logger';
 import getStringValue from '../utils/helpers/getStringValue';
 
+export interface StripeOptions {
+  readonly publishableKey: string;
+}
+
 export interface Config {
-  apiUrl: string;
-  assetsUrl: string;
-  logger: LoggerFactoryOptions;
+  readonly apiUrl: string;
+  readonly assetsUrl: string;
+  readonly logger: LoggerFactoryOptions;
+  readonly stripe: StripeOptions;
 }
 
 const env = (window as any)._env_ || {};
@@ -24,6 +29,12 @@ const config: Config = {
       ),
     },
     type: getStringValue(env.REACT_APP_LOGGER_TYPE, 'dummy') as LoggerType,
+  },
+  stripe: {
+    publishableKey: getStringValue(
+      env.STRIPE_PUBLISHABLE_KEY,
+      'pk_test_TYooMQauvdEDq54NiTphI7jx'
+    ),
   },
 };
 

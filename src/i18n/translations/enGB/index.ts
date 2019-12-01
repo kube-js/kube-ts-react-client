@@ -39,7 +39,7 @@ export default {
   },
   checkout: {
     buyNow: 'Buy now',
-    mainHeadline: 'Checkout'
+    mainHeadline: 'Checkout',
   },
   courseView: {
     instructor: 'Instructor',
@@ -78,8 +78,7 @@ export default {
   payment: {
     cardNumber: 'Card number',
     cvc: 'CVC',
-    month: 'MM',
+    expiry: 'Expiry date (MM/YY)',
     nameOnACard: 'Name on a card',
-    year: 'YYYY',
   },
 };

@@ -3,6 +3,7 @@ import { Container, Grid, Typography } from '@material-ui/core';
 import _isNil from 'ramda/src/isNil';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Elements } from 'react-stripe-elements';
 import PaymentForm from '../../components/PaymentForm';
 import useStyles from './styles';
 
@@ -28,7 +29,9 @@ const CheckoutView = () => {
         </Container>
       </Container>
       <Container>
-        <PaymentForm />
+        <Elements>
+          <PaymentForm />
+        </Elements>
       </Container>
     </div>
   );
