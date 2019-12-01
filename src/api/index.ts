@@ -148,7 +148,6 @@ const createApi = ({ httpClient, token }: Options): Api => {
     }),
     getDiscoveryItems: <T>({
       searchParams,
-      type,
     }: BaseGetOptions): Promise<T> =>
       normalisePromise(
         httpClient.get('discovery-items', {
