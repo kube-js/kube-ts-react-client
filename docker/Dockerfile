@@ -10,7 +10,7 @@ RUN npm ci
 COPY . .
 RUN PUBLIC_URL=/ npm run build
 
-FROM nginx:1.17.7-alpine as app
+FROM nginx:1.17.8-alpine as app
 
 # Add bash
 RUN apk add --no-cache bash
