@@ -74,7 +74,7 @@
     "react-test-renderer": "16.12.0",
     "redux-devtools": "3.5.0",
     "redux-logger": "3.0.6",
-    "ts-jest": "24.3.0",
+    "ts-jest": "25.4.0",
     "tslint": "5.20.1",
     "tslint-config-prettier": "1.18.0",
     "typescript": "3.7.5"
