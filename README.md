@@ -4,6 +4,3 @@
 ![jscpd](assets/jscpd-badge.svg)
 
 ## Dockerized single page application powered by react/typescript ready to be deployed on kubernetes cluster
-
-## Demo - deployed on digital ocean kubernetes cluster
-[https://client.mariuszrajczakowski.me](https://client.mariuszrajczakowski.me)
