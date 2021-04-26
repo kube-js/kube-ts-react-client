@@ -45,7 +45,7 @@
     "set-value": "3.0.1",
     "slick-carousel": "1.8.1",
     "store": "2.0.12",
-    "url-search-params-polyfill": "7.0.1",
+    "url-search-params-polyfill": "8.1.1",
     "uuid": "3.4.0",
     "yup": "0.28.0"
   },
