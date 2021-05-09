@@ -47,7 +47,7 @@
     "store": "2.0.12",
     "url-search-params-polyfill": "7.0.1",
     "uuid": "3.4.0",
-    "yup": "0.28.0"
+    "yup": "0.28.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "4.2.4",
