@@ -47,7 +47,7 @@
     "store": "2.0.12",
     "url-search-params-polyfill": "7.0.1",
     "uuid": "3.4.0",
-    "yup": "0.28.0"
+    "yup": "0.32.11"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "4.2.4",
@@ -69,7 +69,7 @@
     "@types/redux-persist": "4.3.1",
     "@types/store": "2.0.2",
     "@types/uuid": "3.4.6",
-    "@types/yup": "0.26.27",
+    "@types/yup": "0.32.0",
     "flat": "5.0.0",
     "react-test-renderer": "16.12.0",
     "redux-devtools": "3.5.0",
